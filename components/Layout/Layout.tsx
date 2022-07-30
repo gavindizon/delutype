@@ -22,7 +22,7 @@ const Layout: FC<Props> = ({ children, title, description, lang }) => {
             <Navigation lang={lang} />
             <main className="mx-auto container">{children}</main>
             <div className="fixed bottom-10 right-10">
-                <Toggle isToggled={value} toggle={toggle} toggleText="☀" untoggleText="☾" label="Mode" />
+                <Toggle isToggled={value} toggle={toggle} toggleText="☾" untoggleText="☀" label="Mode" />
             </div>
         </>
     );
