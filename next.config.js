@@ -1,7 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const path = require("path");
 
-module.exports = nextConfig
+/**
+ * @type {import('next').NextConfig}
+ *  */
+
+const nextConfig = {
+    reactStrictMode: true,
+    swcMinify: true,
+    sassOptions: {
+        includePaths: [path.join(__dirname, "styles")],
+    },
+    unstable_includeFiles: ["node_modules/next/dist/compiled/@edge-runtime/primitives/**/*.+(js|json)"],
+};
+
+module.exports = nextConfig;

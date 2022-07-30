@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://rsms.me/inter/inter.css");
+@import "./variables.module.scss";
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+
+    span {
+        color: $txt-alt;
+    }
+}
+@supports (font-variation-settings: normal) {
+    html,
+    body {
+        font-family: "Inter var", sans-serif;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.light-mode {
+    background-color: $bg-primary-light-mode;
+    color: $txt-primary-light-mode;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="checkbox"] {
+        background-color: $bg-secondary-light-mode;
+        color: $txt-primary-light-mode;
+    }
+
+    .btn {
+        background-color: $bg-primary-dark-mode;
+        color: $txt-primary-dark-mode;
+        transition: background-color 0.4s ease-in-out;
+        &:hover {
+            background-color: $bg-secondary-dark-mode;
+        }
+    }
+
+    select {
+        background-color: $bg-primary-light-mode;
+        border: 1.2px solid $txt-primary-light-mode;
+        color: $txt-primary-light-mode;
+    }
+}
+
+body.dark-mode {
+    background-color: $bg-primary-dark-mode;
+    color: $txt-primary-dark-mode;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="checkbox"] {
+        background-color: $bg-secondary-dark-mode;
+        color: $txt-primary-dark-mode;
+    }
+
+    .btn {
+        background-color: $bg-primary-light-mode;
+        color: $txt-primary-light-mode;
+        transition: background-color 0.4s ease-in-out;
+        &:hover {
+            background-color: $bg-secondary-light-mode;
+        }
+    }
+
+    select {
+        background-color: $bg-primary-dark-mode;
+        border: 1.2px solid $txt-primary-dark-mode;
+        color: $txt-primary-dark-mode;
+    }
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+
+    select {
+        appearance: none;
+    }
+
+    &::after {
+        content: "▼";
+        font-size: 0.4rem;
+        top: 9px;
+        right: 10px;
+        position: absolute;
+    }
+}

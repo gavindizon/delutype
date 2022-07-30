@@ -1,0 +1,28 @@
+// DARK MODE
+$bg-primary-dark-mode: #222;
+$bg-secondary-dark-mode: #111;
+$txt-primary-dark-mode: #fff;
+$txt-secondary-dark-mode: #555;
+
+// LIGHT MODE
+$bg-primary-light-mode: #fff;
+$bg-secondary-light-mode: #ddd;
+$txt-primary-light-mode: #222;
+$txt-secondary-light-mode: #aaa;
+
+// GENERAL
+$txt-tertiary: #666;
+$txt-alt: #00c49a;
+
+:export {
+    bgPrimaryDarkMode: $bg-primary-dark-mode;
+    bgSecondaryDarkMode: $bg-secondary-dark-mode;
+    bgPrimaryLightMode: $bg-primary-light-mode;
+    bgSecondaryDarkMode: $bg-secondary-dark-mode;
+    txtPrimaryDarkMode: $txt-primary-dark-mode;
+    txtSecondaryDarkMode: $txt-secondary-dark-mode;
+    txtPrimaryLightMode: $txt-primary-light-mode;
+    txtSecondaryLightMode: $txt-secondary-light-mode;
+    txtTertiary: $txt-tertiary;
+    txtAlt: $txt-alt;
+}

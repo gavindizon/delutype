@@ -1,0 +1,67 @@
+.container {
+    width: 4rem;
+    height: 2rem;
+    position: relative;
+
+    &::after {
+        content: attr(data-value) !important;
+        position: absolute;
+        margin-top: 2px;
+        margin-left: 4px;
+        left: 0;
+        min-width: 28px;
+        min-height: 28px;
+        border-radius: 100%;
+        color: #00c49a;
+        background-color: #fff;
+        text-align: center;
+        transition: translate 1s ease-in-out;
+        transform: translateX(0px);
+        vertical-align: middle;
+        line-height: normal;
+        display: inline-block;
+        font-size: 1.4rem;
+        pointer-events: none;
+    }
+
+    input {
+        appearance: none;
+        width: inherit;
+        height: inherit;
+        border-radius: 48px;
+    }
+
+    &--toggled {
+        width: 4rem;
+        height: 2rem;
+        position: relative;
+
+        &::after {
+            content: attr(data-value) !important;
+            position: absolute;
+            margin-top: 2px;
+            margin-right: 2px;
+            left: 0;
+            min-width: 28px;
+            min-height: 28px;
+            border-radius: 100%;
+            color: #00c49a;
+            background-color: #fff;
+            text-align: center;
+            transition: translate 1s ease-in-out;
+            transform: translateX(32px);
+            vertical-align: middle;
+            line-height: normal;
+            display: inline-block;
+            font-size: 1.4rem;
+            pointer-events: none;
+        }
+
+        input {
+            appearance: none;
+            width: inherit;
+            height: inherit;
+            border-radius: 48px;
+        }
+    }
+}
