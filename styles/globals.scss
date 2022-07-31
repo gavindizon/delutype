@@ -56,6 +56,11 @@ body.light-mode {
         border: 1.2px solid $txt-primary-light-mode;
         color: $txt-primary-light-mode;
     }
+
+    .modal {
+        background-color: $bg-primary-light-mode;
+        color: $txt-primary-light-mode;
+    }
 }
 
 body.dark-mode {
@@ -84,6 +89,11 @@ body.dark-mode {
         border: 1.2px solid $txt-primary-dark-mode;
         color: $txt-primary-dark-mode;
     }
+
+    .modal {
+        background-color: $bg-primary-dark-mode;
+        color: $txt-primary-dark-mode;
+    }
 }
 
 .select-wrapper {
@@ -101,4 +111,14 @@ body.dark-mode {
         right: 10px;
         position: absolute;
     }
+}
+
+.full-overlay {
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(#000, 0.7);
 }

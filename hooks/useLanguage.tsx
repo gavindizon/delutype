@@ -12,7 +12,6 @@ export default function useLanguage() {
         if (Router && Router.isReady) {
             if (lang === "en" || lang === "fil") setLanguage(lang);
         }
-        console.log(lang);
         //eslint-disable-next-line
     }, [router]);
 
