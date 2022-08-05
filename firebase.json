@@ -1,14 +1,38 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "hosting": {
-    "public": "out",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+    "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    },
+    "hosting": {
+        "public": "public",
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "rewrites": [
+            {
+                "source": "**",
+                "function": "server"
+            }
+        ]
+    },
+    "functions": {
+        "source": ".",
+        "ignore": [
+            "**/src/**",
+            "**/.vscode/**",
+            ".firebase/**",
+            ".firebaserc",
+            "firebase.json",
+            "**/node_modules/**",
+            "**/public/**",
+            "**/.next/cache/**",
+            "**/.next/BUILD_ID",
+            "**/.next/build-manifest.json",
+            "**/.next/export-marker.json",
+            "**/.next/images-manifest.json",
+            "**/.next/next-server.js.nft.json",
+            "**/.next/prerender-manifest.json",
+            "**/.next/react-loadable-manifest.json",
+            "**/.next/routes-manifest.json",
+            "**/.next/trace"
+        ]
+    }
 }

@@ -1,13 +1,10 @@
 import React, { FC, useState } from "react";
 import Head from "next/head";
 import Navigation from "./Navigation/Navigation";
-import useDarkMode from "use-dark-mode";
+import useDarkMode from "@fisch0920/use-dark-mode";
 import Toggle from "../Toggle/Toggle";
 import Modal from "../Modal/Modal";
 import { AnyAction, CombinedState, Dispatch } from "redux";
-import { closeModal } from "../../redux/actions/modal";
-import { useSelector } from "react-redux";
-import { EnhancedStore } from "@reduxjs/toolkit";
 
 type Props = {
     children: React.ReactNode;
