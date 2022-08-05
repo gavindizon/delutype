@@ -10,6 +10,8 @@ import { FcGoogle } from "react-icons/fc";
 import { CgMail } from "react-icons/cg";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
+import Script from "next/script";
+
 import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
 import TypingGame from "../../components/TypingGame";
@@ -23,25 +25,12 @@ const Test: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSid
     const dispatch = useDispatch();
     const genLang = general[lang as keyof typeof general];
 
-    useEffect(() => {
-        webgazer
-            .setRegression("ridge")
-            .setGazeListener(function (data: any, elapsedTime: any) {
-                if (data == null) {
-                    return;
-                }
-                var xprediction = data.x; //these x coordinates are relative to the viewport
-                var yprediction = data.y; //these y coordinates are relative to the viewport
-                console.log(elapsedTime); //elapsed time is based on time since begin was called
-            })
-            .begin(() => {});
-        // webgazer.params.showVideoPreview = true;
-    }, []);
 
     const handleOnClick = () => {};
 
     return (
         <Layout title="Test" description="" lang={lang} state={state} dispatch={dispatch}>
+              <Script src="/test.js" strategy="beforeInteractive" />
             <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
                 <h5>Esc to reset</h5>
                 <button onClick={(e) => handleOnClick()}>X</button>
