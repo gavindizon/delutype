@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect, useDispatch, useSelector } from "react-redux";
 
@@ -50,6 +50,12 @@ const Home: NextPage = () => {
             </section>
         </Layout>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    return {
+        props: { ssr: true },
+    };
 };
 
 export default Home;
