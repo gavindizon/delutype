@@ -1,4 +1,5 @@
-import type { NextPage } from "next";
+import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
+import axios from "axios";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect, useDispatch, useSelector } from "react-redux";
 
@@ -16,7 +17,7 @@ import home from "../data/home.json";
 import general from "../data/general.json";
 import useLanguage from "../hooks/useLanguage";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const lang = useLanguage();
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
@@ -52,18 +53,14 @@ const Home: NextPage = () => {
     );
 };
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const res = await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
+
+    return {
+        props: {
+            ssr: res,
+        },
+    };
+};
+
 export default Home;
-
-// export const getStaticProps = wrapper.getStaticProps((store) => () => {
-//   store.dispatch(closeModal)
-
-// });
-
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//   return {
-//       openModal: bindActionCreators(openModal, dispatch),
-//       closeModal: bindActionCreators(closeModal, dispatch)
-//   };
-// };
-
-// export default connect((state) => state, mapDispatchToProps)(Home);
