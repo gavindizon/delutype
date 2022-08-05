@@ -5,6 +5,7 @@ import useDarkMode from "@fisch0920/use-dark-mode";
 import Toggle from "../Toggle/Toggle";
 import Modal from "../Modal/Modal";
 import { AnyAction, CombinedState, Dispatch } from "redux";
+import { GetServerSideProps } from "next";
 
 type Props = {
     children: React.ReactNode;
@@ -47,6 +48,14 @@ const Layout: FC<Props> = ({ children, title, description, lang, state, dispatch
             </div>
         </>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    return {
+        props: {
+            ssr: true,
+        },
+    };
 };
 
 export default Layout;
