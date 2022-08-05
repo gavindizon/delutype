@@ -9,7 +9,8 @@ import Script from "next/script";
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
-            <Script src="/public/theme.js" strategy="beforeInteractive" />
+            <Script src="/webgazer.js" strategy="beforeInteractive" />
+            <Script src="/theme.js" strategy="beforeInteractive" />
             <Component {...pageProps} />
         </Provider>
     );

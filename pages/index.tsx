@@ -1,9 +1,6 @@
 import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
-import axios from "axios";
-import { Dispatch, bindActionCreators } from "redux";
-import { connect, useDispatch, useSelector } from "react-redux";
-
-import { store, wrapper } from "../redux/store";
+import { axiosInstance as axios } from "../config/axios";
+import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../components/Layout/Layout";
 import Button from "../components/Button/Button";
@@ -54,13 +51,19 @@ const Home: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSid
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const res = await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
-
-    return {
-        props: {
-            ssr: res,
-        },
-    };
+    try {
+        const data = 1;
+        //const { data } =  //await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
+        return {
+            props: {
+                ssr: data,
+            },
+        };
+    } catch (e) {
+        return {
+            props: {},
+        };
+    }
 };
 
 export default Home;
