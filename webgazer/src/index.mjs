@@ -4,7 +4,7 @@ import "@tensorflow/tfjs";
 
 import "regression";
 import params from "./params";
-//import "./dom_util";
+import "./dom_util";
 import localforage from "localforage";
 import TFFaceMesh from "./facemesh";
 import Reg from "./ridgeReg";
@@ -216,15 +216,17 @@ function getPupilFeatures(canvas, width, height) {
  * @param {Number} height - the new height of the canvas
  */
 function paintCurrentFrame(canvas, width, height) {
-    if (canvas.width != width) {
-        canvas.width = width;
-    }
-    if (canvas.height != height) {
-        canvas.height = height;
-    }
+    if (canvas) {
+        if (canvas.width != width) {
+            canvas.width = width;
+        }
+        if (canvas.height != height) {
+            canvas.height = height;
+        }
 
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    }
 }
 
 /**

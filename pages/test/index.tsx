@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../components/Layout/Layout";
 import Button from "../../components/Button/Button";
+import dynamic from "next/dynamic";
 
 import { FaChevronDown } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -16,27 +17,13 @@ import TypingGame from "../../components/TypingGame";
 //import webgazer from "../../webgazer-v2/src/index.mjs";
 import React, { useEffect } from "react";
 import timeout from "../../utils/timeout";
+const WebGazer = dynamic(() => import("../../components/WebGazer") as any, { ssr: false });
 
-const Test: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Test: NextPage = () => {
     const lang = useLanguage();
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const genLang = general[lang as keyof typeof general];
-
-    useEffect(() => {
-        webgazer
-            .setRegression("ridge")
-            .setGazeListener(function (data: any, elapsedTime: any) {
-                if (data == null) {
-                    return;
-                }
-                var xprediction = data.x; //these x coordinates are relative to the viewport
-                var yprediction = data.y; //these y coordinates are relative to the viewport
-                console.log(elapsedTime); //elapsed time is based on time since begin was called
-            })
-            .begin(() => {});
-        // webgazer.params.showVideoPreview = true;
-    }, []);
 
     const handleOnClick = () => {};
 
@@ -52,26 +39,27 @@ const Test: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSid
                             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat eum, qui nulla culpa dignissimos soluta excepturi omnis possimus repudiandae, incidunt molestias? Eius aperiam accusamus unde laboriosam totam. Voluptatum, accusamus eius!"
                         }
                     />
+                    <WebGazer />
                 </div>
             </section>
         </Layout>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    try {
-        const data = 1;
-        //const { data } =  //await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
-        return {
-            props: {
-                ssr: data,
-            },
-        };
-    } catch (e) {
-        return {
-            props: {},
-        };
-    }
-};
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//     try {
+//         const data = 1;
+//         //const { data } =  //await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
+//         return {
+//             props: {
+//                 ssr: data,
+//             },
+//         };
+//     } catch (e) {
+//         return {
+//             props: {},
+//         };
+//     }
+// };
 
 export default Test;
