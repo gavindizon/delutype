@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
             <Script src="/webgazer.js" strategy="beforeInteractive" />
+            <Script src="/test.js" strategy="beforeInteractive" />
             <Script src="/theme.js" strategy="beforeInteractive" />
             <Component {...pageProps} />
         </Provider>
