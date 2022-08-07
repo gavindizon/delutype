@@ -49,16 +49,17 @@ const Test: NextPage = ({
 
         <div className="w-full md:w-1/2">
           <h1 className="mb-2">Charles Darwin, On the Origin of Species</h1>
-          {/* <TypingGame
+          <TypingGame
             text={
               "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat eum, qui nulla culpa dignissimos soluta excepturi omnis possimus repudiandae, incidunt molestias? Eius aperiam accusamus unde laboriosam totam. Voluptatum, accusamus eius!"
             }
-          /> */}
-          <TypingGame
+          />
+          
+          {/* <TypingGame
             text={
               "Lorem ipsum dolor sit amet"
             }
-          />
+          /> */}
         </div>
       </section>
     </Layout>
