@@ -61,10 +61,10 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
       window.removeEventListener("addGaze", addGazeCount);
       let finalResults : object;
       finalResults = {
-        wpm: 69,
-        accuracy: 69,
+        wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
+        accuracy: ((correctChar - errorChar) /text.length* 100).toFixed(2),
         consistency: 69,
-        time: duration
+        time: time
       };
       dispatch({ type: "UPDATE_RESULT", payload: finalResults });
       
