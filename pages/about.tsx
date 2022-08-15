@@ -28,7 +28,7 @@ const About: NextPage = () => {
                     </div>
 
                     <div className='flex-col space-y-20'>
-                        <h1 className='font-extrabold text-4xl leading-tight xs:text-5xl xs:leading-tight'>Designing an optimized Filipino-English keyboard layout</h1>
+                        <h1 className='font-extrabold text-4xl leading-tight xs:text-5xl xs:leading-snug'>Designing an optimized Filipino-English keyboard layout</h1>
 
                         <div className='grid grid-cols-2 gap-8 sm:gap-20 md:grid-cols-4 md:gap-12 lg:gap-20'>
                             <Researcher 
