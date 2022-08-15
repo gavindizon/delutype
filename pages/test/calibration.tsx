@@ -1,7 +1,12 @@
-import type { NextPage } from "next";
-import { useSelector, useDispatch } from "react-redux";
+
+import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { axiosInstance as axios } from "../../config/axios";
+import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../components/Layout/Layout";
+
+import Script from "next/script";
+
 
 import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
@@ -10,23 +15,81 @@ import TypingGame from "../../components/TypingGame";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const Test: NextPage = () => {
+import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
+
+const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const [gazeCount, setGazeCount] = useState(0);
+
     const lang = useLanguage();
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const genLang = general[lang as keyof typeof general];
     let data = [];
 
-    useEffect(() => {}, []);
 
     return (
-        <Layout title="Test" description="" lang={lang} state={state} dispatch={dispatch}>
+        <Layout title="Calibration" description="" lang={lang} state={state} dispatch={dispatch}>
             {/* <Script src="/test.js" strategy="beforeInteractive" /> */}
-            <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
-                <h1>Calibration Zone</h1>
+            <section >
+                <h3 className="text-center text-3xl pt-10">Calibration</h3>
+            
+            <div className="flex flex-row h-fit py-5 w-full justify-between">
+
+          
+            <CalibrationButton className=""></CalibrationButton>
+            
+        
+            <CalibrationButton className=""></CalibrationButton>
+            
+
+            <CalibrationButton className=""></CalibrationButton>
+           
+            </div>
+
+            <div className="flex flex-row h-fit pt-96 w-full justify-between">
+
+            <CalibrationButton className=""></CalibrationButton>
+       
+         
+            <CalibrationButton className=""></CalibrationButton>
+           
+            </div>         
+            <div className="flex flex-row h-fit fixed bottom-10 w-full justify-around pl-56 xl:pl-12 2xl:pr-20">
+       
+            <CalibrationButton className=""></CalibrationButton>
+          
+            <CalibrationButton className=""></CalibrationButton>
+           
+            <CalibrationButton className=""></CalibrationButton>
+          
+           
+           
+        
+     
+            </div> 
             </section>
+
+          
+        
+        
+
         </Layout>
     );
 };
 
-export default Test;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    try {
+        const data = 1;
+        //const { data } =  //await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
+        return {
+            props: {
+                ssr: data,
+            },
+        };
+    } catch (e) {
+        return {
+            props: {},
+        };
+    }
+};
+export default Calibration;
