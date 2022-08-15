@@ -1,4 +1,3 @@
-
 import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { axiosInstance as axios } from "../../config/axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,26 +6,30 @@ import Layout from "../../components/Layout/Layout";
 
 import Script from "next/script";
 
-
 import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
 import TypingGame from "../../components/TypingGame";
 //import webgazer from "../../webgazer-v2/src/index.mjs";
 import React, { useEffect } from "react";
 import { useState } from "react";
-
 import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
 
 const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const [gazeCount, setGazeCount] = useState(0);
+    
+    useEffect(() => {
+        webgazer.begin();
+    
+        return () => {
+          webgazer.end();
+        };
+      }, []);
 
+    const [gazeCount, setGazeCount] = useState(0);
     const lang = useLanguage();
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const genLang = general[lang as keyof typeof general];
     let data = [];
-
-
     return (
         <Layout title="Calibration" description="" lang={lang} state={state} dispatch={dispatch}>
             {/* <Script src="/test.js" strategy="beforeInteractive" /> */}
@@ -72,7 +75,6 @@ const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getSe
           
         
         
-
         </Layout>
     );
 };
