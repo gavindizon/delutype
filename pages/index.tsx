@@ -43,6 +43,7 @@ const Home: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSid
                     {genLang["learn-more"]}
                     <span>
                         <FaChevronDown size={16} />
+                        Hello World
                     </span>
                 </button>
             </section>
