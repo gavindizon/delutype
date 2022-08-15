@@ -5,6 +5,9 @@
 
 # dependencies
 /node_modules
+**/node_modules
+**/WebGazer-master
+
 /.pnp
 .pnp.js
 

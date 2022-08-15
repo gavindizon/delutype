@@ -27,7 +27,7 @@ const Home: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSid
                 <h1 className="text-4xl md:text-7xl mb-4">
                     <span className="font-bold">DELU</span>Type
                 </h1>
-                <p className="font-light text-lg md:text-xl  tracking-wider ">{pageLang.hero.subtitle}</p>
+                <p className="font-light text-lg md:text-xl tracking-wider">{pageLang.hero.subtitle}</p>
                 <div className="mt-8 flex flex-col items-center gap-4 w-full">
                     <Button onClick={() => dispatch({ type: "OPEN_MODAL" })} leftIcon={<CgMail size={18} />}>
                         {genLang["sign-in-email"]}
