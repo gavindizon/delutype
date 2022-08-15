@@ -19,7 +19,7 @@ const Test: NextPage = ({ text, title }: InferGetServerSidePropsType<typeof getS
             <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
                 <div className="w-full md:w-1/2">
                     <h1 className="mb-2">{title}</h1>
-                    <TypingGame text={text} />
+                    <TypingGame text={text}/>
                 </div>
             </section>
         </Layout>
@@ -41,5 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         };
     }
 };
+
+
 
 export default Test;

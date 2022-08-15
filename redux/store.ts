@@ -1,4 +1,4 @@
-import { createWrapper } from "next-redux-wrapper";
+import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import reducer from "./reducers/index";
 import { configureStore } from "@reduxjs/toolkit";
 
