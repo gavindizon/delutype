@@ -15,6 +15,7 @@ const Test: NextPage = ({ text, title }: InferGetServerSidePropsType<typeof getS
     const dispatch = useDispatch();
 
     return (
+        
         <Layout title="Test" description="" lang={lang} state={state} dispatch={dispatch}>
             <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
                 <div className="w-full md:w-1/2">
