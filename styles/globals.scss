@@ -133,6 +133,25 @@ body.light-mode {
             }
         }
     }
+
+    table {
+        tr:nth-child(odd) {
+            background-color: $bg-secondary-light-mode;
+        }
+
+        tr:nth-child(even) {
+            background-color: $bg-primary-light-mode;
+        }
+    }
+}
+
+tr {
+    @apply py-2;
+}
+
+th,
+td {
+    @apply px-2 py-4 text-xs md:text-base;
 }
 
 body.dark-mode {
@@ -200,6 +219,16 @@ body.dark-mode {
             &:hover {
                 background-color: $txt-secondary-dark-mode;
             }
+        }
+    }
+
+    table {
+        tr:nth-child(odd) {
+            background-color: $bg-secondary-dark-mode;
+        }
+
+        tr:nth-child(even) {
+            background-color: $bg-primary-dark-mode;
         }
     }
 }

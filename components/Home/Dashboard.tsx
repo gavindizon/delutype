@@ -19,6 +19,40 @@ const Dashboard: FC<Props> = ({ user }) => {
                     </Button>
                 </div>
             </div>
+            <div className="w-full text-left">
+                <h2 className="text-3xl font-semibold mb-4">History</h2>
+
+                <table className="w-full">
+                    <tr>
+                        <th>#</th>
+                        <th>Layout</th>
+                        <th>WPM</th>
+                        <th>Accuracy</th>
+                        <th>Consistency</th>
+                        <th>Duration</th>
+                        <th>Datetime</th>
+                    </tr>
+                    {/* <tr>
+                    <td>1</td>
+                    <td>QWERTY</td>
+                    <td>123</td>
+                    <td>98%</td>
+                    <td>100%</td>
+                    <td>132s</td>
+                    <td>{new Date().toUTCString()}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>QWERTY</td>
+                    <td>123</td>
+                    <td>98%</td>
+                    <td>100%</td>
+                    <td>132s</td>
+                    <td>{new Date().toUTCString()}</td>
+                </tr> */}
+                </table>
+                <p className="text-center my-4">No data found yet. Try starting a test.</p>
+            </div>
         </section>
     );
 };
