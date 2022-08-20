@@ -1,15 +1,15 @@
-import { ActionCreatorWithNonInferrablePayload } from "@reduxjs/toolkit";
+import { AnyAction } from "@reduxjs/toolkit";
 import { OPEN_MODAL, CLOSE_MODAL } from "../actions/modal";
 
 const initialState: Object = {
-    name: "",
+    type: "",
     isActive: false,
 };
 
-const modalReducer = (state: Object = initialState, action: ActionCreatorWithNonInferrablePayload) => {
+const modalReducer = (state: Object = initialState, action: AnyAction) => {
     switch (action.type) {
         case OPEN_MODAL:
-            return { ...state, isActive: true };
+            return { ...state, isActive: true, type: action?.payload?.type };
         case CLOSE_MODAL:
             return { ...state, isActive: false };
         default:

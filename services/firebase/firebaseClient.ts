@@ -14,7 +14,7 @@ const firebaseConfig: firebase.FirebaseOptions = {
 let auth: firebaseAuth.Auth;
 
 if (typeof window !== "undefined" && !firebase.getApps().length) {
-    const client = firebase.initializeApp(firebaseConfig);
+    const client = firebase.initializeApp(firebaseConfig, "CLIENT");
     auth = firebaseAuth.getAuth(client);
     auth.setPersistence(inMemoryPersistence);
 }
