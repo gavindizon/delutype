@@ -24,7 +24,8 @@ const Base: FC<Props> = ({ dispatch }) => {
     return (
         <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
             <h1 className="text-4xl md:text-7xl mb-4">
-                <span className="font-bold">DELU</span>Type
+                ty
+                <span>ph</span>e
             </h1>
             <p className="font-light text-lg md:text-xl tracking-wider">{pageLang.hero.subtitle}</p>
             <div className="mt-8 flex flex-col items-center gap-4 w-full">

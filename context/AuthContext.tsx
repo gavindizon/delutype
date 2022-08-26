@@ -19,6 +19,7 @@ export function AuthProvider({ children }: any) {
     const dispatch = useDispatch();
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     useEffect(() => {
         // const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -84,13 +85,15 @@ export function AuthProvider({ children }: any) {
 
     const login = async (email: string, password: string) => {
         try {
+            setIsLoggingIn(true);
             let response = await signInWithEmailAndPassword(auth, email, password);
             dispatch({ type: "CLOSE_MODAL" });
-
             await axios.post("/api/claims", { user: response.user });
 
+            setIsLoggingIn(false);
             return { type: "success" };
         } catch (e) {
+            setIsLoggingIn(false);
             switch ((e as FirebaseError).code) {
                 case "auth/unverified-email":
                     return { type: "error", message: "Error: Email not yet verified. Please verify your email." };
@@ -122,7 +125,7 @@ export function AuthProvider({ children }: any) {
     // }, []);
 
     return (
-        <AuthContext.Provider value={{ user, signup, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, signup, login, logout, loading, isLoggingIn }}>
             {loading ? (
                 <div className="h-screen w-full flex justify-center items-center">
                     <Loading size={"xl"} />

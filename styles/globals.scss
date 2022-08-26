@@ -70,11 +70,30 @@ body.light-mode {
     color: $txt-primary-light-mode;
     transition: background-color 0.3s ease, color 0.3s ease;
 
+    header {
+        background-color: $bg-primary-light-mode;
+        color: $txt-primary-light-mode;
+    }
+
+    input[type="date"],
+    input[type="email"],
     input[type="text"],
     input[type="password"],
-    input[type="checkbox"] {
+    input[type="checkbox"],
+    select {
         background-color: $bg-secondary-light-mode;
         color: $txt-primary-light-mode;
+
+        &:autofill,
+        &:-webkit-autofill {
+            -webkit-text-fill-color: $txt-primary-light-mode;
+            box-shadow: 0 0 0px 1000px $bg-secondary-light-mode inset;
+            &:hover,
+            &:focus {
+                -webkit-text-fill-color: $txt-primary-light-mode;
+                box-shadow: 0 0 0px 1000px $bg-secondary-light-mode inset;
+            }
+        }
     }
 
     .btn {
@@ -99,7 +118,7 @@ body.light-mode {
         }
     }
 
-    select {
+    .language-selector {
         background-color: $bg-primary-light-mode;
         border: 1.2px solid $txt-primary-light-mode;
         color: $txt-primary-light-mode;
@@ -159,11 +178,31 @@ body.dark-mode {
     color: $txt-primary-dark-mode;
     transition: background-color 0.3s ease, color 0.3s ease;
 
+    header {
+        background-color: $bg-primary-dark-mode;
+        color: $txt-primary-dark-mode;
+    }
+
+    input[type="date"],
+    input[type="email"],
     input[type="text"],
     input[type="password"],
-    input[type="checkbox"] {
-        background-color: $bg-secondary-dark-mode;
-        color: $txt-primary-dark-mode;
+    input[type="checkbox"],
+    select {
+        background-color: $bg-secondary-dark-mode !important;
+        color: $txt-primary-dark-mode !important;
+        color-scheme: dark;
+
+        &:autofill,
+        &:-webkit-autofill {
+            -webkit-text-fill-color: $txt-primary-dark-mode;
+            box-shadow: 0 0 0px 1000px $bg-secondary-dark-mode inset;
+            &:hover,
+            &:focus {
+                -webkit-text-fill-color: $txt-primary-dark-mode;
+                box-shadow: 0 0 0px 1000px $bg-secondary-dark-mode inset;
+            }
+        }
     }
 
     .btn {
@@ -188,7 +227,7 @@ body.dark-mode {
         }
     }
 
-    select {
+    .language-selector {
         background-color: $bg-primary-dark-mode;
         border: 1.2px solid $txt-primary-dark-mode;
         color: $txt-primary-dark-mode;

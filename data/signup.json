@@ -1,0 +1,95 @@
+[
+    {
+        "title": "Personal Information",
+        "fields": [
+            {
+                "name": "email",
+                "label": "Email",
+                "required": true,
+                "type": "email",
+                "placeholder": "janedelacruz@typhe.io"
+            },
+            {
+                "name": "firstName",
+                "label": "First Name",
+                "required": true,
+                "type": "text",
+                "placeholder": "Jane"
+            },
+            {
+                "name": "lastName",
+                "label": "Last Name",
+                "required": true,
+                "type": "text",
+                "placeholder": "Dela Cruz"
+            },
+            {
+                "name": "sex",
+                "label": "Sex",
+                "required": false,
+                "type": "select",
+                "options": ["Prefer not to say", "Female", "Male"]
+            },
+            {
+                "name": "birthdate",
+                "label": "Birth Date",
+                "required": false,
+                "type": "date"
+            }
+        ]
+    },
+    {
+        "title": "Scheduling",
+        "fields": [
+            {
+                "name": "datesAvailable",
+                "label": "What week(s) is/are you most likely available?",
+                "required": true,
+                "type": "checkbox",
+                "options": [
+                    {
+                        "name": "1stweekNov",
+                        "label": "1st week of November 2022"
+                    },
+                    {
+                        "name": "2ndweekNov",
+                        "label": "2nd week of November 2022"
+                    },
+                    {
+                        "name": "3rdweekNov",
+                        "label": "3rd week of November 2022"
+                    },
+                    {
+                        "name": "4thweekNov",
+                        "label": "4th week of November 2022"
+                    }
+                ]
+            },
+            {
+                "name": "isEligibleInDLSU",
+                "label": "Are you an alumni, student, or faculty at De La Salle University - Manila?",
+                "type": "radio",
+                "options": ["Yes", "No"]
+            }
+        ]
+    },
+    {
+        "title": "Password",
+        "fields": [
+            {
+                "name": "password",
+                "label": "Password",
+                "required": true,
+                "type": "password",
+                "placeholder": "*********"
+            },
+            {
+                "name": "confirmPassword",
+                "label": "Confirm Password",
+                "required": true,
+                "type": "password",
+                "placeholder": "*********"
+            }
+        ]
+    }
+]

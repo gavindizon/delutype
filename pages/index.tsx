@@ -12,11 +12,19 @@ import Dashboard from "../components/Home/Dashboard";
 const Home: NextPage = () => {
     const dispatch = useDispatch();
     const lang = useLanguage();
-    const { user } = useAuth();
+    const { user, isLoggingIn } = useAuth();
 
     return (
         <Layout title="Home" description="" lang={lang}>
-            {user ? <Dashboard user={user} /> : <Base dispatch={dispatch} />}
+            {isLoggingIn ? (
+                <div className="h-screen w-full flex justify-center items-center">
+                    <Loading size={"xl"} />
+                </div>
+            ) : user ? (
+                <Dashboard user={user} />
+            ) : (
+                <Base dispatch={dispatch} />
+            )}
         </Layout>
     );
 };

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import sitemap from "../../../data/sitemap.json";
 import { useRouter } from "next/router";
@@ -10,15 +10,37 @@ type Props = {
 };
 
 const Navigation: FC<Props> = ({ lang }) => {
+    const [scrollTop, setScrollTop] = useState(0);
+
     const router = useRouter();
     const { user, logout } = useAuth();
 
+    useEffect(() => {
+        const onScroll = (e: any) => {
+            setScrollTop(e.target.documentElement.scrollTop);
+        };
+        window.addEventListener("scroll", onScroll);
+
+        console.log("Test");
+
+        return () => window.removeEventListener("scroll", onScroll);
+    }, [scrollTop]);
+
     return (
-        <header className="fixed z-30 w-full h-12 top-0 flex items-center">
+        <header
+            className="fixed z-30 w-full h-24 top-0 flex items-center"
+            style={{
+                transition: `box-shadow .4s`,
+                boxShadow: `${
+                    scrollTop > 100 ? "0px 18px 45px -20px rgba(0, 0, 0, 0.3)" : "0px 18px 45px -20px rgba(0, 0, 0, 0)"
+                }`,
+            }}
+        >
             <nav className="px-2 container m-auto flex justify-between items-center">
                 <Link href={"/"}>
                     <a className="text-3xl">
-                        <span className="font-bold">DELU</span>Type
+                        ty
+                        <span>ph</span>e
                     </a>
                 </Link>
                 {user ? (
@@ -67,7 +89,7 @@ const Navigation: FC<Props> = ({ lang }) => {
                                 name="langauge"
                                 title="language"
                                 value={lang}
-                                className="ml-4 rounded-xl pl-2 pr-6 py-1 text-xs cursor-pointer"
+                                className="language-selector ml-4 rounded-xl pl-2 pr-6 py-1 text-xs cursor-pointer"
                                 onChange={(e) => {
                                     router.push(`?lang=${e.target.value}`, undefined, { shallow: true });
                                     localStorage.setItem("lang", e.target.value);

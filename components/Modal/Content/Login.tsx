@@ -47,7 +47,8 @@ const Login = () => {
     return (
         <div className="flex h-full flex-col justify-center items-center">
             <h1 className="text-center text-4xl mt-16 mb-4">
-                <span className="font-bold">DELU</span>Type
+                ty
+                <span>ph</span>e
             </h1>
             <form
                 onSubmit={(e) => {
@@ -60,7 +61,7 @@ const Login = () => {
                 </label>
                 <input
                     type="text"
-                    placeholder="janedelacruz@delutype.com"
+                    placeholder="janedelacruz@typhe.io"
                     className="w-full p-2 mb-4"
                     onChange={(e) => {
                         setError({ status: false, message: "" });

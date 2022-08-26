@@ -20,7 +20,7 @@ const Layout: FC<Props> = ({ children, title, description, lang }) => {
     return (
         <>
             <Head>
-                <title>{title} | DELUType</title>
+                <title>{title} | typhe</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Navigation lang={lang} />
