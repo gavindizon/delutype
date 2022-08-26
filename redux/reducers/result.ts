@@ -1,4 +1,4 @@
-import { ActionCreatorWithNonInferrablePayload, ActionCreatorWithPayload, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { UPDATE_RESULT } from "../actions/result";
 
 const initialState: Object = {
@@ -8,10 +8,7 @@ const initialState: Object = {
     time: 0,
 };
 
-const resultReducer = (
-    state: Object = initialState,
-    action : PayloadAction<any, string>
-) => {
+const resultReducer = (state: Object = initialState, action: PayloadAction<any, string>) => {
     switch (action.type) {
         case UPDATE_RESULT:
             console.log(state);
@@ -23,7 +20,6 @@ const resultReducer = (
                 consistency: action.payload.consistency,
                 time: action.payload.time,
             };
-            
 
         default:
             return state;

@@ -29,29 +29,96 @@ a {
 * {
     box-sizing: border-box;
 }
+.divider {
+    position: relative;
+}
+
+.divider::before {
+    content: "";
+    width: 196px;
+    height: 0.6px;
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    margin-right: 2rem;
+    top: 50%;
+    transform: translateY(-25%);
+
+    @media only screen and (max-width: 768px) {
+        width: 35vw;
+    }
+}
+
+.divider::after {
+    content: "";
+    width: 196px;
+    overflow: hidden;
+    height: 0.6px;
+    position: absolute;
+    left: 0;
+    margin-left: 2rem;
+    top: 50%;
+    transform: translateY(-25%);
+
+    @media only screen and (max-width: 768px) {
+        width: 35vw;
+    }
+}
 
 body.light-mode {
     background-color: $bg-primary-light-mode;
     color: $txt-primary-light-mode;
     transition: background-color 0.3s ease, color 0.3s ease;
 
-    input[type="text"],
-    input[type="password"],
-    input[type="checkbox"] {
-        background-color: $bg-secondary-light-mode;
+    header {
+        background-color: $bg-primary-light-mode;
         color: $txt-primary-light-mode;
     }
 
-    .btn {
-        background-color: $bg-primary-dark-mode;
-        color: $txt-primary-dark-mode;
-        transition: background-color 0.4s ease-in-out;
-        &:hover {
-            background-color: $bg-secondary-dark-mode;
+    input[type="date"],
+    input[type="email"],
+    input[type="text"],
+    input[type="password"],
+    input[type="checkbox"],
+    select {
+        background-color: $bg-secondary-light-mode;
+        color: $txt-primary-light-mode;
+
+        &:autofill,
+        &:-webkit-autofill {
+            -webkit-text-fill-color: $txt-primary-light-mode;
+            box-shadow: 0 0 0px 1000px $bg-secondary-light-mode inset;
+            &:hover,
+            &:focus {
+                -webkit-text-fill-color: $txt-primary-light-mode;
+                box-shadow: 0 0 0px 1000px $bg-secondary-light-mode inset;
+            }
         }
     }
 
-    select {
+    .btn {
+        &--solid {
+            transition: all 0.4s ease-in-out;
+            background-color: $bg-primary-dark-mode;
+            color: $txt-primary-dark-mode;
+            &:hover {
+                background-color: $bg-secondary-dark-mode;
+            }
+        }
+
+        &--outline {
+            transition: all 0.4s ease-in-out;
+            color: $txt-primary-light-mode;
+            border: 2px solid $txt-primary-light-mode;
+
+            &:hover {
+                background-color: $txt-primary-light-mode;
+                color: $bg-primary-light-mode;
+            }
+        }
+    }
+
+    .language-selector {
         background-color: $bg-primary-light-mode;
         border: 1.2px solid $txt-primary-light-mode;
         color: $txt-primary-light-mode;
@@ -61,6 +128,49 @@ body.light-mode {
         background-color: $bg-primary-light-mode;
         color: $txt-primary-light-mode;
     }
+
+    .divider::before,
+    .divider::after {
+        background-color: $txt-primary-light-mode;
+    }
+
+    circle {
+        stroke: $txt-secondary-light-mode;
+    }
+
+    .card {
+        background-color: $bg-primary-light-mode;
+        border: 2px solid $txt-primary-light-mode;
+        color: $txt-primary-light-mode;
+
+        a,
+        button {
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: $txt-secondary-light-mode;
+            }
+        }
+    }
+
+    table {
+        tr:nth-child(odd) {
+            background-color: $bg-secondary-light-mode;
+        }
+
+        tr:nth-child(even) {
+            background-color: $bg-primary-light-mode;
+        }
+    }
+}
+
+tr {
+    @apply py-2;
+}
+
+th,
+td {
+    @apply px-2 py-4 text-xs md:text-base;
 }
 
 body.dark-mode {
@@ -68,23 +178,56 @@ body.dark-mode {
     color: $txt-primary-dark-mode;
     transition: background-color 0.3s ease, color 0.3s ease;
 
-    input[type="text"],
-    input[type="password"],
-    input[type="checkbox"] {
-        background-color: $bg-secondary-dark-mode;
+    header {
+        background-color: $bg-primary-dark-mode;
         color: $txt-primary-dark-mode;
     }
 
-    .btn {
-        background-color: $bg-primary-light-mode;
-        color: $txt-primary-light-mode;
-        transition: background-color 0.4s ease-in-out;
-        &:hover {
-            background-color: $bg-secondary-light-mode;
+    input[type="date"],
+    input[type="email"],
+    input[type="text"],
+    input[type="password"],
+    input[type="checkbox"],
+    select {
+        background-color: $bg-secondary-dark-mode !important;
+        color: $txt-primary-dark-mode !important;
+        color-scheme: dark;
+
+        &:autofill,
+        &:-webkit-autofill {
+            -webkit-text-fill-color: $txt-primary-dark-mode;
+            box-shadow: 0 0 0px 1000px $bg-secondary-dark-mode inset;
+            &:hover,
+            &:focus {
+                -webkit-text-fill-color: $txt-primary-dark-mode;
+                box-shadow: 0 0 0px 1000px $bg-secondary-dark-mode inset;
+            }
         }
     }
 
-    select {
+    .btn {
+        &--solid {
+            transition: all 0.4s ease-in-out;
+            background-color: $bg-primary-light-mode;
+            color: $txt-primary-light-mode;
+            &:hover {
+                background-color: $bg-secondary-light-mode;
+            }
+        }
+
+        &--outline {
+            transition: all 0.4s ease-in-out;
+            color: $txt-primary-dark-mode;
+            border: 2px solid $txt-primary-dark-mode;
+
+            &:hover {
+                background-color: $bg-primary-light-mode;
+                color: $txt-primary-light-mode;
+            }
+        }
+    }
+
+    .language-selector {
         background-color: $bg-primary-dark-mode;
         border: 1.2px solid $txt-primary-dark-mode;
         color: $txt-primary-dark-mode;
@@ -93,6 +236,39 @@ body.dark-mode {
     .modal {
         background-color: $bg-primary-dark-mode;
         color: $txt-primary-dark-mode;
+    }
+    .divider::before,
+    .divider::after {
+        background-color: $txt-primary-dark-mode;
+    }
+
+    circle {
+        stroke: $txt-secondary-dark-mode;
+    }
+
+    .card {
+        background-color: $bg-primary-dark-mode;
+        border: 2px solid $txt-primary-dark-mode;
+        color: $txt-primary-dark-mode;
+
+        a,
+        button {
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: $txt-secondary-dark-mode;
+            }
+        }
+    }
+
+    table {
+        tr:nth-child(odd) {
+            background-color: $bg-secondary-dark-mode;
+        }
+
+        tr:nth-child(even) {
+            background-color: $bg-primary-dark-mode;
+        }
     }
 }
 

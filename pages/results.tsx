@@ -12,15 +12,13 @@ import { useState } from "react";
 
 const Results: NextPage = () => {
     const lang = useLanguage();
-    const state = useSelector((state: any) => state);
-    const dispatch = useDispatch();
     const genLang = general[lang as keyof typeof general];
     let data = [];
 
     useEffect(() => {}, []);
 
     return (
-        <Layout title="Results" description="" lang={lang} state={state} dispatch={dispatch}>
+        <Layout title="Results" description="" lang={lang}>
             {/* <Script src="/test.js" strategy="beforeInteractive" /> */}
             <section className="h-screen px-2 text-center flex flex-col -mt-6 justify-center items-center relative">
                 <h1>Test Results</h1>
