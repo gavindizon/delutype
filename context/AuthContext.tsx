@@ -128,7 +128,7 @@ export function AuthProvider({ children }: any) {
         <AuthContext.Provider value={{ user, signup, login, logout, loading, isLoggingIn }}>
             {loading ? (
                 <div className="h-screen w-full flex justify-center items-center">
-                    <Loading size={"xl"} />
+                    <Loading size={"2xl"} />
                 </div>
             ) : (
                 children

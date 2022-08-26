@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <Layout title="Home" description="" lang={lang}>
             {isLoggingIn ? (
                 <div className="h-screen w-full flex justify-center items-center">
-                    <Loading size={"xl"} />
+                    <Loading size={"2xl"} />
                 </div>
             ) : user ? (
                 <Dashboard user={user} />
