@@ -1,14 +1,14 @@
 {
     "en": {
         "learn-more": "Learn More",
-        "sign-in-email": "Sign-in with E-mail",
+        "sign-in-email": "Sign-in with Email",
         "sign-in-google": "Sign-in with Google",
         "create-an-account": "Create an Account"
     },
     "fil": {
         "learn-more": "Matuto Pa",
-        "sign-in-email": "Magsign-in gamit ang Sulatroniko",
-        "sign-in-google": "Magign-in gamit ang Google",
+        "sign-in-email": "Magsign-in gamit Sulatroniko",
+        "sign-in-google": "Magsign-in gamit Google",
         "create-an-account": "Gumawa ng Akawnt"
     }
 }

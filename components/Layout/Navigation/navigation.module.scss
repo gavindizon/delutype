@@ -1,0 +1,6 @@
+.navProfile {
+    &:hover > div > .navDropdown,
+    .navUserInfo:focus + .navDropdown {
+        display: block !important;
+    }
+}
