@@ -11,8 +11,13 @@ const SignUp: FC<Props> = () => {
     const lang = useLanguage();
 
     const fields: any = {};
+    const tempValidity: any = {};
+
     form.forEach((section) =>
         section.fields.forEach((field) => {
+            if (field.required) tempValidity[field.name] = false;
+            else tempValidity[field.name] = true;
+
             switch (field.type) {
                 case "checkbox":
                     fields[field.name] = [];
@@ -24,10 +29,23 @@ const SignUp: FC<Props> = () => {
     );
 
     const [signUpForm, setSignUpForm] = useState(fields);
+    const [validity, setValidity] = useState(tempValidity);
 
-    // useEffect(() => {
-    //     console.log(signUpForm);
-    // }, [signUpForm]);
+    const validateForm = () => {
+        let valid = true;
+
+        Object.keys(validity).forEach((key) => {
+            if (key !== "datesAvailable") {
+                if (validity[key] === false) valid = false;
+            } else {
+                if (signUpForm[key].length === 0) valid = false;
+            }
+        });
+
+        console.log(validity);
+        console.log(valid);
+        return valid;
+    };
 
     return (
         <Layout title="Sign Up" description="" lang={lang}>
@@ -47,6 +65,9 @@ const SignUp: FC<Props> = () => {
                                         <Input
                                             key={field.name}
                                             {...field}
+                                            fieldValues={signUpForm}
+                                            validity={validity}
+                                            setValidity={setValidity}
                                             onChange={(e: React.ChangeEvent<any> | any) => {
                                                 if (field.type !== "checkbox")
                                                     setSignUpForm({ ...signUpForm, [field.name]: e.target.value });
@@ -68,7 +89,13 @@ const SignUp: FC<Props> = () => {
                                 </div>
                             );
                         })}
-                        <Button type="submit" isFullWidth className="mt-8" leftIcon={<IoPersonCircleSharp size={18} />}>
+                        <Button
+                            type="submit"
+                            isDisabled={!validateForm()}
+                            isFullWidth
+                            className="mt-8"
+                            leftIcon={<IoPersonCircleSharp size={18} />}
+                        >
                             SIGN UP
                         </Button>
                     </form>

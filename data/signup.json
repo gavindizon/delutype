@@ -3,6 +3,18 @@
         "title": "Personal Information",
         "fields": [
             {
+                "name": "username",
+                "label": "Username",
+                "required": true,
+                "type": "text",
+                "placeholder": "janeDC",
+                "validation": {
+                    "max": 15,
+                    "min": 5,
+                    "unique": true
+                }
+            },
+            {
                 "name": "email",
                 "label": "Email",
                 "required": true,
@@ -81,14 +93,21 @@
                 "label": "Password",
                 "required": true,
                 "type": "password",
-                "placeholder": "*********"
+                "placeholder": "*********",
+                "validation": {
+                    "min": 8,
+                    "max": 20
+                }
             },
             {
                 "name": "confirmPassword",
                 "label": "Confirm Password",
                 "required": true,
                 "type": "password",
-                "placeholder": "*********"
+                "placeholder": "*********",
+                "validation": {
+                    "matchesWith": "password"
+                }
             }
         ]
     }

@@ -1,5 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Loading from "../Indicator/Loading";
+import validator from "./utils/validator";
 
 type Props = {
     type: string;
@@ -7,13 +9,43 @@ type Props = {
     label: string;
     onChange: Function;
     value: any;
+    validity: any;
+    setValidity: Function;
     options?: Array<any>;
     placeholder?: string;
     required?: boolean;
+    validation?: any;
+    fieldValues?: any;
 };
 
-const Input: FC<Props> = ({ type, name, label, onChange, value, options, placeholder, required }) => {
+const Input: FC<Props> = ({
+    type,
+    name,
+    label,
+    onChange,
+    value,
+    options,
+    placeholder,
+    required,
+    validation,
+    fieldValues,
+    validity,
+    setValidity,
+}) => {
     const [visibility, setVisibility] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState<Array<string>>([]);
+
+    useEffect(() => {
+        if (message.length > 0) {
+            setValidity({ ...validity, [name]: false });
+        } else {
+            setValidity({ ...validity, [name]: true });
+        }
+
+        //eslint-disable-next-line
+    }, [message]);
+
     switch (type) {
         case "select":
             return (
@@ -89,53 +121,96 @@ const Input: FC<Props> = ({ type, name, label, onChange, value, options, placeho
 
         case "password":
             return (
-                <div className="relative">
-                    <label htmlFor={name} className="block text-left mb-2">
-                        {label}
-                        {required && "*"}
-                    </label>
-                    <input
-                        type={visibility ? "text" : "password"}
-                        name={name}
-                        className="rounded-sm w-full p-2 mb-4"
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            onChange(e);
-                        }}
-                        required={required}
-                    />
-                    <button
-                        className="absolute z-50 top-1/2 right-0 mr-3 opacity-50"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setVisibility(!visibility);
-                        }}
-                    >
-                        {visibility ? <FaEye size={"18"} /> : <FaEyeSlash size={"18"} />}
-                    </button>
-                </div>
+                <>
+                    <div className="relative">
+                        <label htmlFor={name} className="block text-left my-2">
+                            {label}
+                            {required && "*"}
+                        </label>
+                        <input
+                            type={visibility ? "text" : "password"}
+                            name={name}
+                            className="rounded-sm w-full p-2 mb-2"
+                            placeholder={placeholder}
+                            value={value}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                onChange(e);
+
+                                (validation || required) &&
+                                    setMessage(
+                                        validator(
+                                            validation,
+                                            name,
+                                            label,
+                                            e.target.value,
+                                            fieldValues,
+                                            setLoading,
+                                            required,
+                                            "users"
+                                        )
+                                    );
+                            }}
+                            required={required}
+                        />
+                        <button
+                            className="absolute z-50 top-1/2 right-0 mr-3 opacity-50"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setVisibility(!visibility);
+                            }}
+                        >
+                            {visibility ? <FaEye size={"18"} /> : <FaEyeSlash size={"18"} />}
+                        </button>
+                    </div>
+                    {message.length > 0 && (
+                        <span className="w-full block text-red-500 text-left text-sm mb-4">{message[0]}</span>
+                    )}
+                </>
             );
 
         default:
             return (
                 <>
-                    <label htmlFor={name} className="block text-left mb-2">
-                        {label}
-                        {required && "*"}
-                    </label>
-                    <input
-                        type={type}
-                        name={name}
-                        value={value}
-                        className="rounded-sm w-full p-2 mb-4"
-                        placeholder={placeholder}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            onChange(e);
-                        }}
-                    />
+                    <div className="relative">
+                        <label htmlFor={name} className="block text-left my-2">
+                            {label}
+                            {required && "*"}
+                        </label>
+                        <input
+                            type={type}
+                            name={name}
+                            value={value}
+                            className="rounded-sm w-full p-2 mb-2"
+                            placeholder={placeholder}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                onChange(e);
+                                (validation || required) &&
+                                    setMessage(
+                                        validator(
+                                            validation,
+                                            name,
+                                            label,
+                                            e.target.value,
+                                            fieldValues,
+                                            setLoading,
+                                            required,
+                                            "users"
+                                        )
+                                    );
+                            }}
+                        />
+                        {loading && (
+                            <div className="absolute z-50 top-1/2 right-0 mr-3 opacity-50">
+                                <Loading size={"md"} />
+                            </div>
+                        )}
+                    </div>
+
+                    {message.length > 0 && (
+                        <span className="w-full block text-red-500 text-left text-sm mb-4">{message[0]}</span>
+                    )}
                 </>
             );
     }

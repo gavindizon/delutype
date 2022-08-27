@@ -1,6 +1,8 @@
 import * as firebase from "firebase/app";
 import * as firebaseAuth from "firebase/auth";
+import * as firebaseFirestore from "firebase/firestore";
 import { inMemoryPersistence } from "firebase/auth";
+import { Firestore } from "firebase/firestore";
 
 const firebaseConfig: firebase.FirebaseOptions = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,11 +14,13 @@ const firebaseConfig: firebase.FirebaseOptions = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 let auth: firebaseAuth.Auth;
+let firestore: Firestore;
 
 if (typeof window !== "undefined" && !firebase.getApps().length) {
     const client = firebase.initializeApp(firebaseConfig, "CLIENT");
     auth = firebaseAuth.getAuth(client);
+    firestore = firebaseFirestore.getFirestore(client);
     auth.setPersistence(inMemoryPersistence);
 }
 
-export { firebase, auth };
+export { firebase, auth, firestore };
