@@ -19,7 +19,11 @@
                 "label": "Email",
                 "required": true,
                 "type": "email",
-                "placeholder": "janedelacruz@typhe.io"
+                "placeholder": "janedelacruz@typhe.io",
+                "validation": {
+                    "email": true,
+                    "unique": true
+                }
             },
             {
                 "name": "firstName",
@@ -43,7 +47,7 @@
                 "options": ["Prefer not to say", "Female", "Male"]
             },
             {
-                "name": "birthdate",
+                "name": "birthDate",
                 "label": "Birth Date",
                 "required": false,
                 "type": "date"
@@ -58,6 +62,9 @@
                 "label": "What week(s) is/are you most likely available?",
                 "required": true,
                 "type": "checkbox",
+                "validation": {
+                    "min": 1
+                },
                 "options": [
                     {
                         "name": "1stweekNov",

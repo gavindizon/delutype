@@ -1,7 +1,10 @@
 import { firestore } from "../../../services/firebase/firebaseClient";
 import { collection, query, getDocs, where, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 
-export default function validator(
+const REGEX_EMAIL =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export default async function validator(
     validatorObject: any = {},
     name: string,
     label: string,
@@ -13,9 +16,15 @@ export default function validator(
 ) {
     let messages: Array<string> = [];
 
-    if (required && (currentValue.trim() === "" || currentValue === null)) messages.push(label + " is required");
+    if (
+        required &&
+        ((typeof currentValue === "string" && currentValue?.trim() === "") ||
+            currentValue.length === 0 ||
+            currentValue === null)
+    )
+        messages.push(label + " is required");
 
-    Object.keys(validatorObject).forEach(async (key: string) => {
+    for (const key of Object.keys(validatorObject)) {
         switch (key) {
             case "matchesWith":
                 if (currentValue !== fieldValues[validatorObject.matchesWith])
@@ -23,13 +32,20 @@ export default function validator(
 
                 break;
             case "min":
-                console.log;
-                if (currentValue.length < validatorObject[key])
-                    messages.push(label + " must be at least " + validatorObject[key] + " characters");
+                if (currentValue.length < validatorObject[key]) {
+                    typeof currentValue === "string"
+                        ? messages.push(label + " must be at least " + validatorObject[key] + " characters")
+                        : messages.push(label + " must choose at least " + validatorObject[key] + " option");
+                }
                 break;
             case "max":
                 if (currentValue.length > validatorObject[key])
                     messages.push(label + " must be at most " + validatorObject[key] + " characters");
+                break;
+
+            case "email":
+                if (!currentValue.toLowerCase().match(REGEX_EMAIL))
+                    messages.push(label + " must be a valid email address");
                 break;
             case "unique":
                 setLoading(true);
@@ -40,13 +56,17 @@ export default function validator(
                 querySnapshot.forEach((snapshot) => {
                     result.push(snapshot);
                 });
-                if (result.length > 0)
-                    messages.push(currentValue + " is already used by another user. Please try a different username");
+                if (result.length > 0) {
+                    messages.push(currentValue + " is already used by another user. Please try a different " + label);
+                }
                 setLoading(false);
-
                 break;
         }
-    });
+    }
+
+    //  Object.keys(validatorObject).forEach(async (key: string) => {
+
+    // });
 
     return messages;
 }

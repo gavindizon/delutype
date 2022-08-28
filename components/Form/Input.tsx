@@ -7,7 +7,7 @@ type Props = {
     type: string;
     name: string;
     label: string;
-    onChange: Function;
+    setForm: Function;
     value: any;
     validity: any;
     setValidity: Function;
@@ -22,7 +22,7 @@ const Input: FC<Props> = ({
     type,
     name,
     label,
-    onChange,
+    setForm,
     value,
     options,
     placeholder,
@@ -37,6 +37,8 @@ const Input: FC<Props> = ({
     const [message, setMessage] = useState<Array<string>>([]);
 
     useEffect(() => {
+        console.log(label, message);
+
         if (message.length > 0) {
             setValidity({ ...validity, [name]: false });
         } else {
@@ -58,9 +60,23 @@ const Input: FC<Props> = ({
                         title={name}
                         className="rounded-sm w-full p-2 mb-4 "
                         value={value}
-                        onChange={(e) => {
+                        onChange={async (e) => {
                             e.preventDefault();
-                            onChange(e);
+                            setForm({ ...fieldValues, [name]: e.target.value });
+
+                            (validation || required) &&
+                                setMessage(
+                                    await validator(
+                                        validation,
+                                        name,
+                                        label,
+                                        e.target.value,
+                                        fieldValues,
+                                        setLoading,
+                                        required,
+                                        "users"
+                                    )
+                                );
                         }}
                     >
                         {options?.map((opt) => (
@@ -84,14 +100,36 @@ const Input: FC<Props> = ({
                                     name={opt.name}
                                     title={opt.name}
                                     className="mr-2"
-                                    onChange={(e) => {
-                                        onChange({ value: opt.name, status: e.target.checked });
+                                    onChange={async (e) => {
+                                        let values = fieldValues[name];
+
+                                        if (e.target.checked) values.push(opt.name);
+                                        else values = values.filter((value: any) => opt.name !== value);
+
+                                        setForm({ ...fieldValues, [name]: values });
+
+                                        (validation || required) &&
+                                            setMessage(
+                                                await validator(
+                                                    validation,
+                                                    name,
+                                                    label,
+                                                    values,
+                                                    fieldValues,
+                                                    setLoading,
+                                                    required,
+                                                    "users"
+                                                )
+                                            );
                                     }}
                                 />
                                 <label htmlFor={opt.name}>{opt.label}</label>
                             </div>
                         );
                     })}
+                    {message.length > 0 && (
+                        <span className="w-full block text-red-500 text-left text-sm mt-2">{message[0]}</span>
+                    )}
                 </div>
             );
         case "radio":
@@ -107,15 +145,31 @@ const Input: FC<Props> = ({
                                     title={name}
                                     value={opt}
                                     className="mr-2"
-                                    onChange={(e) => {
-                                        e.preventDefault();
-                                        onChange(e);
+                                    onChange={async (e) => {
+                                        setForm({ ...fieldValues, [name]: e.target.value });
+
+                                        (validation || required) &&
+                                            setMessage(
+                                                await validator(
+                                                    validation,
+                                                    name,
+                                                    label,
+                                                    e.target.value,
+                                                    fieldValues,
+                                                    setLoading,
+                                                    required,
+                                                    "users"
+                                                )
+                                            );
                                     }}
                                 />
                                 <label htmlFor={opt}>{opt}</label>
                             </div>
                         );
                     })}
+                    {message.length > 0 && (
+                        <span className="w-full block text-red-500 text-left text-sm mt-2">{message[0]}</span>
+                    )}
                 </div>
             );
 
@@ -133,13 +187,12 @@ const Input: FC<Props> = ({
                             className="rounded-sm w-full p-2 mb-2"
                             placeholder={placeholder}
                             value={value}
-                            onChange={(e) => {
+                            onChange={async (e) => {
                                 e.preventDefault();
-                                onChange(e);
-
+                                setForm({ ...fieldValues, [name]: e.target.value });
                                 (validation || required) &&
                                     setMessage(
-                                        validator(
+                                        await validator(
                                             validation,
                                             name,
                                             label,
@@ -183,12 +236,12 @@ const Input: FC<Props> = ({
                             value={value}
                             className="rounded-sm w-full p-2 mb-2"
                             placeholder={placeholder}
-                            onChange={(e) => {
+                            onChange={async (e) => {
                                 e.preventDefault();
-                                onChange(e);
+                                setForm({ ...fieldValues, [name]: e.target.value });
                                 (validation || required) &&
                                     setMessage(
-                                        validator(
+                                        await validator(
                                             validation,
                                             name,
                                             label,
