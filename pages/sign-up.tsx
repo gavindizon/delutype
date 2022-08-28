@@ -73,7 +73,14 @@ const SignUp: FC<Props> = () => {
                         <form
                             className="w-full md:w-[640px] mb-32"
                             onSubmit={async (e) => {
-                                await handleSignUpSubmit(signUpForm, signup, setLoading);
+                                try {
+                                    e.preventDefault();
+
+                                    await handleSignUpSubmit(signUpForm, signup, setLoading);
+                                    router.push("?status=success", undefined, { shallow: false });
+                                } catch (err) {
+                                    router.push("?status=failed", undefined, { shallow: false });
+                                }
                             }}
                         >
                             {form.map((section, index) => {

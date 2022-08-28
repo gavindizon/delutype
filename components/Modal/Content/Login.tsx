@@ -21,8 +21,8 @@ const Login = () => {
 
     const auth = useAuth();
     const [loginForm, setLoginForm] = useState<LoginModel>({
-        email: "gavinrainedizon@gmail.com",
-        password: "SlowDancingInTheDark",
+        email: "",
+        password: "",
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ status: false, message: "" });

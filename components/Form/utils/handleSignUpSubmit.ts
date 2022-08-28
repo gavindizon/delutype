@@ -1,4 +1,4 @@
-import { updateProfile } from "firebase/auth";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 import {
     collection,
     query,
@@ -14,12 +14,7 @@ import { firestore } from "../../../services/firebase/firebaseClient";
 const handleSignUpSubmit = async (values: any, signup: Function, setLoading: Function) => {
     setLoading(true);
     try {
-        let { user } = await signup(values.email, values.password);
-
-        await updateProfile(user, {
-            displayName: values.username,
-        });
-
+        await signup(values.email, values.password, values.username);
         await addDoc(collection(firestore, "users"), {
             email: values.email,
             username: values.username,
