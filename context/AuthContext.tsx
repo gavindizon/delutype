@@ -6,6 +6,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    updateProfile,
+    sendEmailVerification,
 } from "firebase/auth";
 import axios, { AxiosError } from "axios";
 import { FirebaseError } from "firebase/app";
@@ -22,23 +24,6 @@ export function AuthProvider({ children }: any) {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     useEffect(() => {
-        // const unsubscribe = onAuthStateChanged(auth, (user) => {
-        //     if (user) {
-        //         setUser({
-        //             uid: user.uid,
-        //             displayName: user.displayName,
-        //             email: user.email,
-        //             photoUrl: user.photoURL,
-        //         });
-        //     } else {
-        //         setUser(null);
-        //     }
-        //     setLoading(false);
-        //     console.log(user);
-        // });
-
-        // return () => unsubscribe();
-
         return auth.onIdTokenChanged(async (user) => {
             try {
                 if (!user) {
@@ -48,6 +33,7 @@ export function AuthProvider({ children }: any) {
                         setUser(null);
                     } else {
                         const { data } = await axios.post("/api/verify", { token });
+
                         setUser({
                             email: data.user.email,
                             uid: data.user.uid,
@@ -79,8 +65,14 @@ export function AuthProvider({ children }: any) {
         });
     }, []);
 
-    const signup = async (email: string, password: string) => {
-        return await createUserWithEmailAndPassword(auth, email, password);
+    const signup = async (email: string, password: string, username: string) => {
+        let { user } = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(user, {
+            displayName: username,
+        });
+        await sendEmailVerification(user);
+        nookies.destroy(undefined, "token");
+        setUser(null);
     };
 
     const login = async (email: string, password: string) => {
@@ -114,15 +106,6 @@ export function AuthProvider({ children }: any) {
         await signOut(auth);
         nookies.destroy(undefined, "token");
     };
-
-    // refresh
-    // useEffect(() => {
-    //     const handle = setInterval(async () => {
-    //         const user = auth?.currentUser;
-    //         if (user) await user.getIdToken(true);
-    //     }, 10 * 60 * 1000);
-    //     return () => clearInterval(handle);
-    // }, []);
 
     return (
         <AuthContext.Provider value={{ user, signup, login, logout, loading, isLoggingIn }}>
