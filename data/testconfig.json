@@ -1,0 +1,21 @@
+[
+    {
+        "title": "Test Configuration",
+        "fields": [
+            {
+                "name": "keyboardLayout",
+                "label": "Keyboard Layout",
+                "type": "radio",
+                "required": true,
+                "options": ["QWERTY", "Salvo", "Dvorak", "Iteration 1", "Iteration 2"]
+            },
+            {
+                "name": "showWPM",
+                "label": "Show Words Per Minute",
+                "type": "radio",
+                "required": true,
+                "options": ["Yes", "No"]
+            }
+        ]
+    }
+]
