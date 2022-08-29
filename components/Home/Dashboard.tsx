@@ -1,48 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { FC } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { IoPersonCircleSharp } from "react-icons/io5";
-
-import Layout from "../../components/Layout/Layout";
-import Input from "../../components/Form/Input";
-import Button from "../../components/Button/Button";
-
-import validateForm from "../../components/Form/utils/validateForm";
-
-import useAuth from "../../hooks/useAuth";
-import useLanguage from "../../hooks/useLanguage";
-
-import form from "../../data/testconfig.json";
-import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
-
-
+import Button from "../Button/Button";
 type Props = {
     user: any;
 };
 
 const Dashboard: FC<Props> = ({ user }) => {
-    const [status, setStatus] = useState("");
-    const [testConfigForm, setTestConfigForm] = useState(initializeFieldValues(form));
-    const [validity, setValidity] = useState(initializeValidatorValues(form));
-    const [loading, setLoading] = useState(false);
-
-    console.log(initializeValidatorValues(form), validity);
-
-    const lang = useLanguage();
-    const { signup } = useAuth();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (router.isReady) {
-            const { status } = router.query;
-            setStatus((status as string) || "");
-        }
-    }, [router]);
-
-    useEffect(() => {
-        setTestConfigForm(initializeValidatorValues(form));
-    }, []);
-
     return (
         <section className="min-h-screen px-2 text-center flex flex-col mt-32 items-center relative">
             <div className="w-full flex flex-col justify-center items-center">
@@ -54,50 +18,6 @@ const Dashboard: FC<Props> = ({ user }) => {
                         Delete Account
                     </Button>
                 </div>
-            </div>
-            <div>
-                <form
-                    className="w-full md:w-[640px] mb-32"
-                    onSubmit={ (e) => {
-                        e.preventDefault();
-
-                        // console.log(validity);
-                        
-
-                        setValidity(initializeValidatorValues(form));
-                        setTestConfigForm(initializeFieldValues(form));
-                        router.push("/test");
-                    }}
-                >
-                    {form.map((section: any, index: any) => {
-                        return (
-                            <div key={index}>
-                                <h3 className="text-2xl text-left mt-2 mb-4 font-semibold ">{section.title}</h3>
-                                <hr className="mb-3" />
-                                {section.fields.map((field: any) => (
-                                    <Input
-                                        key={field.name}
-                                        {...field}
-                                        validity={validity}
-                                        setValidity={setValidity}
-                                        fieldValues={testConfigForm}
-                                        setForm={setTestConfigForm}
-                                        value={testConfigForm[field.name]}
-                                    />
-                                ))}
-                            </div>
-                        );
-                    })}
-                    <Button
-                        type="submit"
-                        isDisabled={!validateForm(validity)}
-                        isFullWidth
-                        loading={loading}
-                        className="mt-8"
-                    >
-                        START TEST
-                    </Button>
-                </form>
             </div>
             <div className="w-full text-left">
                 <h2 className="text-3xl font-semibold mb-4">History</h2>

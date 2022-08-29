@@ -11,12 +11,11 @@ import { AuthProvider } from "../context/AuthContext";
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
-            <Script src="/webgazer.min.js" strategy="beforeInteractive" />
-            <Script src="/test.js" strategy="beforeInteractive" />
-            <Script src="/theme.js" strategy="beforeInteractive" />
-            
             <AuthProvider>
                 <NextNProgress color="#00c49a" />
+                <Script src="/webgazer.min.js" strategy="beforeInteractive" />
+                <Script src="/test.js" strategy="beforeInteractive" />
+                <Script src="/theme.js" strategy="beforeInteractive" />
                 <Component {...pageProps} />
             </AuthProvider>
         </Provider>
