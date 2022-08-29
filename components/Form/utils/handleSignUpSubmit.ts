@@ -29,10 +29,13 @@ const handleSignUpSubmit = async (values: any, signup: Function, setLoading: Fun
         });
 
         // Add NOTIFICATION
-
         setLoading(false);
+
+        return { status: "success" };
     } catch (e) {
         setLoading(false);
+
+        return { status: "failed", error: e };
     }
 };
 

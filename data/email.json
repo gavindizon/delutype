@@ -1,0 +1,12 @@
+[
+    {
+        "name": "email",
+        "label": "Email",
+        "required": true,
+        "type": "email",
+        "placeholder": "janedelacruz@typhe.io",
+        "validation": {
+            "email": true
+        }
+    }
+]

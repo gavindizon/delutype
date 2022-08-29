@@ -1,20 +1,13 @@
-import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { axiosInstance as axios } from "../../config/axios";
-import { useDispatch, useSelector } from "react-redux";
-
+import type { NextPage } from "next";
 import Layout from "../../components/Layout/Layout";
-
-import Script from "next/script";
 
 import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
-import TypingGame from "../../components/TypingGame";
-//import webgazer from "../../webgazer-v2/src/index.mjs";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
-import Modal from "../../components/Modal/Modal";
-const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+
+const Calibration: NextPage = () => {
     useEffect(() => {
         webgazer.begin();
 
@@ -23,28 +16,10 @@ const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getSe
         };
     }, []);
 
-    const [gazeCount, setGazeCount] = useState(0);
     const lang = useLanguage();
     const genLang = general[lang as keyof typeof general];
     let data = [];
-
     const [remaining, setRemaining] = useState(9);
-
-    // useEffect(() => {
-
-    //         dispatch({ type: "OPEN_MODAL" });
-
-    //   }, []);
-
-    // useEffect(() => {
-
-    //     if (remaining === 0){
-
-    //         dispatch({ type: "OPEN_MODAL" });
-
-    //     }
-
-    //   }, [remaining]);
 
     return (
         <Layout title="Calibration" description="" lang={lang}>
@@ -79,19 +54,4 @@ const Calibration: NextPage = ({ ssr }: InferGetServerSidePropsType<typeof getSe
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    try {
-        const data = 1;
-        //const { data } =  //await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");
-        return {
-            props: {
-                ssr: data,
-            },
-        };
-    } catch (e) {
-        return {
-            props: {},
-        };
-    }
-};
 export default Calibration;

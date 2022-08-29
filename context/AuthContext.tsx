@@ -8,6 +8,9 @@ import {
     signOut,
     updateProfile,
     sendEmailVerification,
+    applyActionCode,
+    confirmPasswordReset,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import axios, { AxiosError } from "axios";
 import { FirebaseError } from "firebase/app";
@@ -102,13 +105,54 @@ export function AuthProvider({ children }: any) {
         }
     };
 
-    const logout = async () => {
+    const verifyEmail = async (code: string) => {
+        try {
+            await applyActionCode(auth, code);
+            return { status: "success" };
+        } catch (e) {
+            return { status: "failed", error: e };
+        }
+    };
+
+    const resetPassword = async (password: string, code: string) => {
+        try {
+            await confirmPasswordReset(auth, code, password);
+            return { status: "success" };
+        } catch (e) {
+            return { status: "failed", error: e };
+        }
+    };
+
+    const sendEmailResetPassword = async (email: string) => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+            return { status: "success" };
+        } catch (e) {
+            return { status: "failed", error: e };
+        }
+    };
+
+    const logout = async (router: any) => {
         await signOut(auth);
         nookies.destroy(undefined, "token");
+        router.push("/");
+        router.reload();
     };
 
     return (
-        <AuthContext.Provider value={{ user, signup, login, logout, loading, isLoggingIn }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                signup,
+                login,
+                logout,
+                loading,
+                isLoggingIn,
+                resetPassword,
+                verifyEmail,
+                sendEmailResetPassword,
+            }}
+        >
             {loading ? (
                 <div className="h-screen w-full flex justify-center items-center">
                     <Loading size={"2xl"} />

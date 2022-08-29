@@ -48,7 +48,14 @@ const Button: FC<Props> = ({
     if (href)
         return (
             <Link href={href}>
-                <a className={className}>{content}</a>
+                <a
+                    className={className}
+                    onClick={(e) => {
+                        onClick && onClick();
+                    }}
+                >
+                    {content}
+                </a>
             </Link>
         );
 
