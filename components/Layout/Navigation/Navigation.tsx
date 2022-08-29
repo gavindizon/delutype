@@ -21,8 +21,6 @@ const Navigation: FC<Props> = ({ lang }) => {
         };
         window.addEventListener("scroll", onScroll);
 
-        console.log("Test");
-
         return () => window.removeEventListener("scroll", onScroll);
     }, [scrollTop]);
 
@@ -65,8 +63,7 @@ const Navigation: FC<Props> = ({ lang }) => {
                                 </Link>
                                 <button
                                     onClick={(e) => {
-                                        logout();
-                                        router.reload();
+                                        logout(router);
                                     }}
                                     type="button"
                                     className="text-left w-full px-2 py-1 block"

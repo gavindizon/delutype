@@ -8,6 +8,13 @@
 **/node_modules
 **/WebGazer-master
 
+public/webgazer.commonjs2.js
+public/webgazer.commonjs2.js.map
+public/webgazer.commonjs2.min.js
+public/webgazer.commonjs2.min.js.map
+public/webgazer.js
+public/webgazer.js.map
+
 /.pnp
 .pnp.js
 

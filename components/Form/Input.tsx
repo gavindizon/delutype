@@ -37,8 +37,6 @@ const Input: FC<Props> = ({
     const [message, setMessage] = useState<Array<string>>([]);
 
     useEffect(() => {
-        console.log(label, message);
-
         if (message.length > 0) {
             setValidity({ ...validity, [name]: false });
         } else {

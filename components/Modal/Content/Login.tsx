@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import Button from "../../../components/Button/Button";
-
-import { FaChevronDown } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { CgMail } from "react-icons/cg";
-import general from "../../../data/general.json";
-import useLanguage from "../../../hooks/useLanguage";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
+import Button from "../../../components/Button/Button";
+
+import general from "../../../data/general.json";
+import useLanguage from "../../../hooks/useLanguage";
 import useAuth from "../../../hooks/useAuth";
-import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 interface LoginModel {
     email: string;
@@ -18,6 +19,7 @@ interface LoginModel {
 
 const Login = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const auth = useAuth();
     const [loginForm, setLoginForm] = useState<LoginModel>({
@@ -37,6 +39,7 @@ const Login = () => {
             if (email.trim() === "" || password === "") throw new Error("Error: Please input your email and password");
             const response: any = await auth.login(email, password);
             if (response?.type === "error") throw new Error(response?.message);
+            router.push("/");
         } catch (e: any) {
             setError({ status: true, message: e.message });
         } finally {
@@ -87,6 +90,9 @@ const Login = () => {
                         <p className="text-left text-sm mb-2 text-red-900/100 ">{error.message}</p>
                     </div>
                 )}
+                <Link href="/forgot-password">
+                    <a className="text-xs font-semibold text-left w-full">Forgot Password?</a>
+                </Link>
                 <Button
                     type="submit"
                     isFullWidth
@@ -102,10 +108,21 @@ const Login = () => {
             <div className="divider my-4">
                 <h6 className="text-sm">or</h6>
             </div>
-            <Button isFullWidth href={"/sign-in"} leftIcon={<FcGoogle size={18} />}>
+            <Button
+                isFullWidth
+                href={"/sign-in"}
+                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                leftIcon={<FcGoogle size={18} />}
+            >
                 {genLang["sign-in-google"]}
             </Button>
-            <Button isFullWidth href={"/sign-up"} className="mt-2 mb-8" leftIcon={<IoPersonCircleSharp size={18} />}>
+            <Button
+                isFullWidth
+                href={"/sign-up"}
+                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                className="mt-2 mb-8"
+                leftIcon={<IoPersonCircleSharp size={18} />}
+            >
                 {genLang["create-an-account"]}
             </Button>
         </div>

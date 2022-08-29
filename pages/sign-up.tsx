@@ -1,44 +1,32 @@
 import React, { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { IoPersonCircleSharp } from "react-icons/io5";
+
 import Layout from "../components/Layout/Layout";
-import useLanguage from "../hooks/useLanguage";
-import form from "../data/signup.json";
 import Input from "../components/Form/Input";
 import Button from "../components/Button/Button";
-import { IoPersonCircleSharp } from "react-icons/io5";
-import useAuth from "../hooks/useAuth";
+
+import validateForm from "../components/Form/utils/validateForm";
 import handleSignUpSubmit from "../components/Form/utils/handleSignUpSubmit";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Image from "next/image";
+
+import useAuth from "../hooks/useAuth";
+import useLanguage from "../hooks/useLanguage";
+
+import form from "../data/signup.json";
+import { initializeFieldValues, initializeValidatorValues } from "../components/Form/utils/initializeFieldValues";
+
 type Props = {};
 
 const SignUp: FC<Props> = () => {
+    const [status, setStatus] = useState("");
+    const [signUpForm, setSignUpForm] = useState(initializeFieldValues(form));
+    const [validity, setValidity] = useState(initializeValidatorValues(form));
+    const [loading, setLoading] = useState(false);
+
     const lang = useLanguage();
     const { signup } = useAuth();
-    const [status, setStatus] = useState("");
-
-    const fields: any = {};
-    const tempValidity: any = {};
     const router = useRouter();
-
-    form.forEach((section) =>
-        section.fields.forEach((field) => {
-            if (field.required) tempValidity[field.name] = false;
-            else tempValidity[field.name] = true;
-
-            switch (field.type) {
-                case "checkbox":
-                    fields[field.name] = [];
-                    break;
-                default:
-                    fields[field.name] = "";
-            }
-        })
-    );
-
-    const [signUpForm, setSignUpForm] = useState(fields);
-    const [validity, setValidity] = useState(tempValidity);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (router.isReady) {
@@ -46,20 +34,6 @@ const SignUp: FC<Props> = () => {
             setStatus((status as string) || "");
         }
     }, [router]);
-
-    const validateForm = () => {
-        let valid = true;
-
-        Object.keys(validity).forEach((key) => {
-            if (key !== "datesAvailable") {
-                if (validity[key] === false) valid = false;
-            } else {
-                if (signUpForm[key].length === 0) valid = false;
-            }
-        });
-
-        return valid;
-    };
 
     return (
         <Layout title="Sign Up" description="" lang={lang}>
@@ -104,7 +78,7 @@ const SignUp: FC<Props> = () => {
                             })}
                             <Button
                                 type="submit"
-                                isDisabled={!validateForm()}
+                                isDisabled={!validateForm(validity)}
                                 isFullWidth
                                 loading={loading}
                                 className="mt-8"
@@ -128,10 +102,6 @@ const SignUp: FC<Props> = () => {
                         <h1 className="text-4xl font-bold mb-2">Successfully created an Account</h1>
                         <p className="tracking-wide font-light text-2xl">
                             Please check the email we sent you to verify the account.
-                            {/* <br /> Please check 
-                            <Link href="/">
-                                <a className="underline">homepage</a>
-                            </Link> */}
                         </p>
                     </div>
                 )}
