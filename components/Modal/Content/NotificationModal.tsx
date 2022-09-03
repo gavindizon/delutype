@@ -16,15 +16,14 @@ type Props = {
 
 const NotificationModal: FC<Props> = ({ name, description, redirectTo, redirectToLabel}) => {
   
-
+    const dispatch = useDispatch();
     return (
         <>
 
                     <div className="mx-auto py-4 px-4 h-full">
                         <h1 className="text-center text-2xl pb-6">{name}</h1>
-                        <h1 className="px-4 pb-2">{description}</h1>
-
-                        <div className= "w-full flex justify-center py-4">{redirectToLabel && <Button href={redirectTo} className="">{redirectToLabel}</Button>}</div>
+                        <h1 className="text-center">{description}</h1>
+                        <div className= "w-full flex justify-center py-4">{redirectToLabel && <Button href={redirectTo}  onClick={() => dispatch({ type: "CLOSE_MODAL" })}>{redirectToLabel}</Button>}</div>
                         
                         
                     </div>

@@ -23,23 +23,27 @@ const CalibrationButton: FC<Props> = ({
 }) => {
     className += "w-5 h-5 rounded-full bg-green-300 ";
 
-    const [count, setCount] = useState(300);
+    const [count, setCount] = useState(0.4);
     const [isFinished, setisFinished] = useState(false);
 
     return (
         <button
             title="calibration"
             onClick={(e) => {
-                setCount((count) => count + 100);
+                setCount((count) => count + 0.2);
 
-                if (count + 100 === 800) {
+                if (count + 0.2 === 1.4) {
                     setisFinished(true);
                     setRemaining((remaining: number) => remaining - 1);
                 }
             }}
-            className={`w-5 h-5 rounded-full ${isFinished ? "bg-red-500" : "bg-green-" + count} ${
+            className={`w-5 h-5 rounded-full ${
                 hide ? "hidden" : ""
             }`}
+            style={{
+                opacity: count,
+                backgroundColor: isFinished  ? "red" : "green"
+            }}
             id={id}
         >
             &nbsp;
