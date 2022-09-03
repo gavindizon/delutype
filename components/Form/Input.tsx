@@ -16,6 +16,7 @@ type Props = {
     required?: boolean;
     validation?: any;
     fieldValues?: any;
+    insertAsHTML?: boolean;
 };
 
 const Input: FC<Props> = ({
@@ -31,6 +32,7 @@ const Input: FC<Props> = ({
     fieldValues,
     validity,
     setValidity,
+    insertAsHTML = false,
 }) => {
     const [visibility, setVisibility] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -121,7 +123,11 @@ const Input: FC<Props> = ({
                                             );
                                     }}
                                 />
-                                <label htmlFor={opt.name}>{opt.label}</label>
+                                {!insertAsHTML ? (
+                                    <label htmlFor={opt.name}>{opt.label}</label>
+                                ) : (
+                                    <label htmlFor={opt.name} dangerouslySetInnerHTML={{ __html: opt.label }}></label>
+                                )}
                             </div>
                         );
                     })}
@@ -232,7 +238,7 @@ const Input: FC<Props> = ({
                             type={type}
                             name={name}
                             value={value}
-                            className="rounded-sm w-full p-2 mb-2"
+                            className="rounded-sm w-full text p-2 mb-2"
                             placeholder={placeholder}
                             onChange={async (e) => {
                                 e.preventDefault();
