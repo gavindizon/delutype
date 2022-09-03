@@ -13,13 +13,13 @@ import Link from "next/link";
 const Calibration: NextPage = () => {
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     webgazer.begin();
+    useEffect(() => {
+        webgazer.begin();
 
-    //     return () => {
-    //         webgazer.end();
-    //     };
-    // }, []);
+        return () => {
+            webgazer.end();
+        };
+    }, []);
     useEffect(() => {
 
         dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"Calibration", description:"Click on each point 5 times, whilst looking at it until every point turns red."}});
@@ -34,11 +34,10 @@ const Calibration: NextPage = () => {
     useEffect(() => {
 
         if (remaining === 1)
-        dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"One More Step!", description:"Click on the center point 5 times to end calibration."}});
+        dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"One More Step!", description:"Click on the center point 5 times, whilst looking at it to end calibration."}});
         
         if (remaining === 0){
-            dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"Calibration Finished!", description:"You will be redirected to the typing test.", redirectTo:"/test", redirectToLabel:"Proceed"}});
-            <Link href="/"></Link>
+            dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"Calibration Finished!", description:"Click Proceed to continue with the typing test.", redirectTo:"/test", redirectToLabel:"Proceed"}});
         }
        
         
