@@ -337,3 +337,9 @@ body.dark-mode {
     bottom: 0 !important;
     top: unset !important;
 }
+
+// handle IOS
+input[type="date"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+}

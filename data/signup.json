@@ -55,6 +55,32 @@
         ]
     },
     {
+        "title": "Password",
+        "fields": [
+            {
+                "name": "password",
+                "label": "Password",
+                "required": true,
+                "type": "password",
+                "placeholder": "*********",
+                "validation": {
+                    "min": 8,
+                    "max": 20
+                }
+            },
+            {
+                "name": "confirmPassword",
+                "label": "Confirm Password",
+                "required": true,
+                "type": "password",
+                "placeholder": "*********",
+                "validation": {
+                    "matchesWith": "password"
+                }
+            }
+        ]
+    },
+    {
         "title": "Scheduling",
         "fields": [
             {
@@ -93,28 +119,23 @@
         ]
     },
     {
-        "title": "Password",
+        "title": "",
         "fields": [
             {
-                "name": "password",
-                "label": "Password",
+                "name": "datesAvailable",
+                "label": "",
                 "required": true,
-                "type": "password",
-                "placeholder": "*********",
+                "type": "checkbox",
                 "validation": {
-                    "min": 8,
-                    "max": 20
-                }
-            },
-            {
-                "name": "confirmPassword",
-                "label": "Confirm Password",
-                "required": true,
-                "type": "password",
-                "placeholder": "*********",
-                "validation": {
-                    "matchesWith": "password"
-                }
+                    "min": 1
+                },
+                "insertAsHTML": true,
+                "options": [
+                    {
+                        "name": "privacyPolicy",
+                        "label": "By registering an account, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>."
+                    }
+                ]
             }
         ]
     }
