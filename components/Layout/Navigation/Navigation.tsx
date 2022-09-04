@@ -36,7 +36,7 @@ const Navigation: FC<Props> = ({ lang }) => {
         >
             <nav className="px-2 container m-auto flex justify-between items-center">
                 <Link href={"/"}>
-                    <a className="text-3xl">
+                    <a className="font-extrabold text-3xl">
                         ty
                         <span>ph</span>e
                     </a>
@@ -77,7 +77,7 @@ const Navigation: FC<Props> = ({ lang }) => {
                     <div className="my-4">
                         {sitemap.map((site) => (
                             <Link href={site.path} key={site.path}>
-                                <a className="inline-block mx-4 font-light mt-2 uppercase">{site.title}</a>
+                                <a className="font-semibold inline-block mx-4 font-light mt-2">{site.title}</a>
                             </Link>
                         ))}
 

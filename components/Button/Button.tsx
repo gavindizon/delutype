@@ -22,20 +22,26 @@ const Button: FC<Props> = ({
     leftIcon,
     rightIcon,
     className = "",
-    isFullWidth = false,
+    isFullWidth,
     isDisabled = false,
     onClick,
     type = "button",
     variant = "solid",
     loading = false,
 }) => {
-    className += ` rounded-md ${
-        variant === "danger"
+    className += `rounded-md font-bold py-3 flex items-center justify-center
+        ${ variant === "danger" 
             ? "bg-red-600 border-2 border-red-600 transition hover:bg-red-800 hover:border-red-800 text-white"
             : `btn--${variant}`
-    } uppercase py-2 ${isFullWidth ? "w-full" : "md:w-96 w-full"} ${
-        isDisabled ? "opacity-90 cursor-not-allowed" : ""
-    } flex items-center justify-center`;
+        } 
+        ${ isFullWidth 
+            ? "w-3/4" 
+            : "px-6"
+        }
+        ${ isDisabled 
+            ? "opacity-90 cursor-not-allowed" 
+            : ""
+        }`;
 
     const content = (
         <>
