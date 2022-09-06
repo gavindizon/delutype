@@ -58,6 +58,7 @@ const Login = () => {
         <div className="flex h-full flex-col justify-center items-center">
             <h1 className="font-extrabold text-center text-4xl mt-16 mb-4">
                 ty<span>ph</span>e
+
             </h1>
             <form
                 onSubmit={(e) => {

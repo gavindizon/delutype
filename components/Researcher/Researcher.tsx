@@ -25,7 +25,6 @@ const Researcher: FC<Props> = (values) => {
             />
         </div>
         <h3 className='font-medium text-lg text-center'>{values.name}</h3>
-
         <div className='flex justify-center space-x-4 text-2xl w-3/4'>
             <Fragment>
                 {values.linkedInURL && (

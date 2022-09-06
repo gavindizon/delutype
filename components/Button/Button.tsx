@@ -34,6 +34,7 @@ const Button: FC<Props> = ({
             ? "bg-red-600 border-2 border-red-600 transition hover:bg-red-800 hover:border-red-800 text-white"
             : `btn--${variant}`
         } 
+
         ${ isFullWidth
             ? "w-full" 
             : "px-6"
