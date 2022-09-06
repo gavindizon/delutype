@@ -159,7 +159,7 @@ const AuthMode: FC<Props> = ({ mode, status = "", setStatus, code }) => {
                                 <Button
                                     type="submit"
                                     isDisabled={!validateForm(validity)}
-                                    isFullWidth
+                                    isFullWidth={true}
                                     loading={loading}
                                     className="mt-8"
                                 >

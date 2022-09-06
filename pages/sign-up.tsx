@@ -79,7 +79,7 @@ const SignUp: FC<Props> = () => {
                             <Button
                                 type="submit"
                                 isDisabled={!validateForm(validity)}
-                                isFullWidth
+                                isFullWidth={true}
                                 loading={loading}
                                 className="mt-8"
                                 leftIcon={<IoPersonCircleSharp size={18} />}

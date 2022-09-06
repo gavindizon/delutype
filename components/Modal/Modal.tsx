@@ -45,7 +45,7 @@ const Modal: FC<Props> = ({ headerTitle, containerClassName }) => {
 
             <animated.div
                 style={containerStyle}
-                className={`modal ${containerClassName} z-[999] absolute top-1/2 left-1/2 rounded-sm`}
+                className={`modal ${containerClassName} z-[999] absolute top-1/2 left-1/2 rounded-lg`}
             >
                 <div className="relative">
                     <div className="absolute top-4 right-4">
