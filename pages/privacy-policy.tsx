@@ -17,7 +17,7 @@ const PrivacyPolicy: NextPage = () => {
                     Typhe is committed to protecting your privacy. This Privacy Policy explains how your personal
                     information will be collected, used, and disclosed by Typhe. This privacy policy applies to our
                     website,{" "}
-                    <Link href="typhe.io">
+                    <Link href="/">
                         <a className="text-blue-500 underline">typhe.io</a>
                     </Link>
                     , and its associated subdomains (collectively, our &quot;Service&quot;). By registering an account,
