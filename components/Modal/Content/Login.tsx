@@ -6,11 +6,15 @@ import { CgMail } from "react-icons/cg";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
 import Button from "../../../components/Button/Button";
+import Input from "../../../components/Form/Input";
 
 import general from "../../../data/general.json";
 import useLanguage from "../../../hooks/useLanguage";
 import useAuth from "../../../hooks/useAuth";
 import { useRouter } from "next/router";
+
+import form from "../../../data/signin.json";
+import { initializeFieldValues, initializeValidatorValues } from "../../../components/Form/utils/initializeFieldValues";
 
 interface LoginModel {
     email: string;
@@ -20,6 +24,9 @@ interface LoginModel {
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
+
+    const [sendLoginForm, setSendLoginForm] = useState(initializeFieldValues(form, false));
+    const [validity, setValidity] = useState(initializeValidatorValues(form, false));
 
     const auth = useAuth();
     const [loginForm, setLoginForm] = useState<LoginModel>({
@@ -50,54 +57,40 @@ const Login = () => {
     return (
         <div className="flex h-full flex-col justify-center items-center">
             <h1 className="font-extrabold text-center text-4xl mt-16 mb-4">
-                ty
-                <span>ph</span>e
+                ty<span>ph</span>e
             </h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleLogin(loginForm);
+                    console.log(sendLoginForm)
+                    handleLogin(sendLoginForm);
                 }}
+                className="flex flex-col w-11/12 items-center"
             >
-                <label htmlFor="email" className="w-full text-sm mb-2">
-                    Email:
-                </label>
-                <input
-                    type="text"
-                    placeholder="janedelacruz@typhe.io"
-                    className="w-full p-2 mb-4"
-                    onChange={(e) => {
-                        setError({ status: false, message: "" });
-                        setLoginForm({ ...loginForm, email: e.target.value });
-                    }}
-                    value={loginForm.email}
-                />
-                <label htmlFor="password" className="w-full text-sm mb-2">
-                    Password:
-                </label>
-                <input
-                    type="password"
-                    placeholder="*******"
-                    className="w-full p-2 mb-2"
-                    onChange={(e) => {
-                        setError({ status: false, message: "" });
-                        setLoginForm({ ...loginForm, password: e.target.value });
-                    }}
-                    value={loginForm.password}
-                />
+                {form.map((field: any) => (
+                    <Input
+                        key={field.name}
+                        {...field}
+                        validity={validity}
+                        setValidity={setValidity}
+                        fieldValues={sendLoginForm}
+                        setForm={setSendLoginForm}
+                        value={sendLoginForm[field.name]}
+                    />
+                ))}
                 {error?.status && (
                     <div className="w-full bg-red-500/70 border border-red-900 rounded-sm p-2">
                         <p className="text-left text-sm mb-2 text-red-900/100 ">{error.message}</p>
                     </div>
                 )}
                 <Link href="/forgot-password">
-                    <a className="text-xs font-semibold text-left w-full">Forgot Password?</a>
+                    <a className="text-xs font-semibold text-left w-full mt-1">Forgot Password?</a>
                 </Link>
                 <Button
                     type="submit"
-                    isFullWidth
-                    isDisabled={loginForm.email.trim() === "" || loginForm.password === ""}
-                    className="mt-4"
+                    isFullWidth={false}
+                    isDisabled={sendLoginForm.email === "" || sendLoginForm.password === ""}
+                    className="mt-8"
                     loading={loading}
                     leftIcon={<CgMail size={18} />}
                 >
@@ -108,23 +101,26 @@ const Login = () => {
             <div className="divider my-4">
                 <h6 className="text-sm">or</h6>
             </div>
-            <Button
-                isFullWidth
-                href={"/sign-in"}
-                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-                leftIcon={<FcGoogle size={18} />}
-            >
-                {genLang["sign-in-google"]}
-            </Button>
-            <Button
-                isFullWidth
-                href={"/sign-up"}
-                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-                className="mt-2 mb-8"
-                leftIcon={<IoPersonCircleSharp size={18} />}
-            >
-                {genLang["create-an-account"]}
-            </Button>
+            
+            <div className="flex flex-col items-center mb-8 gap-2 w-full w-11/12">
+                <Button
+                    isFullWidth
+                    href={"/sign-in"}
+                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    leftIcon={<FcGoogle size={18} />}
+                >
+                    {genLang["sign-in-google"]}
+                </Button>
+                <Button
+                    isFullWidth
+                    href={"/sign-up"}
+                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    className="mt-2 mb-8"
+                    leftIcon={<IoPersonCircleSharp size={18} />}
+                >
+                    {genLang["create-an-account"]}
+                </Button>
+            </div>
         </div>
     );
 };

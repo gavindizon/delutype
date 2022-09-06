@@ -29,19 +29,19 @@ const Button: FC<Props> = ({
     variant = "solid",
     loading = false,
 }) => {
-    className += `rounded-md font-bold py-3 flex items-center justify-center
+    className += ` font-bold py-3 flex items-center justify-center
         ${ variant === "danger" 
             ? "bg-red-600 border-2 border-red-600 transition hover:bg-red-800 hover:border-red-800 text-white"
             : `btn--${variant}`
         } 
-        ${ isFullWidth 
-            ? "w-3/4" 
+        ${ isFullWidth
+            ? "w-full" 
             : "px-6"
         }
         ${ isDisabled 
             ? "opacity-90 cursor-not-allowed" 
             : ""
-        }`;
+        } rounded-md `;
 
     const content = (
         <>

@@ -66,7 +66,7 @@ const Dashboard: FC<Props> = ({ user }) => {
 
                         setValidity(initializeValidatorValues(form));
                         setTestConfigForm(initializeFieldValues(form));
-                        router.push("/test");
+                        router.push("/test/calibration");
                     }}
                 >
                     {form.map((section: any, index: any) => {

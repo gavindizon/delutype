@@ -46,7 +46,7 @@ const SignUp: FC<Props> = () => {
                             your password.
                         </p>
                         <form
-                            className="w-full md:w-[640px] mb-32"
+                            className="flex flex-col w-full md:w-[640px] mb-32"
                             onSubmit={async (e) => {
                                 try {
                                     e.preventDefault();
@@ -72,12 +72,12 @@ const SignUp: FC<Props> = () => {
                             <Button
                                 type="submit"
                                 isDisabled={!validateForm(validity)}
-                                isFullWidth
+                                isFullWidth={false}
                                 loading={loading}
                                 className="mt-8"
                                 leftIcon={<IoPersonCircleSharp size={18} />}
                             >
-                                SEND EMAIL
+                                Send Email
                             </Button>
                         </form>
                     </div>

@@ -34,7 +34,6 @@ const Researcher: FC<Props> = (values) => {
                     </Link>
                 )}
             </Fragment>
-            
             <Fragment>
                 {values.githubURL && (
                     <Link href={values.githubURL}>
@@ -42,7 +41,6 @@ const Researcher: FC<Props> = (values) => {
                     </Link>
                 )}
             </Fragment>
-
             <Fragment>
                 {values.websiteURL && (
                     <Link href={values.websiteURL}>

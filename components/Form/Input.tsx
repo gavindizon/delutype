@@ -180,7 +180,7 @@ const Input: FC<Props> = ({
         case "password":
             return (
                 <>
-                    <div className="relative">
+                    <div className="relative w-full">
                         <label htmlFor={name} className="block text-left my-2">
                             {label}
                             {required && "*"}
@@ -211,7 +211,7 @@ const Input: FC<Props> = ({
                             required={required}
                         />
                         <button
-                            className="absolute z-50 top-1/2 right-0 mr-3 opacity-50"
+                            className="absolute z-50 right-0 mr-3 mt-3 opacity-50"
                             onClick={(e) => {
                                 e.preventDefault();
                                 setVisibility(!visibility);
@@ -229,7 +229,7 @@ const Input: FC<Props> = ({
         default:
             return (
                 <>
-                    <div className="relative">
+                    <div className="relative w-full">
                         <label htmlFor={name} className="block text-left my-2">
                             {label}
                             {required && "*"}
