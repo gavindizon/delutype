@@ -35,7 +35,7 @@ a {
 
 .divider::before {
     content: "";
-    width: 196px;
+    width: 180px;
     height: 0.6px;
     position: absolute;
     overflow: hidden;
@@ -51,7 +51,7 @@ a {
 
 .divider::after {
     content: "";
-    width: 196px;
+    width: 180px;
     overflow: hidden;
     height: 0.6px;
     position: absolute;
