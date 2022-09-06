@@ -55,7 +55,7 @@ const Calibration: NextPage = () => {
                     <CalibrationButton id="btn3" setRemaining={setRemaining}></CalibrationButton>
                 </div>
 
-                <div className="flex flex-row h-fit pt-96 w-full justify-between">
+                <div className="flex flex-row fixed top-1/2 items-center w-full justify-between">
                     <CalibrationButton id="btn4" setRemaining={setRemaining}></CalibrationButton>
 
                     <CalibrationButton id="btn5" hide={remaining > 1} setRemaining={setRemaining}></CalibrationButton>
@@ -63,7 +63,7 @@ const Calibration: NextPage = () => {
                     <CalibrationButton id="btn6" setRemaining={setRemaining}></CalibrationButton>
                 </div>
 
-                <div className="flex flex-row h-fit fixed bottom-10 w-full justify-around pl-56 xl:pl-12 2xl:pr-24">
+                <div className="flex flex-row h-fit fixed bottom-10 w-full justify-around pl-56 xl:pl-32 2xl:pr-24">
                     <CalibrationButton id="btn7" setRemaining={setRemaining}></CalibrationButton>
 
                     <CalibrationButton id="btn8" setRemaining={setRemaining}></CalibrationButton>

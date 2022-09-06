@@ -15,7 +15,7 @@ const Content: FC<Props> = ({ type }) => {
     switch (type.toUpperCase()) {
         case "NOTIFICATION":
           
-            return <NotificationModal name={state.modal.title} description={state.modal.description} redirectTo={state.modal.redirectTo} redirectToLabel={state.modal.redirectToLabel}/>
+            return <NotificationModal name={state.modal.title} description={state.modal.description} redirectTo={state.modal.redirectTo} redirectToLabel={state.modal.redirectToLabel} addOns={state.modal?.addOns}/>
         case "LOGIN":
         default:
             return <Login/>;

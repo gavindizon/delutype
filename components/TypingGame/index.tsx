@@ -2,6 +2,9 @@ import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 import { updateResult } from "../../redux/actions/result";
 import { useDispatch, useSelector } from "react-redux";
+import useAuth from "../../hooks/useAuth";
+import { serverTimestamp } from "firebase/firestore";
+import submitResults from "../Form/utils/submitResults";
 
 const TypingGame: FC<{ text: string }> = ({ text }) => {
   const [duration, setDuration] = useState(0);
@@ -11,6 +14,7 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
   const letterElements = useRef<HTMLDivElement>(null);
   const state = useSelector((state: any) => state);
   const dispatch = useDispatch();
+  const { user, logout } = useAuth();
 
   const {
     states: {
@@ -40,6 +44,61 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
     }
   }, [currIndex]);
 
+  async function checkEndGame() {
+    setDuration(Math.floor(((endTime || 0) - (startTime || 0)) / 1000));
+    setRunning(false);
+    window.removeEventListener("addGaze", addGazeCount);
+    let finalResults: object;
+    let reduxResults: object;
+    finalResults = {
+      wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
+      accuracy: (((correctChar - errorChar) / text.length) * 100).toFixed(
+        2
+      ),
+      consistency: 69,
+      time: time,
+      gazeCount: gazeCount,
+    };
+
+    reduxResults = {
+      wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
+      accuracy: (((correctChar - errorChar) / text.length) * 100).toFixed(
+        2
+      ),
+      consistency: 69,
+      time: time,
+      gazeCount: gazeCount,
+      username: user.displayName,
+    };
+    await submitResults(reduxResults);
+    
+    dispatch({ type: "UPDATE_RESULT", payload: finalResults });
+
+    dispatch({
+      type: "OPEN_MODAL",
+      payload: {
+        type: "NOTIFICATION",
+        title: "Test done!",
+        description:
+          "Thank you for finishing the typing test. Would you like to perform the test again?",
+        redirectTo: "/test",
+        redirectToLabel: "YES",
+        addOns: {
+          backTo: "/",
+          backToLabel: "BACK TO HOME",
+        },
+      },
+    });
+
+    setGazeCount(0);
+    resetTyping();
+    setListenerActivated(false);
+    setDuration(0);
+    setTime (0);
+    setIsFocused (false);
+    
+  }
+
   function addGazeCount() {
     setGazeCount((prev) => prev + 1);
   }
@@ -53,21 +112,9 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
     };
   }, []);
 
-  //set WPM
   useEffect(() => {
     if (phase === 2 && endTime && startTime) {
-      setDuration(Math.floor((endTime - startTime) / 1000));
-      setRunning(false);
-      window.removeEventListener("addGaze", addGazeCount);
-      let finalResults : object;
-      finalResults = {
-        wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
-        accuracy: ((correctChar - errorChar) /text.length* 100).toFixed(2),
-        consistency: 69,
-        time: time
-      };
-      dispatch({ type: "UPDATE_RESULT", payload: finalResults });
-      
+      checkEndGame();
     } else {
       setDuration(0);
     }
@@ -113,7 +160,7 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
           handleKeyDown(e.key, e.ctrlKey);
           setRunning(true);
         }}
-        //onFocus={() => setIsFocused(true)}
+        onFocus={() => setIsFocused(true)}
         //  onBlur={() => setIsFocused(false)}
         className="typing-test relative"
       >
@@ -138,8 +185,8 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
               state === 0
                 ? "text-gray-700"
                 : state === 1
-                  ? "text-gray-400"
-                  : "text-red-500";
+                ? "text-gray-400"
+                : "text-red-500";
             return (
               <span key={letter + index} className={`${color}`}>
                 {letter}
