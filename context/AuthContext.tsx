@@ -11,7 +11,11 @@ import {
     applyActionCode,
     confirmPasswordReset,
     sendPasswordResetEmail,
+    GoogleAuthProvider,
+    getAuth,
+    signInWithRedirect,
 } from "firebase/auth";
+
 import axios, { AxiosError } from "axios";
 import { FirebaseError } from "firebase/app";
 
@@ -21,10 +25,10 @@ import { useDispatch } from "react-redux";
 export const AuthContext = createContext<any>({});
 
 export function AuthProvider({ children }: any) {
-    const dispatch = useDispatch();
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         return auth.onIdTokenChanged(async (user) => {
@@ -76,6 +80,22 @@ export function AuthProvider({ children }: any) {
         await sendEmailVerification(user);
         nookies.destroy(undefined, "token");
         setUser(null);
+    };
+
+    const loginWithGoogle = async (languageCode: string = "en") => {
+        try {
+            const provider = new GoogleAuthProvider();
+            provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+
+            auth.languageCode = languageCode;
+
+            console.log(auth.languageCode);
+
+            await signInWithRedirect(auth, provider);
+            return { type: "success" };
+        } catch (error) {
+            return { type: "error", error };
+        }
     };
 
     const login = async (email: string, password: string) => {
@@ -145,6 +165,7 @@ export function AuthProvider({ children }: any) {
                 user,
                 signup,
                 login,
+                loginWithGoogle,
                 logout,
                 loading,
                 isLoggingIn,

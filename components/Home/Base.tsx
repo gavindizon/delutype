@@ -30,9 +30,7 @@ const Base: FC<Props> = ({ dispatch }) => {
                         <span>ph</span>e
                     </h1>
                     <p className="font-light text-lg tracking-normal">{pageLang.hero.subtitle}</p>
-                    <Button href={"/about"} >
-                        {genLang["learn-more"]}
-                    </Button>
+                    <Button href={"/about"}>{genLang["learn-more"]}</Button>
                 </div>
                 <div className="flex flex-col items-center w-full lg:w-5/12 mt-8 lg:items-end gap-4">
                     <Button
@@ -42,16 +40,10 @@ const Base: FC<Props> = ({ dispatch }) => {
                     >
                         {genLang["sign-in-email"]}
                     </Button>
-                    <Button 
-                        href={"/sign-in"} 
-                        leftIcon={<FcGoogle size={18} />}
-                        isFullWidth={true}>
+                    <Button onClick={() => {}} leftIcon={<FcGoogle size={18} />} isFullWidth={true}>
                         {genLang["sign-in-google"]}
                     </Button>
-                    <Button 
-                        href={"/sign-up"} 
-                        leftIcon={<IoPersonCircleSharp size={18} />}
-                        isFullWidth={true}>
+                    <Button href={"/sign-up"} leftIcon={<IoPersonCircleSharp size={18} />} isFullWidth={true}>
                         {genLang["create-an-account"]}
                     </Button>
                 </div>
