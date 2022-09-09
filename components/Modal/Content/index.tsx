@@ -14,11 +14,20 @@ const Content: FC<Props> = ({ type }) => {
     const state = useSelector((state: any) => state);
     switch (type.toUpperCase()) {
         case "NOTIFICATION":
-          
-            return <NotificationModal name={state.modal.title} description={state.modal.description} redirectTo={state.modal.redirectTo} redirectToLabel={state.modal.redirectToLabel} addOns={state.modal?.addOns}/>
+            return (
+                <NotificationModal
+                    name={state.modal.title}
+                    description={state.modal.description}
+                    redirectTo={state.modal.redirectTo}
+                    redirectToLabel={state.modal.redirectToLabel}
+                    redirectAction={state.modal.redirectAction}
+                    addOns={state.modal?.addOns}
+                    insertDescriptionAsHTML={state.modal?.insertDescriptionAsHTML}
+                />
+            );
         case "LOGIN":
         default:
-            return <Login/>;
+            return <Login />;
     }
 };
 

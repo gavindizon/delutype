@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import nookies from "nookies";
 import { auth } from "../services/firebase/firebaseClient";
 import {
@@ -25,6 +26,7 @@ import { useDispatch } from "react-redux";
 export const AuthContext = createContext<any>({});
 
 export function AuthProvider({ children }: any) {
+    const router = useRouter();
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -40,21 +42,24 @@ export function AuthProvider({ children }: any) {
                         setUser(null);
                     } else {
                         const { data } = await axios.post("/api/verify", { token });
-
+                        if (!data.user.providerData && router.pathname !== "/profile") return router.push("/profile");
                         setUser({
                             email: data.user.email,
                             uid: data.user.uid,
-                            displayName: data.user.providerData[0].displayName,
-                            photoUrl: data.user.providerData[0].photoURL,
+                            displayName:
+                                (data.user.providerData && data.user.providerData[0]?.displayName) || data.user.name,
+                            photoUrl:
+                                (data.user.providerData && data.user.providerData[0]?.photoURL) || data.user.picture,
                         });
                     }
                 } else {
                     const token = await user.getIdToken(true);
+
                     setUser({
                         email: user.email,
                         uid: user.uid,
-                        displayName: user.providerData[0].displayName,
-                        photoUrl: user.providerData[0].photoURL,
+                        displayName: (user.providerData && user.providerData[0]?.displayName) || user.email,
+                        photoUrl: (user.providerData && user.providerData[0]?.photoURL) || user.photoURL,
                     });
                     nookies.set(undefined, "token", token);
                 }
@@ -89,9 +94,8 @@ export function AuthProvider({ children }: any) {
 
             auth.languageCode = languageCode;
 
-            console.log(auth.languageCode);
+            signInWithRedirect(auth, provider);
 
-            await signInWithRedirect(auth, provider);
             return { type: "success" };
         } catch (error) {
             return { type: "error", error };

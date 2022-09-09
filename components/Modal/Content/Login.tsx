@@ -111,11 +111,25 @@ const Login = () => {
             <div className="flex flex-col items-center mb-8 gap-2 w-11/12">
                 <Button
                     isFullWidth
-                    onClick={async () => {
-                        dispatch({ type: "CLOSE_MODAL" });
-                        console.log("Test", lang);
-                        await loginWithGoogle(lang);
-                        console.log("Test", lang);
+                    onClick={() => {
+                        dispatch({
+                            type: "OPEN_MODAL",
+                            payload: {
+                                type: "NOTIFICATION",
+                                title: genLang["your-consent"],
+                                description: genLang["privacy-google"],
+                                insertDescriptionAsHTML: true,
+                                redirectTo: "/",
+                                redirectToLabel: genLang["i-agree"],
+                                redirectAction: () => {
+                                    loginWithGoogle(lang);
+                                },
+                                addOns: {
+                                    backTo: "/",
+                                    backToLabel: genLang["go-back"],
+                                },
+                            },
+                        });
                     }}
                     leftIcon={<FcGoogle size={18} />}
                 >

@@ -11,12 +11,14 @@ import useLanguage from "../../hooks/useLanguage";
 
 import home from "../../data/home.json";
 import general from "../../data/general.json";
+import useAuth from "../../hooks/useAuth";
 
 type Props = {
     dispatch: Dispatch;
 };
 
 const Base: FC<Props> = ({ dispatch }) => {
+    const { loginWithGoogle } = useAuth();
     const lang = useLanguage();
     const genLang = general[lang as keyof typeof general];
     const pageLang = home[lang as keyof typeof home];
@@ -40,7 +42,30 @@ const Base: FC<Props> = ({ dispatch }) => {
                     >
                         {genLang["sign-in-email"]}
                     </Button>
-                    <Button onClick={() => {}} leftIcon={<FcGoogle size={18} />} isFullWidth={true}>
+                    <Button
+                        onClick={() => {
+                            dispatch({
+                                type: "OPEN_MODAL",
+                                payload: {
+                                    type: "NOTIFICATION",
+                                    title: genLang["your-consent"],
+                                    description: genLang["privacy-google"],
+                                    insertDescriptionAsHTML: true,
+                                    redirectTo: "/",
+                                    redirectToLabel: genLang["i-agree"],
+                                    redirectAction: () => {
+                                        loginWithGoogle(lang);
+                                    },
+                                    addOns: {
+                                        backTo: "/",
+                                        backToLabel: genLang["go-back"],
+                                    },
+                                },
+                            });
+                        }}
+                        leftIcon={<FcGoogle size={18} />}
+                        isFullWidth={true}
+                    >
                         {genLang["sign-in-google"]}
                     </Button>
                     <Button href={"/sign-up"} leftIcon={<IoPersonCircleSharp size={18} />} isFullWidth={true}>
