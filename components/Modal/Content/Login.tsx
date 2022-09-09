@@ -24,15 +24,13 @@ interface LoginModel {
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
+    const { loginWithGoogle } = useAuth();
 
     const [sendLoginForm, setSendLoginForm] = useState(initializeFieldValues(form, false));
     const [validity, setValidity] = useState(initializeValidatorValues(form, false));
 
     const auth = useAuth();
-    const [loginForm, setLoginForm] = useState<LoginModel>({
-        email: "",
-        password: "",
-    });
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ status: false, message: "" });
 
@@ -58,12 +56,10 @@ const Login = () => {
         <div className="flex h-full flex-col justify-center items-center">
             <h1 className="font-extrabold text-center text-4xl mt-16 mb-4">
                 ty<span>ph</span>e
-
             </h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    console.log(sendLoginForm)
                     handleLogin(sendLoginForm);
                 }}
                 className="flex flex-col w-11/12 items-center"
@@ -85,11 +81,20 @@ const Login = () => {
                     </div>
                 )}
                 <Link href="/forgot-password">
-                    <a className="text-xs font-semibold text-left w-full mt-1">Forgot Password?</a>
+                    <a
+                        className="text-xs font-semibold text-left w-full mt-1"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            dispatch({ type: "CLOSE_MODAL" });
+                            router.push("/forgot-password", undefined, { shallow: true });
+                        }}
+                    >
+                        Forgot Password?
+                    </a>
                 </Link>
                 <Button
                     type="submit"
-                    isFullWidth={false}
+                    isFullWidth
                     isDisabled={sendLoginForm.email === "" || sendLoginForm.password === ""}
                     className="mt-8"
                     loading={loading}
@@ -102,12 +107,30 @@ const Login = () => {
             <div className="divider my-4">
                 <h6 className="text-sm">or</h6>
             </div>
-            
-            <div className="flex flex-col items-center mb-8 gap-2 w-full w-11/12">
+
+            <div className="flex flex-col items-center mb-8 gap-2 w-11/12">
                 <Button
                     isFullWidth
-                    href={"/sign-in"}
-                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    onClick={() => {
+                        dispatch({
+                            type: "OPEN_MODAL",
+                            payload: {
+                                type: "NOTIFICATION",
+                                title: genLang["your-consent"],
+                                description: genLang["privacy-google"],
+                                insertDescriptionAsHTML: true,
+                                redirectTo: "/",
+                                redirectToLabel: genLang["i-agree"],
+                                redirectAction: () => {
+                                    loginWithGoogle(lang);
+                                },
+                                addOns: {
+                                    backTo: "/",
+                                    backToLabel: genLang["go-back"],
+                                },
+                            },
+                        });
+                    }}
                     leftIcon={<FcGoogle size={18} />}
                 >
                     {genLang["sign-in-google"]}

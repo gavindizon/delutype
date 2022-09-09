@@ -11,12 +11,14 @@ import useLanguage from "../../hooks/useLanguage";
 
 import home from "../../data/home.json";
 import general from "../../data/general.json";
+import useAuth from "../../hooks/useAuth";
 
 type Props = {
     dispatch: Dispatch;
 };
 
 const Base: FC<Props> = ({ dispatch }) => {
+    const { loginWithGoogle } = useAuth();
     const lang = useLanguage();
     const genLang = general[lang as keyof typeof general];
     const pageLang = home[lang as keyof typeof home];
@@ -30,9 +32,7 @@ const Base: FC<Props> = ({ dispatch }) => {
                         <span>ph</span>e
                     </h1>
                     <p className="font-light text-lg tracking-normal">{pageLang.hero.subtitle}</p>
-                    <Button href={"/about"} >
-                        {genLang["learn-more"]}
-                    </Button>
+                    <Button href={"/about"}>{genLang["learn-more"]}</Button>
                 </div>
                 <div className="flex flex-col items-center w-full lg:w-5/12 mt-8 lg:items-end gap-4">
                     <Button
@@ -42,16 +42,33 @@ const Base: FC<Props> = ({ dispatch }) => {
                     >
                         {genLang["sign-in-email"]}
                     </Button>
-                    <Button 
-                        href={"/sign-in"} 
+                    <Button
+                        onClick={() => {
+                            dispatch({
+                                type: "OPEN_MODAL",
+                                payload: {
+                                    type: "NOTIFICATION",
+                                    title: genLang["your-consent"],
+                                    description: genLang["privacy-google"],
+                                    insertDescriptionAsHTML: true,
+                                    redirectTo: "/",
+                                    redirectToLabel: genLang["i-agree"],
+                                    redirectAction: () => {
+                                        loginWithGoogle(lang);
+                                    },
+                                    addOns: {
+                                        backTo: "/",
+                                        backToLabel: genLang["go-back"],
+                                    },
+                                },
+                            });
+                        }}
                         leftIcon={<FcGoogle size={18} />}
-                        isFullWidth={true}>
+                        isFullWidth={true}
+                    >
                         {genLang["sign-in-google"]}
                     </Button>
-                    <Button 
-                        href={"/sign-up"} 
-                        leftIcon={<IoPersonCircleSharp size={18} />}
-                        isFullWidth={true}>
+                    <Button href={"/sign-up"} leftIcon={<IoPersonCircleSharp size={18} />} isFullWidth={true}>
                         {genLang["create-an-account"]}
                     </Button>
                 </div>

@@ -8,14 +8,13 @@ const initialState: Object = {
     description: "",
     redirectTo: "",
     redicrectToLabel: "",
-    addOns: {}
+    addOns: {},
 };
 
 const modalReducer = (state: Object = initialState, action: AnyAction) => {
     switch (action.type) {
         case OPEN_MODAL:
-            console.log (action.payload)
-            return { isActive: true, ...action.payload};
+            return { isActive: true, ...action.payload };
         case CLOSE_MODAL:
             return { ...state, isActive: false };
         default:
