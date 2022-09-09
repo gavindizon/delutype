@@ -6,6 +6,9 @@ const path = require("path");
 
 const nextConfig = {
     reactStrictMode: true,
+    images: {
+        domains: ["lh3.googleusercontent.com"],
+    },
     swcMinify: true,
     sassOptions: {
         includePaths: [path.join(__dirname, "styles")],

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import sitemap from "../../../data/sitemap.json";
 import { useRouter } from "next/router";
 import useAuth from "../../../hooks/useAuth";
@@ -49,7 +50,21 @@ const Navigation : FC<Props> = ({ lang, active }) => {
                 {user ? (
                     <div className={`relative ${styles["navProfile"]}`}>
                         <div className="flex flex-row items-center my-4 ">
-                            <div className="mr-2">{user.photoUrl ? <></> : <IoPersonCircleSharp size={32} />}</div>
+                            <div className="mr-2">
+                                {user.photoUrl ? (
+                                    <div className="w-8 h-8 relative rounded-full overflow-hidden mr-1">
+                                        <Image
+                                            src={user.photoUrl}
+                                            alt={user.displayName}
+                                            layout="fill"
+                                            objectFit="contain"
+                                            objectPosition={"center"}
+                                        />
+                                    </div>
+                                ) : (
+                                    <IoPersonCircleSharp size={32} />
+                                )}
+                            </div>
 
                             <Link href="/profile">
                                 <a className={styles["navUserInfo"]}>
@@ -82,8 +97,7 @@ const Navigation : FC<Props> = ({ lang, active }) => {
                     <div className="my-4">
                         {sitemap.map((site) => (
                             <Link href={site.path} key={site.path}>
-                                <a className="font-semibold  mx-4 font-light mt-2  hidden md:inline-block">{site.title}</a>
-                            </Link>
+                                <a className="font-semibold  mx-4 font-light mt-2  hidden md:inline-block">{site.title}</a>                            </Link>
                         ))}
 
                         <div className="select-wrapper">

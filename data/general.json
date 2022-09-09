@@ -3,12 +3,22 @@
         "learn-more": "Learn More",
         "sign-in-email": "Sign-in with Email",
         "sign-in-google": "Sign-in with Google",
-        "create-an-account": "Create an Account"
+        "create-an-account": "Create an Account",
+        "your-consent": "Your Consent",
+        "privacy-email": "By registering an account, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>.",
+        "privacy-google": "By signing in with Google, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>.",
+        "i-agree": "I Agree",
+        "go-back": "Go Back"
     },
     "fil": {
         "learn-more": "Matuto Pa",
         "sign-in-email": "Magsign-in gamit Sulatroniko",
         "sign-in-google": "Magsign-in gamit Google",
-        "create-an-account": "Gumawa ng Akawnt"
+        "create-an-account": "Gumawa ng Akawnt",
+        "your-consent": "Ang iyong Pahintulot",
+        "privacy-email": "Sa pagrehistro ng akawnt, binibigyan mo ng pahintulot ang typhe at sumasang-ayon ka sa kanilang <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Patakaran sa Privacy</a>.",
+        "privacy-google": "Sa pagsign-in gamit ang Google, binibigyan mo ng pahintulot ang typhe at sumasang-ayon ka sa kanilang <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Patakaran sa Privacy</a>.",
+        "i-agree": "Sumasang-ayon ako",
+        "go-back": "Bumalik"
     }
 }
