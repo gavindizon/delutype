@@ -62,7 +62,7 @@
                 "label": "Password",
                 "required": true,
                 "type": "password",
-                "placeholder": "*********",
+                "placeholder": "••••••••",
                 "validation": {
                     "min": 8,
                     "max": 20
@@ -73,7 +73,7 @@
                 "label": "Confirm Password",
                 "required": true,
                 "type": "password",
-                "placeholder": "*********",
+                "placeholder": "••••••••",
                 "validation": {
                     "matchesWith": "password"
                 }
