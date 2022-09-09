@@ -6,13 +6,18 @@ import { useRouter } from "next/router";
 import useAuth from "../../../hooks/useAuth";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import styles from "./navigation.module.scss";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { FaTimes } from "react-icons/fa";
+import NavItemMobile from "./NavItem/NavItemMobile";
+
 type Props = {
     lang: string;
+    active?: any;
 };
 
-const Navigation: FC<Props> = ({ lang }) => {
+const Navigation : FC<Props> = ({ lang, active }) => {
     const [scrollTop, setScrollTop] = useState(0);
-
+    const [sidebar, toggleSidebar] = useState(false);
     const router = useRouter();
     const { user, logout } = useAuth();
 
@@ -68,7 +73,7 @@ const Navigation: FC<Props> = ({ lang }) => {
                                 </a>
                             </Link>
                             <div
-                                className={`hidden w-4/5 shadow-xl rounded-sm  absolute top-0 right-0 mt-14 card ${styles["navDropdown"]}`}
+                                className={`hidden w-4/5 shadow-xl rounded-sm  absolute top-0 right-0 mt-14 card ${styles["navDropdown"]} `}
                             >
                                 <Link href="/">
                                     <a className="px-2 py-1 block">Home</a>
@@ -92,8 +97,7 @@ const Navigation: FC<Props> = ({ lang }) => {
                     <div className="my-4">
                         {sitemap.map((site) => (
                             <Link href={site.path} key={site.path}>
-                                <a className="font-semibold inline-block mx-4 mt-2">{site.title}</a>
-                            </Link>
+                                <a className="font-semibold  mx-4 font-light mt-2  hidden md:inline-block">{site.title}</a>                            </Link>
                         ))}
 
                         <div className="select-wrapper">
@@ -113,7 +117,39 @@ const Navigation: FC<Props> = ({ lang }) => {
                         </div>
                     </div>
                 )}
+
+<div className="block md:hidden">
+            <GiHamburgerMenu  size="32px"
+            className="lead-7"
+            color="gray"
+            onClick={() => toggleSidebar(true)}
+           />
+           <div className={`fixed transition-all w-full h-full top-0 flex flex-col justify-center ease-in-out duration-300 sidebar`}
+            style={{
+            left: sidebar ? "0" : "100%",
+            }}
+            >
+              <FaTimes
+              size="32px"
+              color="gray"
+              className="absolute right-0 top-0 mr-4 mt-4"
+              onClick={() => toggleSidebar(false)}
+            />
+             <ul className="list-none w-full block">
+              {sitemap.map((item, index) => (
+                <NavItemMobile 
+                 active={index == active }
+                  key={index}
+                  name={item.title}
+                  link={item.path}
+                />
+              ))}
+           
+            </ul>   
+           </div>
+           </div>
             </nav>
+          
         </header>
     );
 };
