@@ -90,10 +90,8 @@ export function AuthProvider({ children }: any) {
     const loginWithGoogle = async (languageCode: string = "en") => {
         try {
             const provider = new GoogleAuthProvider();
-            provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
 
             auth.languageCode = languageCode;
-
             signInWithRedirect(auth, provider);
 
             return { type: "success" };
