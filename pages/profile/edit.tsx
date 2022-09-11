@@ -42,21 +42,27 @@ const EditProfile: NextPage = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const snapshot = (await getDocument(
-                "users",
-                "email",
-                user.email,
-                false
-            )) as QueryDocumentSnapshot<DocumentData>;
-            if (snapshot) setHasDocument(true);
-            setEditProfileForm((values: any) => {
-                return { ...values, ...snapshot?.data(), email: user.email, id: snapshot?.id };
-            });
+            try {
+                if (user?.email) {
+                    const snapshot = (await getDocument(
+                        "users",
+                        "email",
+                        user.email,
+                        false
+                    )) as QueryDocumentSnapshot<DocumentData>;
+                    if (snapshot) setHasDocument(true);
+                    setEditProfileForm((values: any) => {
+                        return { ...values, ...snapshot?.data(), email: user.email, id: snapshot?.id };
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+            }
         };
 
         fetchUserData();
         //eslint-disable-next-line
-    }, []);
+    }, [user]);
     const genLang = general[lang as keyof typeof general];
     let data = [];
 
