@@ -35,6 +35,12 @@ export function AuthProvider({ children }: any) {
             try {
                 const result = await getRedirectResult(auth);
                 if (result?.providerId === "google.com") {
+                    setUser({
+                        email: result.user.email,
+                        photoURL: result.user.photoURL,
+                        displayName: result.user.displayName,
+                        uid: result.user.uid,
+                    });
                     setProvider("google");
                     setIsLoggingIn(true);
                     let snapshot = await getDocs(
@@ -60,7 +66,6 @@ export function AuthProvider({ children }: any) {
                         setUser((user: any) => {
                             return { ...user, isProfileUnfinished: true };
                         });
-                        router.push("/profile/edit");
                     }
                     setIsLoggingIn(false);
 

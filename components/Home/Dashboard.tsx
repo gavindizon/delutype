@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
-import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Form/Input";
 import Button from "../../components/Button/Button";
 import Image from "next/image";
@@ -25,9 +24,6 @@ const Dashboard: FC<Props> = ({ user }) => {
     const [testConfigForm, setTestConfigForm] = useState(initializeFieldValues(form));
     const [validity, setValidity] = useState(initializeValidatorValues(form));
     const [loading, setLoading] = useState(false);
-
-    const lang = useLanguage();
-    const { signup } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
@@ -59,7 +55,9 @@ const Dashboard: FC<Props> = ({ user }) => {
                         <IoPersonCircleSharp size={128} />
                     )}
                 </div>
-                <h2 className="text-3xl text-bold">{user.displayName || user.email.split("@")[0]}</h2>
+                {(user?.displayName || user?.email) && (
+                    <h2 className="text-3xl text-bold">{user.displayName || user.email.split("@")[0]}</h2>
+                )}
                 <div className="my-4 flex md:flex-row flex-col  md:space-x-4 space-y-4 md:space-y-0 w-full md:w-auto">
                     <Button href="/profile/edit" rightIcon={<FaEdit size={18} />}>
                         Edit Account
