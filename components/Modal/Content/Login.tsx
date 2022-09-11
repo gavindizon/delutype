@@ -24,12 +24,10 @@ interface LoginModel {
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { loginWithGoogle } = useAuth();
+    const { loginWithGoogle, login, setIsLoggingIn, setUser, setProvider } = useAuth();
 
     const [sendLoginForm, setSendLoginForm] = useState(initializeFieldValues(form, false));
     const [validity, setValidity] = useState(initializeValidatorValues(form, false));
-
-    const auth = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ status: false, message: "" });
@@ -42,7 +40,9 @@ const Login = () => {
             setError({ status: false, message: "" });
             setLoading(true);
             if (email.trim() === "" || password === "") throw new Error("Error: Please input your email and password");
-            const response: any = await auth.login(email, password);
+            const response: any = await login(email, password, setIsLoggingIn, dispatch, setUser, setProvider);
+            setSendLoginForm(initializeFieldValues(form, false));
+
             if (response?.type === "error") throw new Error(response?.message);
             router.push("/");
         } catch (e: any) {

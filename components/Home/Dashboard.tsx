@@ -61,7 +61,9 @@ const Dashboard: FC<Props> = ({ user }) => {
                 </div>
                 <h2 className="text-3xl text-bold">{user.displayName || user.email.split("@")[0]}</h2>
                 <div className="my-4 flex md:flex-row flex-col  md:space-x-4 space-y-4 md:space-y-0 w-full md:w-auto">
-                    <Button rightIcon={<FaEdit size={18} />}>Edit Account</Button>
+                    <Button href="/profile/edit" rightIcon={<FaEdit size={18} />}>
+                        Edit Account
+                    </Button>
                     <Button variant="danger" rightIcon={<FaTrash size={18} color="white" />}>
                         Delete Account
                     </Button>
@@ -111,16 +113,19 @@ const Dashboard: FC<Props> = ({ user }) => {
                 <h2 className="text-3xl font-semibold mb-4">History</h2>
 
                 <table className="w-full">
-                    <tr>
-                        <th>#</th>
-                        <th>Layout</th>
-                        <th>WPM</th>
-                        <th>Accuracy</th>
-                        <th>Consistency</th>
-                        <th>Duration</th>
-                        <th>Datetime</th>
-                    </tr>
-                    {/* <tr>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Layout</th>
+                            <th>WPM</th>
+                            <th>Accuracy</th>
+                            <th>Consistency</th>
+                            <th>Duration</th>
+                            <th>Datetime</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* <tr>
                     <td>1</td>
                     <td>QWERTY</td>
                     <td>123</td>
@@ -138,6 +143,7 @@ const Dashboard: FC<Props> = ({ user }) => {
                     <td>132s</td>
                     <td>{new Date().toUTCString()}</td>
                 </tr> */}
+                    </tbody>
                 </table>
                 <p className="text-center my-4">No data found yet. Try starting a test.</p>
             </div>

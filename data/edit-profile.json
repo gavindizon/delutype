@@ -17,13 +17,9 @@
             {
                 "name": "email",
                 "label": "Email",
-                "required": true,
                 "type": "email",
                 "placeholder": "janedelacruz@typhe.io",
-                "validation": {
-                    "email": true,
-                    "unique": true
-                }
+                "disabled": true
             },
             {
                 "name": "firstName",
@@ -58,8 +54,15 @@
         "title": "Password",
         "fields": [
             {
-                "name": "password",
-                "label": "Password",
+                "name": "oldPassword",
+                "label": "Old Password",
+                "required": true,
+                "type": "password",
+                "placeholder": "••••••••"
+            },
+            {
+                "name": "newPassword",
+                "label": "New Password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••",
@@ -69,8 +72,8 @@
                 }
             },
             {
-                "name": "confirmPassword",
-                "label": "Confirm Password",
+                "name": "confirmNewPassword",
+                "label": "Confirm New Password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••",

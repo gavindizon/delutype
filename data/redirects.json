@@ -1,0 +1,5 @@
+{
+    "authenticated": ["/sign-up", "/forgot-password"],
+    "unauthenticated": ["/profile", "/profile/edit", "/test", "/test/calibration"],
+    "profileNotFinished": ["/test", "/test/calibration"]
+}

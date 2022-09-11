@@ -49,7 +49,6 @@ const SignUp: FC<Props> = () => {
                             onSubmit={async (e) => {
                                 try {
                                     e.preventDefault();
-
                                     await handleSignUpSubmit(signUpForm, signup, setLoading);
                                     router.push("?status=success", undefined, { shallow: false });
                                 } catch (err) {

@@ -25,8 +25,8 @@ const Base: FC<Props> = ({ dispatch }) => {
 
     return (
         <section className="flex justify-center">
-            <div className="h-screen w-3/4 flex flex-col max-w-5xl space-y-20 justify-center items-center relative lg:flex-row lg:justify-between lg:w-5/6 lg:space-y-0">
-                <div className="flex flex-col w-full space-y-8 items-center text-center lg:items-start lg:text-left lg:w-5/12 items-center">
+            <div className="h-screen w-3/4 flex mt-16 md:mt-0 flex-col max-w-5xl space-y-20 justify-center items-center relative lg:flex-row lg:justify-between lg:w-5/6 lg:space-y-0">
+                <div className="flex flex-col w-full space-y-8 text-center lg:items-start lg:text-left lg:w-5/12 items-center">
                     <h1 className="font-extrabold text-7xl">
                         ty
                         <span>ph</span>e

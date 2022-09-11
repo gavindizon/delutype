@@ -6,15 +6,12 @@ const initialState: Object = {
     accuracy: 0,
     consistency: 0,
     time: 0,
-    createdAtTime: ""
+    createdAtTime: "",
 };
 
 const resultReducer = (state: Object = initialState, action: PayloadAction<any, string>) => {
     switch (action.type) {
         case UPDATE_RESULT:
-            console.log(state);
-            console.log(action);
-
             return {
                 ...state,
                 wpm: action.payload.wpm,

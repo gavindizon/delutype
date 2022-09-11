@@ -54,6 +54,7 @@ export default async function validator(
                 );
                 const result: QueryDocumentSnapshot<DocumentData>[] = [];
                 querySnapshot.forEach((snapshot) => {
+                    snapshot.data();
                     result.push(snapshot);
                 });
                 if (result.length > 0) {
@@ -63,10 +64,6 @@ export default async function validator(
                 break;
         }
     }
-
-    //  Object.keys(validatorObject).forEach(async (key: string) => {
-
-    // });
 
     return messages;
 }
