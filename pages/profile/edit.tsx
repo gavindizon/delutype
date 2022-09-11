@@ -43,7 +43,7 @@ const EditProfile: NextPage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                if (user.email) {
+                if (user?.email) {
                     const snapshot = (await getDocument(
                         "users",
                         "email",
@@ -62,7 +62,7 @@ const EditProfile: NextPage = () => {
 
         fetchUserData();
         //eslint-disable-next-line
-    }, []);
+    }, [user]);
     const genLang = general[lang as keyof typeof general];
     let data = [];
 
