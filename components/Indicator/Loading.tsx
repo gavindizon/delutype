@@ -6,15 +6,15 @@ type Props = {
 
 const Loading: FC<Props> = ({ size = "md" }) => {
     const convertSize = {
-        sm: 2,
-        md: 5,
-        lg: 8,
-        xl: 12,
-        "2xl": 24,
+        sm: "w-2 h-2",
+        md: "w-5 h-5",
+        lg: "w-8 h-8",
+        xl: "w-12 h-12",
+        "2xl": "w-24 h-24",
     };
 
     return (
-        <svg className={`animate-spin h-${convertSize[size]} w-${convertSize[size]} my-1`} viewBox="0 0 24 24">
+        <svg className={`animate-spin ${convertSize[size]} my-1`} viewBox="0 0 24 24">
             <circle
                 className="opacity-25"
                 cx="12"

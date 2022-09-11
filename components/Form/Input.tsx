@@ -14,6 +14,7 @@ type Props = {
     options?: Array<any>;
     placeholder?: string;
     required?: boolean;
+    disabled?: boolean;
     validation?: any;
     fieldValues?: any;
     insertAsHTML?: boolean;
@@ -33,6 +34,7 @@ const Input: FC<Props> = ({
     validity,
     setValidity,
     insertAsHTML = false,
+    disabled = false,
 }) => {
     const [visibility, setVisibility] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -99,6 +101,8 @@ const Input: FC<Props> = ({
                                     type="checkbox"
                                     name={opt.name}
                                     title={opt.name}
+                                    disabled={disabled}
+                                    checked={fieldValues[name].includes(opt.name)}
                                     className="mr-2"
                                     onChange={async (e) => {
                                         let values = fieldValues[name];
@@ -148,6 +152,8 @@ const Input: FC<Props> = ({
                                     name={name}
                                     title={name}
                                     value={opt}
+                                    checked={fieldValues[name] === opt}
+                                    disabled={disabled}
                                     className="mr-2"
                                     onChange={async (e) => {
                                         setForm({ ...fieldValues, [name]: e.target.value });
@@ -227,6 +233,8 @@ const Input: FC<Props> = ({
             );
 
         default:
+            if (type === "date" && typeof value?.toDate === "function")
+                value = new Intl.DateTimeFormat("en-CA").format(value.toDate());
             return (
                 <>
                     <div className="relative w-full">
@@ -238,11 +246,15 @@ const Input: FC<Props> = ({
                             type={type}
                             name={name}
                             value={value}
-                            className="rounded-sm w-full text p-2 mb-2"
+                            disabled={disabled}
+                            className={`rounded-sm w-full text p-2 mb-2 disabled:cursor-not-allowed`}
                             placeholder={placeholder}
                             onChange={async (e) => {
                                 e.preventDefault();
-                                setForm({ ...fieldValues, [name]: e.target.value });
+                                setForm({
+                                    ...fieldValues,
+                                    [name]: e.target.value,
+                                });
                                 (validation || required) &&
                                     setMessage(
                                         await validator(

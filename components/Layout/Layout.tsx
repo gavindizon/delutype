@@ -7,6 +7,7 @@ import Modal from "../Modal/Modal";
 import { AnyAction, CombinedState, Dispatch } from "redux";
 import { GetServerSideProps } from "next";
 import axios from "axios";
+import AuthGuard from "../Auth/AuthGuard";
 
 type Props = {
     children: React.ReactNode;
@@ -24,7 +25,9 @@ const Layout: FC<Props> = ({ children, title, description, lang }) => {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Navigation lang={lang} />
-            <main className="mx-auto container">{children}</main>
+            <main className="mx-auto container">
+                <AuthGuard>{children}</AuthGuard>
+            </main>
             <Modal containerClassName={"w-full h-full md:h-auto md:w-[480px]"} />
             <div className="fixed bottom-10 right-10 z-50">
                 <Toggle isToggled={value} toggle={toggle} toggleText="☾" untoggleText="☀" label="Mode" />

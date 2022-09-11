@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import sitemap from "../../../data/sitemap.json";
@@ -69,7 +69,7 @@ const Navigation: FC<Props> = ({ lang, active }) => {
 
                                 <Link href="/profile">
                                     <a className={styles["navUserInfo"]}>
-                                        {user.displayName || user.email.split("@")[0]}{" "}
+                                        {user.displayName || user.email?.split("@")[0]}{" "}
                                         <span className="ml-2 text-xs">&#9660;</span>
                                     </a>
                                 </Link>
@@ -79,7 +79,7 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                                     <Link href="/">
                                         <a className="px-2 py-1 block">Home</a>
                                     </Link>
-                                    <Link href="/profile">
+                                    <Link href="/profile/edit">
                                         <a className="px-2 py-1 block">Profile</a>
                                     </Link>
                                     <button
@@ -159,4 +159,4 @@ const Navigation: FC<Props> = ({ lang, active }) => {
     );
 };
 
-export default Navigation;
+export default memo(Navigation);

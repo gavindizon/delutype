@@ -1,13 +1,4 @@
-import {
-    collection,
-    query,
-    getDocs,
-    where,
-    QueryDocumentSnapshot,
-    DocumentData,
-    addDoc,
-    serverTimestamp,
-} from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestore } from "../../../services/firebase/firebaseClient";
 
 const submitResults = async (values: any) => {
@@ -19,7 +10,7 @@ const submitResults = async (values: any) => {
             wpm: values.wpm,
             accuracy: values.accuracy,
             gazeCount: values.gazeCount,
-            consistency: values.consistency
+            consistency: values.consistency,
         });
 
         return { status: "added result doc to firestore" };

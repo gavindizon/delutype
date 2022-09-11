@@ -7,41 +7,58 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
 import { useSelector, useDispatch } from "react-redux";
-import NotificationModal from "../../components/Modal/Content/NotificationModal";
-import Modal from "../../components/Modal/Modal";
-import Link from "next/link";
+import useAuth from "../../hooks/useAuth";
+
 const Calibration: NextPage = () => {
     const state = useSelector((state: any) => state);
+    const { user } = useAuth();
     const dispatch = useDispatch();
     useEffect(() => {
-        webgazer.begin();
+        if (user && !user?.isProfileUnfinished) {
+            webgazer.begin();
+            dispatch({
+                type: "OPEN_MODAL",
+                payload: {
+                    type: "NOTIFICATION",
+                    title: "Calibration",
+                    description: "Click on each point 5 times, whilst looking at it until every point turns red.",
+                },
+            });
+        }
 
         return () => {
-            webgazer.end();
+            if (user && !user?.isProfileUnfinished) webgazer?.end();
         };
     }, []);
-    useEffect(() => {
-
-        dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"Calibration", description:"Click on each point 5 times, whilst looking at it until every point turns red."}});
-        
-        
-    }, []) ;
 
     const lang = useLanguage();
     const genLang = general[lang as keyof typeof general];
     let data = [];
     const [remaining, setRemaining] = useState(9);
     useEffect(() => {
-
         if (remaining === 1)
-        dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"One More Step!", description:"Click on the center point 5 times, whilst looking at it to end calibration."}});
-        
-        if (remaining === 0){
-            dispatch({type: "OPEN_MODAL", payload: {type: "NOTIFICATION", title:"Calibration Finished!", description:"Click Proceed to continue with the typing test.", redirectTo:"/test", redirectToLabel:"Proceed"}});
+            dispatch({
+                type: "OPEN_MODAL",
+                payload: {
+                    type: "NOTIFICATION",
+                    title: "One More Step!",
+                    description: "Click on the center point 5 times, whilst looking at it to end calibration.",
+                },
+            });
+
+        if (remaining === 0) {
+            dispatch({
+                type: "OPEN_MODAL",
+                payload: {
+                    type: "NOTIFICATION",
+                    title: "Calibration Finished!",
+                    description: "Click Proceed to continue with the typing test.",
+                    redirectTo: "/test",
+                    redirectToLabel: "Proceed",
+                },
+            });
         }
-       
-        
-    }, [remaining]) ;
+    }, [remaining]);
     return (
         <Layout title="Calibration" description="" lang={lang}>
             <section>

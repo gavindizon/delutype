@@ -14,10 +14,6 @@
         "label": "Password",
         "required": true,
         "type": "password",
-        "placeholder": "••••••••",
-        "validation": {
-            "min": 8,
-            "max": 20
-        }
+        "placeholder": "••••••••"
     }
 ]

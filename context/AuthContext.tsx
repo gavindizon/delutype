@@ -1,36 +1,94 @@
 import { createContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import nookies from "nookies";
-import { auth } from "../services/firebase/firebaseClient";
-import {
-    User as FirebaseUser,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    updateProfile,
-    sendEmailVerification,
-    applyActionCode,
-    confirmPasswordReset,
-    sendPasswordResetEmail,
-    GoogleAuthProvider,
-    getAuth,
-    signInWithRedirect,
-} from "firebase/auth";
-
 import axios, { AxiosError } from "axios";
-import { FirebaseError } from "firebase/app";
+import nookies from "nookies";
+
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import { auth, firestore } from "../services/firebase/firebaseClient";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { updateProfile, getRedirectResult } from "firebase/auth";
+
+import sendEmailResetPassword from "../components/Auth/services/sendEmailResetPassword";
+import signup from "../components/Auth/services/signup";
+import login from "../components/Auth/services/login";
+import loginWithGoogle from "../components/Auth/services/loginWithGoogle";
+import verifyEmail from "../components/Auth/services/verifyEmail";
+import resetPassword from "../components/Auth/services/resetPassword";
+import logout from "../components/Auth/services/logout";
+import COOKIE_OPTION from "../components/Auth/utils/cookieOption";
 
 import Loading from "../components/Indicator/Loading";
-import { useDispatch } from "react-redux";
 
 export const AuthContext = createContext<any>({});
 
 export function AuthProvider({ children }: any) {
     const router = useRouter();
+    const [provider, setProvider] = useState<"" | "google" | "password">("");
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const redirectResult = async () => {
+            try {
+                const result = await getRedirectResult(auth);
+                if (result?.providerId === "google.com") {
+                    setProvider("google");
+                    setIsLoggingIn(true);
+                    let snapshot = await getDocs(
+                        query(collection(firestore, "users"), where("email", "==", result.user.email))
+                    );
+
+                    let queryResult: any = [];
+                    snapshot?.forEach((doc) => {
+                        queryResult.push({ ...doc.data(), id: doc.id });
+                    });
+                    if (queryResult.length === 0) {
+                        setIsLoggingIn(false);
+                        dispatch({
+                            type: "OPEN_MODAL",
+                            payload: {
+                                type: "NOTIFICATION",
+                                title: "Finish your Profile",
+                                description:
+                                    "Make sure to finish your profile before you start taking your typing tests",
+                            },
+                        });
+
+                        setUser((user: any) => {
+                            return { ...user, isProfileUnfinished: true };
+                        });
+                        router.push("/profile/edit");
+                    }
+                    setIsLoggingIn(false);
+
+                    if (result.user.displayName !== queryResult[0].username) {
+                        await updateProfile(result.user, { displayName: queryResult[0].username });
+
+                        let customUserClaims = {
+                            uid: result.user.uid,
+                            email: result.user.email,
+                            photoURL: result.user.photoURL,
+                            displayName: queryResult[0].username,
+                            providerData: result.user.providerData,
+                        };
+
+                        await axios.post("/api/claims", {
+                            user: customUserClaims,
+                        });
+                    }
+                }
+
+                return { status: "success" };
+            } catch (e) {
+                return { status: "error", error: e };
+            }
+        };
+
+        redirectResult();
+    }, []);
 
     useEffect(() => {
         return auth.onIdTokenChanged(async (user) => {
@@ -38,139 +96,62 @@ export function AuthProvider({ children }: any) {
                 if (!user) {
                     const { token } = nookies.get();
                     if (!token) {
-                        nookies.destroy(undefined, "token");
+                        nookies.destroy(undefined, "token", COOKIE_OPTION);
                         setUser(null);
+                        setProvider("");
                     } else {
                         const { data } = await axios.post("/api/verify", { token });
-                        if (!data.user.providerData && router.pathname !== "/profile") return router.push("/profile");
                         setUser({
                             email: data.user.email,
                             uid: data.user.uid,
-                            displayName:
-                                (data.user.providerData && data.user.providerData[0]?.displayName) || data.user.name,
-                            photoUrl:
-                                (data.user.providerData && data.user.providerData[0]?.photoURL) || data.user.picture,
+                            displayName: data.user?.displayName || data.user?.name,
+                            photoUrl: data.user.picture,
                         });
                     }
                 } else {
                     const token = await user.getIdToken(true);
-
-                    setUser({
-                        email: user.email,
-                        uid: user.uid,
-                        displayName: (user.providerData && user.providerData[0]?.displayName) || user.email,
-                        photoUrl: (user.providerData && user.providerData[0]?.photoURL) || user.photoURL,
+                    setUser((user: any) => {
+                        return {
+                            ...user,
+                            email: user?.email,
+                            uid: user?.uid,
+                            displayName: user?.displayName || user?.email,
+                            photoUrl: user?.photoURL,
+                        };
                     });
-                    nookies.set(undefined, "token", token);
+
+                    nookies.set(undefined, "token", token, COOKIE_OPTION);
                 }
-                setLoading(false);
             } catch (e) {
                 let error: any = (e as AxiosError)?.response?.data;
+                console.error(error);
                 switch (error?.code) {
                     case "TOKEN_EXPIRED":
                     default:
-                        nookies.destroy(undefined, "token");
+                        nookies.destroy(undefined, "token", COOKIE_OPTION);
                 }
                 setUser(null);
+                setProvider("");
+            } finally {
                 setLoading(false);
             }
         });
     }, []);
 
-    const signup = async (email: string, password: string, username: string) => {
-        let { user } = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(user, {
-            displayName: username,
-        });
-        await sendEmailVerification(user);
-        nookies.destroy(undefined, "token");
-        setUser(null);
-    };
-
-    const loginWithGoogle = async (languageCode: string = "en") => {
-        try {
-            const provider = new GoogleAuthProvider();
-
-            auth.languageCode = languageCode;
-            signInWithRedirect(auth, provider);
-
-            return { type: "success" };
-        } catch (error) {
-            return { type: "error", error };
-        }
-    };
-
-    const login = async (email: string, password: string) => {
-        try {
-            setIsLoggingIn(true);
-            let response = await signInWithEmailAndPassword(auth, email, password);
-            dispatch({ type: "CLOSE_MODAL" });
-            await axios.post("/api/claims", { user: response.user });
-
-            setIsLoggingIn(false);
-            return { type: "success" };
-        } catch (e) {
-            setIsLoggingIn(false);
-            switch ((e as FirebaseError).code) {
-                case "auth/unverified-email":
-                    return { type: "error", message: "Error: Email not yet verified. Please verify your email." };
-                case "auth/user-not-found":
-                case "auth/wrong-password":
-                    return {
-                        type: "error",
-                        message:
-                            "Error: Wrong email or password. Please check if you have input the correct credentials.",
-                    };
-                default:
-                    return { type: "error", message: "Unknown error: Please try again later." };
-            }
-        }
-    };
-
-    const verifyEmail = async (code: string) => {
-        try {
-            await applyActionCode(auth, code);
-            return { status: "success" };
-        } catch (e) {
-            return { status: "failed", error: e };
-        }
-    };
-
-    const resetPassword = async (password: string, code: string) => {
-        try {
-            await confirmPasswordReset(auth, code, password);
-            return { status: "success" };
-        } catch (e) {
-            return { status: "failed", error: e };
-        }
-    };
-
-    const sendEmailResetPassword = async (email: string) => {
-        try {
-            await sendPasswordResetEmail(auth, email);
-            return { status: "success" };
-        } catch (e) {
-            return { status: "failed", error: e };
-        }
-    };
-
-    const logout = async (router: any) => {
-        await signOut(auth);
-        nookies.destroy(undefined, "token");
-        router.push("/");
-        router.reload();
-    };
-
     return (
         <AuthContext.Provider
             value={{
                 user,
+                setUser,
+                provider,
+                setProvider,
                 signup,
                 login,
                 loginWithGoogle,
                 logout,
                 loading,
                 isLoggingIn,
+                setIsLoggingIn,
                 resetPassword,
                 verifyEmail,
                 sendEmailResetPassword,

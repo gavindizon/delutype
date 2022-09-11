@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
-import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 
-import Layout from "./../components/Layout/Layout";
-import general from "./../data/general.json";
-import useLanguage from "./../hooks/useLanguage";
+import Layout from "../../components/Layout/Layout";
+import general from "../../data/general.json";
+import useLanguage from "../../hooks/useLanguage";
 import Link from "next/link";
 import Image from "next/image";
 const Profile: NextPage = () => {

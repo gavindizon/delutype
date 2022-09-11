@@ -8,7 +8,6 @@ const initialState: Object = {
 const testReducer = (state: any = initialState, action: ActionCreatorWithNonInferrablePayload) => {
     switch (action.type) {
         case ADD_GAZE_COUNT:
-            console.log("ADDING");
             return { ...state, gazeCounts: state.gazeCounts + 1 };
 
         default:
