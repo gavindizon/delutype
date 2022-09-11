@@ -74,6 +74,9 @@ body.light-mode {
         background-color: $bg-primary-light-mode;
         color: $txt-primary-light-mode;
     }
+    footer {
+        background-color: $bg-secondary-light-mode;
+    }
 
     input[type="date"],
     input[type="email"],
@@ -249,6 +252,9 @@ body.dark-mode {
     header {
         background-color: $bg-primary-dark-mode;
         color: $txt-primary-dark-mode;
+    }
+    footer {
+        background-color: $bg-secondary-dark-mode;
     }
 
     input[type="date"],

@@ -32,7 +32,7 @@ const Navigation: FC<Props> = ({ lang, active }) => {
 
     return (
         <header
-            className="fixed z-30 w-full h-24 top-0 flex items-center"
+            className="fixed z-30 w-full h-24 top-0 flex items-center justify-center"
             style={{
                 transition: `box-shadow .4s`,
                 boxShadow: `${
@@ -40,17 +40,16 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                 }`,
             }}
         >
-            <nav className="px-2 container m-auto flex justify-between items-center">
+            <nav className="flex justify-between items-center w-5/6">
                 <Link href={"/"}>
                     <a className="font-extrabold text-3xl">
-                        ty
-                        <span>ph</span>e
+                        ty<span>ph</span>e
                     </a>
                 </Link>
                 <div className="flex items-center space-x-4">
                     {user ? (
                         <div className={`relative ${styles["navProfile"]}`}>
-                            <div className="flex flex-row items-center my-4 ">
+                            <div className="flex flex-row items-center my-4">
                                 <div className="mr-2">
                                     {user.photoUrl ? (
                                         <div className="w-8 h-8 relative rounded-full overflow-hidden mr-1">
@@ -95,13 +94,13 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                             </div>
                         </div>
                     ) : (
-                        <div className="my-4">
+                        <div className="space-x-8">
                             {sitemap.map((site) => (
                                 <Link href={site.path} key={site.path}>
-                                    <a className="font-semibold  mx-4 font-light mt-2  hidden md:inline-block">
+                                    <a className="font-semibold font-light hidden md:inline-block">
                                         {site.title}
                                     </a>
-                                </Link>
+                                </Link> 
                             ))}
 
                             <div className="select-wrapper">

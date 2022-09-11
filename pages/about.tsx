@@ -22,7 +22,7 @@ const About: NextPage = () => {
             <div className="flex items-center justify-center my-48">
                 <div className="w-3/4 max-w-5xl space-y-24 font-default">
                     <div className="flex flex-col space-y-20 items-center">
-                        <h1 className="font-extrabold text-4xl leading-tight xs:text-5xl xs:leading-snug">
+                        <h1 className="font-extrabold text-3xl sm:text-4xl sm:leading-snug md:text-5xl md:leading-snug">
                             Designing an optimized Filipino-English keyboard layout
                         </h1>
 
@@ -59,7 +59,7 @@ const About: NextPage = () => {
                     <div className="flex flex-col space-y-12">
                         <div className="flex flex-col space-y-8">
                             <h2 className="font-bold text-2xl">Abstract</h2>
-                            <p className="font-regular text-xl">
+                            <p className="font-regular text-md md:text-lg lg:text-lg">
                                 The QWERTY layout has been the standard for computer keyboards for around a century and
                                 although it is unoptimized for most languages, including Filipino, it has undergone few
                                 alterations. Many alternatives were proposed that are proven to be more effective than
@@ -78,14 +78,14 @@ const About: NextPage = () => {
 
                         <div className="flex flex-col space-y-8">
                             <h2 className="font-bold text-2xl">Keywords</h2>
-                            <p className="font-regular text-xl">
+                            <p className="font-regular text-md lg:text-lg">
                                 Keyboard Layout, QWERTY, Optimization, Computational Method, Integer Programming
                             </p>
                         </div>
                     </div>
 
                     <div className="flex flex-col space-y-8">
-                        <h2 className="font-extrabold text-4xl leading-tight text-center xs:text-5xl xs:leading-snug xl:text-left">Our Adviser</h2>
+                        <h1 className="font-extrabold text-3xl text-center sm:text-4xl sm:leading-snug xs:text-5xl xs:leading-snug md:text-5xl md:leading-snug xl:text-left">Our Adviser</h1>
 
                         <div className="flex flex-col items-center xl:flex-row">
                             <div className="flex flex-col items-center w-full space-y-12">
@@ -109,7 +109,7 @@ const About: NextPage = () => {
                             </div>
 
                             <div className="flex-auto space-y-8 mt-12 xl:ml-20 xl:mt-0">
-                                <p className="font-regular text-xl">
+                                <p className="font-regular text-md md:text-lg lg:text-lg">
                                     Briane Paul V. Samson is an Associate Professor of Computer Science and Informatics, 
                                     and currently the Chair of the Department of Software Technology in the College of Computer 
                                     Studies at De La Salle University. He directs the Center for Complexity and Emerging
@@ -117,7 +117,7 @@ const About: NextPage = () => {
                                     Data Science Institute. His research focuses on the integration of human-computer interaction
                                     and complex systems research in developing civic media and technologies that promotes prosocial
                                     behavior. He develops human-centered and interactive technologies that are designed to improve
-                                    one&aposs personal productivity and well-being, and to assess and manage urban mobility, 
+                                    one&apos;s personal productivity and well-being, and to assess and manage urban mobility, 
                                     transportation services, and disaster preparedness and response. At the same time, he 
                                     investigates the underlying and complex dynamics of sociotechnical systems (e.g. crowds, social
                                     networks), especially with the introduction of technological solutions. Currently, Briane is
