@@ -48,7 +48,7 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                     </a>
                 </Link>
                 <div className="flex items-center space-x-4">
-                    {user ? (
+                    {user?.displayName ? (
                         <div className={`relative ${styles["navProfile"]}`}>
                             <div className="flex flex-row items-center my-4 ">
                                 <div className="mr-2">
