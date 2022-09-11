@@ -1,12 +1,12 @@
 {
     "en": {
         "hero": {
-            "subtitle": "typhe is a typing test website that features tests comprising of Filipino (Tagalog) and English words. It is created for data collection on our thesis."
+            "subtitle": "a typing test website that features tests comprising of Filipino (Tagalog) and English words. It is created for data collection on our thesis."
         }
     },
     "fil": {
         "hero": {
-            "subtitle": "Isang pananaliksik ukol sa pagdisenyo ng isang pang-Filipino na tipa"
+            "subtitle": "isang pagmamakinilyang pananaliksik na pahinarya na naglalaman ng mga Filipino (Tagalog) at Ingles na salita. Ito ay nilikha upang makalikom ng datos sa aming thesis."
         }
     }
 }
