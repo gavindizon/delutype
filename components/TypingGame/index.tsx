@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
 import { serverTimestamp } from "firebase/firestore";
 import submitResults from "../Form/utils/submitResults";
-
+import layout from "../../data/layout.json"
 const TypingGame: FC<{ text: string }> = ({ text }) => {
     const [duration, setDuration] = useState(0);
     const [gazeCount, setGazeCount] = useState(0);
@@ -116,21 +116,29 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
         }
     }, [phase, startTime, endTime]);
 
-    //handle key presses
-    const handleKeyDown = (letter: string, control: boolean) => {
-        if (letter === "Escape") {
-            resetTyping();
-        } else if (letter === "Backspace") {
-            deleteTyping(control);
-        } else if (letter.length === 1) {
-            setRunning(true);
-            insertTyping(letter);
-            if (!isListenerActivated) {
-                window.addEventListener("addGaze", addGazeCount);
-                setListenerActivated(true);
-            }
-        }
-    };
+  //handle key presses
+  const handleKeyDown = (letter: string, control: boolean) => {
+
+    if(letter?.length === 1 ){
+      letter = layout[letter as keyof typeof layout ] || letter
+    
+    }
+    
+
+  
+    if (letter === "Escape") {
+      resetTyping();
+    } else if (letter === "Backspace") {
+      deleteTyping(control);
+    } else if (letter.length === 1) {
+      setRunning(true);
+      insertTyping(letter);
+      if (!isListenerActivated) {
+        window.addEventListener("addGaze", addGazeCount);
+        setListenerActivated(true);
+      }
+    }
+  };
 
     //timer
     const [time, setTime] = useState(0);
