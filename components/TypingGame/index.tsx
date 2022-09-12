@@ -3,10 +3,13 @@ import useTyping from "react-typing-game-hook";
 import { updateResult } from "../../redux/actions/result";
 import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
+import { useRouter } from "next/router";
 import { serverTimestamp } from "firebase/firestore";
 import submitResults from "../Form/utils/submitResults";
-import layout from "../../data/layout.json"
+import salvoLayout from "../../data/salvoLayout.json"
+import dvorakLayout from "../../data/dvorakLayout.json"
 const TypingGame: FC<{ text: string }> = ({ text }) => {
+    const router = useRouter();
     const [duration, setDuration] = useState(0);
     const [gazeCount, setGazeCount] = useState(0);
     const [isListenerActivated, setListenerActivated] = useState(false);
@@ -15,6 +18,9 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const { user, logout } = useAuth();
+    const { layout } = router.query;
+    const { showWPM }= router.query;
+
 
     const {
         states: { charsState, currIndex, phase, correctChar, errorChar, startTime, endTime },
@@ -120,10 +126,13 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
   const handleKeyDown = (letter: string, control: boolean) => {
 
     if(letter?.length === 1 ){
-      letter = layout[letter as keyof typeof layout ] || letter
-    
+    if(layout === "Salvo"){
+      letter = salvoLayout[letter as keyof typeof salvoLayout ] || letter
+    }else if (layout === "Dvorak"){
+        letter = dvorakLayout[letter as keyof typeof salvoLayout ] || letter
     }
-    
+    }
+   
 
   
     if (letter === "Escape") {
@@ -169,7 +178,7 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
                 className="typing-test relative"
             >
                 <div className="flex justify-between">
-                    <p className="text-2xl pb-2">WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
+                    <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
                     <p className="text-2xl pb-2">
                         <span>{("0" + Math.floor(time / 3600)).slice(-2)}:</span>
                         <span>{("0" + Math.floor((time / 60) % 60)).slice(-2)}:</span>
