@@ -33,7 +33,7 @@ const Layout: FC<Props> = ({ children, title, description, lang }) => {
             <div className="fixed bottom-10 right-10 z-50">
                 <Toggle isToggled={value} toggle={toggle} toggleText="☾" untoggleText="☀" label="Mode" />
             </div>
-            {title !== "Test" || "Calibration"
+            {title !== "Test" && title !== "Calibration"
             ? <Footer />
             : null}
         </>
