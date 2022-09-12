@@ -88,6 +88,7 @@ const Login = () => {
                             dispatch({ type: "CLOSE_MODAL" });
                             router.push("/forgot-password", undefined, { shallow: true });
                         }}
+                        tabIndex={-1}
                     >
                         Forgot Password?
                     </a>
