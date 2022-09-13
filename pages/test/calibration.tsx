@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/Layout/Layout";
-
+import { useRouter } from "next/router";
 import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
 import React, { useEffect } from "react";
@@ -8,11 +8,16 @@ import { useState } from "react";
 import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
 import { useSelector, useDispatch } from "react-redux";
 import useAuth from "../../hooks/useAuth";
+import { GiRoundStrawBale } from "react-icons/gi";
 
 const Calibration: NextPage = () => {
+    const router = useRouter();
     const state = useSelector((state: any) => state);
     const { user } = useAuth();
+    const { layout } = router.query;
+    const { showWPM } = router.query;
     const dispatch = useDispatch();
+    console.log({layout})
     useEffect(() => {
         if (user && !user?.isProfileUnfinished) {
             webgazer.begin();
@@ -36,7 +41,8 @@ const Calibration: NextPage = () => {
     let data = [];
     const [remaining, setRemaining] = useState(9);
     useEffect(() => {
-        if (remaining === 1)
+        if (remaining === 1){
+
             dispatch({
                 type: "OPEN_MODAL",
                 payload: {
@@ -45,6 +51,8 @@ const Calibration: NextPage = () => {
                     description: "Click on the center point 5 times, whilst looking at it to end calibration.",
                 },
             });
+        }
+          
 
         if (remaining === 0) {
             dispatch({
@@ -53,7 +61,7 @@ const Calibration: NextPage = () => {
                     type: "NOTIFICATION",
                     title: "Calibration Finished!",
                     description: "Click Proceed to continue with the typing test.",
-                    redirectTo: "/test",
+                    redirectTo: `/test?layout=${layout}&showWPM=${showWPM}`,
                     redirectToLabel: "Proceed",
                 },
             });
@@ -72,10 +80,10 @@ const Calibration: NextPage = () => {
                     <CalibrationButton id="btn3" setRemaining={setRemaining}></CalibrationButton>
                 </div>
 
-                <div className="flex flex-row fixed top-1/2 items-center w-full justify-between">
+                <div className="flex flex-row fixed top-1/2 lg:relative lg:py-80 items-center w-full justify-between">
                     <CalibrationButton id="btn4" setRemaining={setRemaining}></CalibrationButton>
 
-                    <CalibrationButton id="btn5" hide={remaining > 1} setRemaining={setRemaining}></CalibrationButton>
+                    <CalibrationButton id="btn5" hide={remaining > 1} setRemaining={setRemaining} onClick={() => dispatch({ type: "CLOSE_MODAL" })}></CalibrationButton>
 
                     <CalibrationButton id="btn6" setRemaining={setRemaining}></CalibrationButton>
                 </div>

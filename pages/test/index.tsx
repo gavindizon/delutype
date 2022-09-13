@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         return {
             props: {
                 title: "Lorem ipsum title",
-                text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                text: "The quick brown fox jumps over the lazy dog.",
             },
         };
     } catch (e) {

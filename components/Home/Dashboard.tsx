@@ -74,7 +74,7 @@ const Dashboard: FC<Props> = ({ user }) => {
                         e.preventDefault();
                         setValidity(initializeValidatorValues(form));
                         setTestConfigForm(initializeFieldValues(form));
-                        router.push("/test/calibration");
+                        router.push(`/test/calibration?layout=${testConfigForm.keyboardLayout}&showWPM=${testConfigForm.showWPM}`);
                     }}
                 >
                     {form.map((section: any, index: any) => {
