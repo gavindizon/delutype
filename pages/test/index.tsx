@@ -2,10 +2,10 @@ import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "
 import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../components/Layout/Layout";
-import general from "../../data/general.json";
 import useLanguage from "../../hooks/useLanguage";
 import TypingGame from "../../components/TypingGame";
 import React, { useState, useEffect } from "react";
+import { getRandomDocument } from "../../services/firebase/queries/getRandomDocument";
 
 const Test: NextPage = ({ text, title }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const lang = useLanguage();
@@ -25,14 +25,16 @@ const Test: NextPage = ({ text, title }: InferGetServerSidePropsType<typeof getS
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
-        const data = 1;
+        let res = await getRandomDocument("corpus", 56931);
+
         return {
             props: {
-                title: "Lorem ipsum title",
-                text: "The quick brown fox jumps over the lazy dog.",
+                title: "Entry #" + res.random,
+                text: res.text,
             },
         };
     } catch (e) {
+        console.log(e);
         return {
             props: {},
         };

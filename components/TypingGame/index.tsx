@@ -6,9 +6,9 @@ import useAuth from "../../hooks/useAuth";
 import { useRouter } from "next/router";
 import { serverTimestamp } from "firebase/firestore";
 import submitResults from "../Form/utils/submitResults";
-import salvoLayout from "../../data/salvoLayout.json"
-import dvorakLayout from "../../data/dvorakLayout.json"
-const TypingGame: FC<{ text: string }> = ({ text }) => {
+import salvoLayout from "../../data/salvoLayout.json";
+import dvorakLayout from "../../data/dvorakLayout.json";
+const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const router = useRouter();
     const [duration, setDuration] = useState(0);
     const [gazeCount, setGazeCount] = useState(0);
@@ -19,8 +19,7 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
     const dispatch = useDispatch();
     const { user, logout } = useAuth();
     const { layout } = router.query;
-    const { showWPM }= router.query;
-
+    const { showWPM } = router.query;
 
     const {
         states: { charsState, currIndex, phase, correctChar, errorChar, startTime, endTime },
@@ -122,32 +121,29 @@ const TypingGame: FC<{ text: string }> = ({ text }) => {
         }
     }, [phase, startTime, endTime]);
 
-  //handle key presses
-  const handleKeyDown = (letter: string, control: boolean) => {
+    //handle key presses
+    const handleKeyDown = (letter: string, control: boolean) => {
+        if (letter?.length === 1) {
+            if (layout === "Salvo") {
+                letter = salvoLayout[letter as keyof typeof salvoLayout] || letter;
+            } else if (layout === "Dvorak") {
+                letter = dvorakLayout[letter as keyof typeof salvoLayout] || letter;
+            }
+        }
 
-    if(letter?.length === 1 ){
-    if(layout === "Salvo"){
-      letter = salvoLayout[letter as keyof typeof salvoLayout ] || letter
-    }else if (layout === "Dvorak"){
-        letter = dvorakLayout[letter as keyof typeof salvoLayout ] || letter
-    }
-    }
-   
-
-  
-    if (letter === "Escape") {
-      resetTyping();
-    } else if (letter === "Backspace") {
-      deleteTyping(control);
-    } else if (letter.length === 1) {
-      setRunning(true);
-      insertTyping(letter);
-      if (!isListenerActivated) {
-        window.addEventListener("addGaze", addGazeCount);
-        setListenerActivated(true);
-      }
-    }
-  };
+        if (letter === "Escape") {
+            resetTyping();
+        } else if (letter === "Backspace") {
+            deleteTyping(control);
+        } else if (letter.length === 1) {
+            setRunning(true);
+            insertTyping(letter);
+            if (!isListenerActivated) {
+                window.addEventListener("addGaze", addGazeCount);
+                setListenerActivated(true);
+            }
+        }
+    };
 
     //timer
     const [time, setTime] = useState(0);
