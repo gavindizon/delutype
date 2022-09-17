@@ -74,11 +74,14 @@ const PrivacyPolicy: NextPage = () => {
                     collect includes:
                 </p>
                 <ul className="list-inside list-disc">
-                    <li>Username/ Name</li>
-                    <li>Phone Numbers</li>
-                    <li>Address</li>
-                    <li>Age</li>
-                    <li>Typing-related data (gaze shifts, wpm, accuracy, consistency)</li>
+                    <li>Username</li>
+                    <li>Email Address</li>
+                    <li>Age Range</li>
+                    <li>Sex</li>
+                    <li>Gaze Shifts - Number of times a user looks from monitor to keyboard.</li>
+                    <li>Words Per Minute - The user's average number of correct words they can type in a minute.</li>
+                    <li>Typing Accuracy - The user's percentage of correctly pressed keys.</li>
+                    <li>Typing Consistency - Variance of a user's words per minute.</li>
                 </ul>
                 <h2 className="text:xl md:text-3xl font-semibold mt-8 mb-4">
                     How do we use the information that we collect?
