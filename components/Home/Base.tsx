@@ -28,8 +28,7 @@ const Base: FC<Props> = ({ dispatch }) => {
             <div className="h-screen w-3/4 flex mt-16 md:mt-0 flex-col max-w-5xl space-y-20 justify-center items-center relative lg:flex-row lg:justify-between lg:w-5/6 lg:space-y-0">
                 <div className="flex flex-col w-full space-y-8 text-center lg:items-start lg:text-left lg:w-5/12 items-center">
                     <h1 className="font-extrabold text-7xl">
-                        ty
-                        <span>ph</span>e
+                        ty<span>ph</span>e
                     </h1>
                     <p className="font-light text-lg tracking-normal">{pageLang.hero.subtitle}</p>
                     <Button href={"/about"}>{genLang["learn-more"]}</Button>
@@ -72,12 +71,6 @@ const Base: FC<Props> = ({ dispatch }) => {
                         {genLang["create-an-account"]}
                     </Button>
                 </div>
-                {/* <button type="button" className="absolute bottom-10 flex flex-col font-thin items-center text-light">
-                    {genLang["learn-more"]}
-                    <span>
-                        <FaChevronDown size={16} />
-                    </span>
-                </button> */}
             </div>
         </section>
     );

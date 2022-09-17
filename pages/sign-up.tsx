@@ -14,6 +14,7 @@ import useAuth from "../hooks/useAuth";
 import useLanguage from "../hooks/useLanguage";
 
 import form from "../data/signup.json";
+import general from "../data/general.json";
 import { initializeFieldValues, initializeValidatorValues } from "../components/Form/utils/initializeFieldValues";
 
 type Props = {};
@@ -25,6 +26,7 @@ const SignUp: FC<Props> = () => {
     const [loading, setLoading] = useState(false);
 
     const lang = useLanguage();
+    const genLang: any = general[lang as keyof typeof general];
     const { signup } = useAuth();
     const router = useRouter();
 
@@ -40,9 +42,11 @@ const SignUp: FC<Props> = () => {
             <section className="min-h-screen px-2 text-center flex flex-col mt-32 items-center relative">
                 {status === "" ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h2 className="text-4xl font-semibold mb-4">Sign Up</h2>
-                        <p className="tracking-wide text-lg mb-8 ">
-                            Sign-up today and help us discover a better alternative for QWERTY
+                        <h2 className="text-4xl font-semibold mb-4">
+                            {genLang["sign-up-header"]}
+                        </h2>
+                        <p className="text-lg mb-8">
+                            {genLang["sign-up-subheader"]}
                         </p>
                         <form
                             className="w-full md:w-[640px] mb-32"
