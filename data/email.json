@@ -1,7 +1,7 @@
 [
     {
         "name": "email",
-        "label": "Email",
+        "label": "email",
         "required": true,
         "type": "email",
         "placeholder": "janedelacruz@typhe.io",

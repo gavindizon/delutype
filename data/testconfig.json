@@ -4,17 +4,17 @@
         "fields": [
             {
                 "name": "keyboardLayout",
-                "label": "Keyboard Layout",
+                "label": "keyboard-layout",
                 "type": "radio",
                 "required": true,
-                "options": ["QWERTY", "Salvo", "Dvorak", "Iteration 1", "Iteration 2"]
+                "options": ["qwerty", "salvo", "dvorak", "iteration-1", "iteration-2"]
             },
             {
                 "name": "showWPM",
-                "label": "Show Words Per Minute",
+                "label": "show-wpm",
                 "type": "radio",
                 "required": true,
-                "options": ["Yes", "No"]
+                "options": ["yes", "no"]
             }
         ]
     }
