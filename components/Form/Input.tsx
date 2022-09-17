@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useLanguage from "../../hooks/useLanguage";
 import Loading from "../Indicator/Loading";
 import validator from "./utils/validator";
+import labelLang from "../../data/field-labels.json"
+
 
 type Props = {
     type: string;
@@ -40,6 +43,9 @@ const Input: FC<Props> = ({
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<Array<string>>([]);
 
+    const lang = useLanguage();
+    const fieldLabel: any = labelLang[lang as keyof typeof labelLang];
+
     useEffect(() => {
         if (message.length > 0) {
             setValidity({ ...validity, [name]: false });
@@ -55,7 +61,7 @@ const Input: FC<Props> = ({
             return (
                 <>
                     <label htmlFor={name} className="block text-left mb-2">
-                        {label}
+                        {fieldLabel[label]}
                         {required && "*"}
                     </label>
                     <select
@@ -93,7 +99,7 @@ const Input: FC<Props> = ({
         case "checkbox":
             return (
                 <div className="w-full mb-4">
-                    <p className="text-left mb-1">{label}</p>
+                    <p className="text-left mb-1">{fieldLabel[label]}</p>
                     {options?.map((opt) => {
                         return (
                             <div key={opt.name} className="text-left">
@@ -128,9 +134,9 @@ const Input: FC<Props> = ({
                                     }}
                                 />
                                 {!insertAsHTML ? (
-                                    <label htmlFor={opt.name}>{opt.label}</label>
+                                    <label htmlFor={opt.name}>{fieldLabel[opt.label]}</label>
                                 ) : (
-                                    <label htmlFor={opt.name} dangerouslySetInnerHTML={{ __html: opt.label }}></label>
+                                    <label htmlFor={opt.name} dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}></label>
                                 )}
                             </div>
                         );
@@ -143,7 +149,7 @@ const Input: FC<Props> = ({
         case "radio":
             return (
                 <div className="w-full mb-4">
-                    <p className="text-left mb-1">{label}</p>
+                    <p className="text-left mb-1">{fieldLabel[label]}</p>
                     {options?.map((opt) => {
                         return (
                             <div key={opt} className="text-left">
@@ -173,7 +179,7 @@ const Input: FC<Props> = ({
                                             );
                                     }}
                                 />
-                                <label htmlFor={opt}>{opt}</label>
+                                <label htmlFor={opt}>{fieldLabel[opt]}</label>
                             </div>
                         );
                     })}
@@ -188,7 +194,7 @@ const Input: FC<Props> = ({
                 <>
                     <div className="relative w-full">
                         <label htmlFor={name} className="block text-left my-2">
-                            {label}
+                            {fieldLabel[label]}
                             {required && "*"}
                         </label>
                         <input
@@ -240,7 +246,7 @@ const Input: FC<Props> = ({
                 <>
                     <div className="relative w-full">
                         <label htmlFor={name} className="block text-left my-2">
-                            {label}
+                            {fieldLabel[label]}
                             {required && "*"}
                         </label>
                         <input

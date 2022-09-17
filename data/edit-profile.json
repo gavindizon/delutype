@@ -4,7 +4,7 @@
         "fields": [
             {
                 "name": "username",
-                "label": "Username",
+                "label": "username",
                 "required": true,
                 "type": "text",
                 "placeholder": "janeDC",
@@ -16,37 +16,20 @@
             },
             {
                 "name": "email",
-                "label": "Email",
+                "label": "email",
+                "required": true,
                 "type": "email",
                 "placeholder": "janedelacruz@typhe.io",
-                "disabled": true
+                "validation": {
+                    "email": true,
+                    "unique": true
+                }
             },
             {
-                "name": "firstName",
-                "label": "First Name",
-                "required": true,
-                "type": "text",
-                "placeholder": "Jane"
-            },
-            {
-                "name": "lastName",
-                "label": "Last Name",
-                "required": true,
-                "type": "text",
-                "placeholder": "Dela Cruz"
-            },
-            {
-                "name": "sex",
-                "label": "Sex",
-                "required": false,
-                "type": "select",
-                "options": ["Prefer not to say", "Female", "Male"]
-            },
-            {
-                "name": "birthDate",
-                "label": "Birth Date",
-                "required": false,
-                "type": "date"
+                "name": "ageRange",
+                "label": "age-range",
+                "type": "radio",
+                "options": ["13-19", "20-29", "30+"]
             }
         ]
     },
@@ -55,14 +38,14 @@
         "fields": [
             {
                 "name": "oldPassword",
-                "label": "Old Password",
+                "label": "old-password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••"
             },
             {
                 "name": "newPassword",
-                "label": "New Password",
+                "label": "new-password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••",
@@ -73,7 +56,7 @@
             },
             {
                 "name": "confirmNewPassword",
-                "label": "Confirm New Password",
+                "label": "confirm-new-password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••",
@@ -88,7 +71,7 @@
         "fields": [
             {
                 "name": "datesAvailable",
-                "label": "What week(s) is/are you most likely available?",
+                "label": "dates-available",
                 "required": true,
                 "type": "checkbox",
                 "validation": {
@@ -115,7 +98,7 @@
             },
             {
                 "name": "isEligibleInDLSU",
-                "label": "Are you an alumni, student, or faculty at De La Salle University - Manila?",
+                "label": "is-eligible-in-dlsu",
                 "type": "radio",
                 "options": ["Yes", "No"]
             }
@@ -135,7 +118,7 @@
                 "insertAsHTML": true,
                 "options": [
                     {
-                        "name": "privacyPolicy",
+                        "name": "privacy-policy",
                         "label": "By registering an account, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>."
                     }
                 ]
