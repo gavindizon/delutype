@@ -8,7 +8,9 @@
         "privacy-email": "By registering an account, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>.",
         "privacy-google": "By signing in with Google, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>.",
         "i-agree": "I Agree",
-        "go-back": "Go Back"
+        "go-back": "Go Back",
+        "sign-up-header": "Sign Up",
+        "sign-up-subheader": "Sign-up today and help us discover a better alternative for QWERTY"
     },
     "fil": {
         "learn-more": "Matuto Pa",
@@ -19,6 +21,8 @@
         "privacy-email": "Sa pagrehistro ng akawnt, binibigyan mo ng pahintulot ang typhe at sumasang-ayon ka sa kanilang <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Patakaran sa Privacy</a>.",
         "privacy-google": "Sa pagsign-in gamit ang Google, binibigyan mo ng pahintulot ang typhe at sumasang-ayon ka sa kanilang <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Patakaran sa Privacy</a>.",
         "i-agree": "Sumasang-ayon ako",
-        "go-back": "Bumalik"
+        "go-back": "Bumalik",
+        "sign-up-header": "Mag-sign Up",
+        "sign-up-subheader": "Mag-sign up ngayon at tulungan kaming makatuklas ng mas magandang alternatibo sa QWERTY"
     }
 }
