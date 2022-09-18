@@ -25,6 +25,21 @@ const PrivacyPolicy: NextPage = () => {
                     disclosure of your personal information as described in this Privacy Policy.
                 </p>
 
+                <p className="my-4">
+                In compliance with the Data Privacy Act of 2012 (RA10173) and its Implementing Rules and Regulations (IPR) effective since September 9, 2016, I am authorizing these student researchers to:
+                <ul className="list-decimal list-inside">
+                <li> Use my personal data, which includes my name, age and contact information, gathered during this survey for their 
+                     research in understanding the demographic and personal experiences of online shopping platform users. </li> 
+
+                <li>Store my personal data for the analysis of results and the accomplishment of their major course outputs.</li>
+                </ul>
+                </p>
+                <h1> 
+                By submitting, you are agreeing with the terms above. Rest assured your data will be used only for the reasons listed above and only by the entities stated in this terms.
+                </h1>
+               
+               
+
                 <h2 className="text:xl md:text-3xl font-semibold mt-8 mb-4">Definition and Key terms</h2>
                 <hr />
                 <p className="mt-4 mb-2">For this privacy policy:</p>
