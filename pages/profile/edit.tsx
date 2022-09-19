@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import { IoPersonCircleSharp, IoKeySharp } from "react-icons/io5";
 
 import validateForm from "../../components/Form/utils/validateForm";
-import form from "../../data/edit-profile.json";
+
 import Button from "../../components/Button/Button";
 import Layout from "../../components/Layout/Layout";
-import general from "../../data/general.json";
-import useLanguage from "../../hooks/useLanguage";
-import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
-import useAuth from "../../hooks/useAuth";
-import { IoPersonCircleSharp, IoKeySharp } from "react-icons/io5";
 import Input from "../../components/Form/Input";
 import { collection, DocumentData, getDoc, QueryDocumentSnapshot } from "firebase/firestore";
 import { getDocument } from "../../services/firebase/queries/getDocument";
@@ -17,11 +13,19 @@ import { upsertDocument } from "../../services/firebase/queries/upsertDocument";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
+import useLanguage from "../../hooks/useLanguage";
+import useAuth from "../../hooks/useAuth";
+
+import form from "../../data/edit-profile.json";
+import general from "../../data/general.json";
+import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
+
 const EditProfile: NextPage = () => {
     const { user, setUser, provider } = useAuth();
     const [hasDocument, setHasDocument] = useState(false);
     const router = useRouter();
     const lang = useLanguage();
+    const genLang: any = general[lang as keyof typeof general];
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const passwordForm = form.filter((section) => section.title === "Password");
@@ -63,17 +67,21 @@ const EditProfile: NextPage = () => {
         fetchUserData();
         //eslint-disable-next-line
     }, [user]);
-    const genLang = general[lang as keyof typeof general];
+
     let data = [];
 
     return (
         <Layout title="Edit Profile" description="" lang={lang}>
-            <section className="mt-32 px-2 text-center flex flex-col justify-center items-center relative">
+            <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
-                    <h2 className="text-4xl font-semibold mb-4">Edit Profile</h2>
-                    <p className="tracking-wide text-lg mb-8 ">Edit your account information</p>
+                    <h2 className="text-4xl font-extrabold mb-4">
+                        {genLang["edit-profile"]}
+                    </h2>
+                    <p className="text-lg mb-8">
+                        {genLang["edit-profile-subheader"]}
+                    </p>
                     <form
-                        className="w-full md:w-[640px] mb-16"
+                        className="w-full md:w-[640px] mb-32"
                         onSubmit={async (e) => {
                             try {
                                 e.preventDefault();
@@ -107,8 +115,7 @@ const EditProfile: NextPage = () => {
 
                             return (
                                 <div key={index}>
-                                    <h3 className="text-2xl text-left mt-2 mb-4 font-semibold ">{section.title}</h3>
-                                    <hr className="mb-3" />
+                                    <h3 className="text-3xl text-left mt-16 mb-8 font-bold">{genLang[section.title]}</h3>
                                     {section.fields.map((field) => (
                                         <Input
                                             key={field.name}
@@ -129,10 +136,10 @@ const EditProfile: NextPage = () => {
                             isDisabled={!validateForm(profileFormValidity)}
                             isFullWidth={true}
                             loading={loading}
-                            className="mt-8"
+                            className="mt-32"
                             leftIcon={<IoPersonCircleSharp size={18} />}
                         >
-                            Update Profile
+                            {genLang["edit-profile"]}
                         </Button>
                     </form>
                     {provider === "password" && (

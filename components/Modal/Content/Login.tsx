@@ -82,7 +82,7 @@ const Login = () => {
                 )}
                 <Link href="/forgot-password">
                     <a
-                        className="text-xs font-semibold text-left w-full mt-1"
+                        className="text-sm font-light text-left w-full mt-4"
                         onClick={(e) => {
                             e.preventDefault();
                             dispatch({ type: "CLOSE_MODAL" });
@@ -90,7 +90,7 @@ const Login = () => {
                         }}
                         tabIndex={-1}
                     >
-                        Forgot Password?
+                        {genLang["forgot-password"]}
                     </a>
                 </Link>
                 <Button
@@ -106,7 +106,7 @@ const Login = () => {
             </form>
 
             <div className="divider my-4">
-                <h6 className="text-sm">or</h6>
+                <h6 className="text-sm">{genLang["or"]}</h6>
             </div>
 
             <div className="flex flex-col items-center mb-8 gap-2 w-11/12">
