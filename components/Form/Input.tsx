@@ -60,9 +60,9 @@ const Input: FC<Props> = ({
         case "select":
             return (
                 <>
-                    <label htmlFor={name} className="block text-left mb-2">
+                    <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                         {fieldLabel[label]}
-                        {required && "*"}
+                        {!required && " *"}
                     </label>
                     <select
                         title={name}
@@ -75,6 +75,7 @@ const Input: FC<Props> = ({
                             (validation || required) &&
                                 setMessage(
                                     await validator(
+                                        lang,
                                         validation,
                                         name,
                                         label,
@@ -98,8 +99,11 @@ const Input: FC<Props> = ({
 
         case "checkbox":
             return (
-                <div className="w-full mb-4">
-                    <p className="text-left mb-1">{fieldLabel[label]}</p>
+                <div className="w-full mb-4 font-light">
+                    <p className="font-medium text-lg text-left mt-4 mb-2 block">
+                        {fieldLabel[label]}
+                        {!required && " *"}
+                    </p>
                     {options?.map((opt) => {
                         return (
                             <div key={opt.name} className="text-left">
@@ -109,7 +113,7 @@ const Input: FC<Props> = ({
                                     title={opt.name}
                                     disabled={disabled}
                                     checked={fieldValues[name].includes(opt.name)}
-                                    className="mr-2"
+                                    className="my-2 mx-4"
                                     onChange={async (e) => {
                                         let values = fieldValues[name];
 
@@ -121,6 +125,7 @@ const Input: FC<Props> = ({
                                         (validation || required) &&
                                             setMessage(
                                                 await validator(
+                                                    lang,
                                                     validation,
                                                     name,
                                                     label,
@@ -134,9 +139,9 @@ const Input: FC<Props> = ({
                                     }}
                                 />
                                 {!insertAsHTML ? (
-                                    <label htmlFor={opt.name}>{fieldLabel[opt.label]}</label>
+                                    <label htmlFor={opt.name} className="">{fieldLabel[opt.label]}</label>
                                 ) : (
-                                    <label htmlFor={opt.name} dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}></label>
+                                    <label htmlFor={opt.name} className="font-light italic" dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}></label>
                                 )}
                             </div>
                         );
@@ -148,8 +153,11 @@ const Input: FC<Props> = ({
             );
         case "radio":
             return (
-                <div className="w-full mb-4">
-                    <p className="text-left mb-1">{fieldLabel[label]}</p>
+                <div className="w-full mb-4 font-light">
+                    <p className="font-medium text-lg text-left mt-4 mb-2 block">
+                        {fieldLabel[label]}
+                        {!required && " *"}
+                    </p>
                     {options?.map((opt) => {
                         return (
                             <div key={opt} className="text-left">
@@ -160,13 +168,14 @@ const Input: FC<Props> = ({
                                     value={opt}
                                     checked={fieldValues[name] === opt}
                                     disabled={disabled}
-                                    className="mr-2"
+                                    className="my-2 mx-4"
                                     onChange={async (e) => {
                                         setForm({ ...fieldValues, [name]: e.target.value });
 
                                         (validation || required) &&
                                             setMessage(
                                                 await validator(
+                                                    lang,
                                                     validation,
                                                     name,
                                                     label,
@@ -179,12 +188,12 @@ const Input: FC<Props> = ({
                                             );
                                     }}
                                 />
-                                <label htmlFor={opt}>{fieldLabel[opt]}</label>
+                                <label htmlFor={opt} className="">{fieldLabel[opt]}</label>
                             </div>
                         );
                     })}
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm mt-2">{message[0]}</span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </div>
             );
@@ -193,14 +202,14 @@ const Input: FC<Props> = ({
             return (
                 <>
                     <div className="relative w-full">
-                        <label htmlFor={name} className="block text-left my-2">
+                        <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
-                            {required && "*"}
+                            {!required && " *"}
                         </label>
                         <input
                             type={visibility ? "text" : "password"}
                             name={name}
-                            className="rounded-sm w-full p-2 mb-2"
+                            className="rounded-md w-full px-4 py-3"
                             placeholder={placeholder}
                             value={value}
                             onChange={async (e) => {
@@ -209,6 +218,7 @@ const Input: FC<Props> = ({
                                 (validation || required) &&
                                     setMessage(
                                         await validator(
+                                            lang,
                                             validation,
                                             name,
                                             label,
@@ -223,7 +233,7 @@ const Input: FC<Props> = ({
                             required={required}
                         />
                         <button
-                            className="absolute z-50 right-0 mr-3 mt-3 opacity-50"
+                            className="absolute z-3 right-0 mr-4 mt-4 opacity-50"
                             onClick={(e) => {
                                 e.preventDefault();
                                 setVisibility(!visibility);
@@ -234,7 +244,7 @@ const Input: FC<Props> = ({
                         </button>
                     </div>
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm mb-4">{message[0]}</span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </>
             );
@@ -245,16 +255,16 @@ const Input: FC<Props> = ({
             return (
                 <>
                     <div className="relative w-full">
-                        <label htmlFor={name} className="block text-left my-2">
+                        <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
-                            {required && "*"}
+                            {!required && " *"}
                         </label>
                         <input
                             type={type}
                             name={name}
                             value={value}
                             disabled={disabled}
-                            className={`rounded-sm w-full text p-2 mb-2 disabled:cursor-not-allowed`}
+                            className={`rounded-md w-full px-4 py-3 disabled:cursor-not-allowed`}
                             placeholder={placeholder}
                             onChange={async (e) => {
                                 e.preventDefault();
@@ -265,6 +275,7 @@ const Input: FC<Props> = ({
                                 (validation || required) &&
                                     setMessage(
                                         await validator(
+                                            lang,
                                             validation,
                                             name,
                                             label,
@@ -285,7 +296,7 @@ const Input: FC<Props> = ({
                     </div>
 
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm mb-4">{message[0]}</span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </>
             );

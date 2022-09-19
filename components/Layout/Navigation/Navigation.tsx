@@ -73,7 +73,7 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                                     </a>
                                 </Link>
                                 <div
-                                    className={`hidden w-4/5 shadow-xl rounded-sm  absolute top-0 right-0 mt-14 card ${styles["navDropdown"]} `}
+                                    className={`hidden w-4/5 shadow-xl rounded-sm absolute top-0 right-0 mt-14 card ${styles["navDropdown"]} `}
                                 >
                                     <Link href="/">
                                         <a className="px-2 py-1 block">Home</a>
