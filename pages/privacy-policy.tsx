@@ -25,6 +25,19 @@ const PrivacyPolicy: NextPage = () => {
                     disclosure of your personal information as described in this Privacy Policy.
                 </p>
 
+                <p className="my-4">
+                In compliance with the Data Privacy Act of 2012 (RA10173) and its Implementing Rules and Regulations (IPR) effective since September 9, 2016, I am authorizing these student researchers to:
+                <ul className="list-decimal list-inside">
+                <li> Use my personal data, which includes my name, and age range , gathered for their 
+                     undergraduate thesis. </li> 
+
+                <li>Store my personal data for the analysis of results and the accomplishment of their undergraduate thesis.</li>
+                </ul>
+                </p>
+                <h1> 
+                By submitting, you are agreeing with the terms above. Rest assured your data will be used only for the reasons listed above and only by the entities stated in this terms.
+                </h1>
+
                 <h2 className="text:xl md:text-3xl font-semibold mt-8 mb-4">Definition and Key terms</h2>
                 <hr />
                 <p className="mt-4 mb-2">For this privacy policy:</p>
@@ -78,7 +91,10 @@ const PrivacyPolicy: NextPage = () => {
                     <li>Phone Numbers</li>
                     <li>Address</li>
                     <li>Age</li>
-                    <li>Typing-related data (gaze shifts, wpm, accuracy, consistency)</li>
+                    <li>Gaze Shifts - Number of times a user looks from monitor to keyboard.</li>
+                    <li>Words Per Minute - The user&apos;s average number of correct words they can type in a minute.</li>
+                    <li>Typing Accuracy - The user&apos;s percentage of correctly pressed keys.</li>
+                    <li>Typing Consistency - Variance of a user&apos;s words per minute.</li>
                 </ul>
                 <h2 className="text:xl md:text-3xl font-semibold mt-8 mb-4">
                     How do we use the information that we collect?
