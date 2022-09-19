@@ -1,6 +1,6 @@
 [
     {
-        "title": "Personal Information",
+        "title": "personal-information",
         "fields": [
             {
                 "name": "username",
@@ -29,16 +29,16 @@
                 "name": "ageRange",
                 "label": "age-range",
                 "type": "radio",
-                "options": ["13-19", "20-29", "30+"]
+                "options": ["19-and-below", "20-29", "30-and-above"]
             }
         ]
     },
     {
-        "title": "Password",
+        "title": "password",
         "fields": [
             {
                 "name": "oldPassword",
-                "label": "old-password",
+                "label": "password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••"
@@ -56,7 +56,7 @@
             },
             {
                 "name": "confirmNewPassword",
-                "label": "confirm-new-password",
+                "label": "confirm-password",
                 "required": true,
                 "type": "password",
                 "placeholder": "••••••••",
@@ -67,7 +67,7 @@
         ]
     },
     {
-        "title": "Scheduling",
+        "title": "scheduling",
         "fields": [
             {
                 "name": "datesAvailable",
@@ -80,19 +80,19 @@
                 "options": [
                     {
                         "name": "1stweekNov",
-                        "label": "1st week of November 2022"
+                        "label": "1st-week"
                     },
                     {
                         "name": "2ndweekNov",
-                        "label": "2nd week of November 2022"
+                        "label": "2nd-week"
                     },
                     {
                         "name": "3rdweekNov",
-                        "label": "3rd week of November 2022"
+                        "label": "3rd-week"
                     },
                     {
                         "name": "4thweekNov",
-                        "label": "4th week of November 2022"
+                        "label": "4th-week"
                     }
                 ]
             },
@@ -100,7 +100,7 @@
                 "name": "isEligibleInDLSU",
                 "label": "is-eligible-in-dlsu",
                 "type": "radio",
-                "options": ["Yes", "No"]
+                "options": ["yes", "no"]
             }
         ]
     },

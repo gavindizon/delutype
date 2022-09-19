@@ -1,6 +1,6 @@
 [
     {
-        "title": "Personal Information",
+        "title": "personal-information",
         "fields": [
             {
                 "name": "username",
@@ -28,13 +28,14 @@
             {
                 "name": "ageRange",
                 "label": "age-range",
+                "required": false,
                 "type": "radio",
-                "options": ["13-19", "20-29", "30+"]
+                "options": ["19-and-below", "20-29", "30-and-above"]
             }
         ]
     },
     {
-        "title": "Password",
+        "title": "password",
         "fields": [
             {
                 "name": "password",
@@ -60,7 +61,7 @@
         ]
     },
     {
-        "title": "Scheduling",
+        "title": "scheduling",
         "fields": [
             {
                 "name": "datesAvailable",

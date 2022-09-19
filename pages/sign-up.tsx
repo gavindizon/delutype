@@ -39,11 +39,11 @@ const SignUp: FC<Props> = () => {
 
     return (
         <Layout title="Sign Up" description="" lang={lang}>
-            <section className="min-h-screen px-2 text-center flex flex-col mt-32 items-center relative">
+            <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 {status === "" ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h2 className="text-4xl font-semibold mb-4">
-                            {genLang["sign-up-header"]}
+                        <h2 className="text-4xl font-extrabold mb-4">
+                            {genLang["sign-up"]}
                         </h2>
                         <p className="text-lg mb-8">
                             {genLang["sign-up-subheader"]}
@@ -63,8 +63,7 @@ const SignUp: FC<Props> = () => {
                             {form.map((section, index) => {
                                 return (
                                     <div key={index}>
-                                        <h3 className="text-2xl text-left mt-2 mb-4 font-semibold ">{section.title}</h3>
-                                        <hr className="mb-3" />
+                                        <h3 className="text-3xl text-left mt-16 mb-8 font-bold">{genLang[section.title]}</h3>
                                         {section.fields.map((field) => (
                                             <Input
                                                 key={field.name}
@@ -84,10 +83,10 @@ const SignUp: FC<Props> = () => {
                                 isDisabled={!validateForm(validity)}
                                 isFullWidth={true}
                                 loading={loading}
-                                className="mt-8"
+                                className="mt-32"
                                 leftIcon={<IoPersonCircleSharp size={18} />}
                             >
-                                SIGN UP
+                                {genLang["sign-up"]}
                             </Button>
                         </form>
                     </div>
@@ -103,7 +102,7 @@ const SignUp: FC<Props> = () => {
                             />
                         </div>
                         <h1 className="text-4xl font-bold mb-2">Successfully created an Account</h1>
-                        <p className="tracking-wide font-light text-2xl">
+                        <p className="font-light text-2xl">
                             Please check the email we sent you to verify the account.
                         </p>
                     </div>

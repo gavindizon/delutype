@@ -9,8 +9,15 @@
         "privacy-google": "By signing in with Google, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>, and in compliance with the Data Privacy Act of 2012 (RA10173) and its Implementing Rules and Regulations (IPR) effective since September 9, 2016, I am authorizing these student researchers to: <ul class='list-decimal list-inside'> <li> Use my personal data, which includes my name, and age range , gathered for their undergraduate thesis. </li>   <li>Store my personal data for the analysis of results and the accomplishment of their undergraduate thesis.</li> </ul> By submitting, you are agreeing with the terms above. Rest assured your data will be used only for the reasons listed above and only by the entities stated in this terms.",
         "i-agree": "I Agree",
         "go-back": "Go Back",
-        "sign-up-header": "Sign Up",
-        "sign-up-subheader": "Sign-up today and help us discover a better alternative for QWERTY"
+        "sign-up": "Sign Up",
+        "sign-up-subheader": "Sign-up today and help us discover a better alternative for QWERTY",
+        "edit-profile": "Edit Profile",
+        "edit-profile-subheader": "Edit your account information",
+        "personal-information": "Personal Information",
+        "password": "Password",
+        "scheduling": "Scheduling",
+        "forgot-password": "Forgot password?",
+        "or": "or"
     },
     "fil": {
         "learn-more": "Matuto Pa",
@@ -22,7 +29,14 @@
         "privacy-google": "Sa pagsign-in gamit ang Google, binibigyan mo ng pahintulot ang typhe at sumasang-ayon ka sa kanilang <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Patakaran sa Privacy</a>, at sa pagsunod ng Data Privacy Act of 2012 (RA10173) at ang kanyang Implementing Rules and Regulations (IPR) epektibo mula Septiyembre 9, 2016, pinahihintulutan mo ang mga estudyante sa:<ul class='list-decimal list-inside'> <li> Paggamit ng personal na datos katulad ng iyong pangalan, at hanay ng iyong edad, na nakuha para sa kanilang undergraduate thesis. </li>   <li>Pagipon ng iyong personal na datos para sa pagsusuri ng mga resulta para sa kanilang undergraduate thesis.</li> </ul> Sa pagpapasa, sumasangayon ka sa mga mga tuntunin sa itaas. Sinisigurado namin na ang mga datos na ibinigay mo ay gagamitin lang para sa mga rason na ibinahagi sa itaas at sa mga tao lang na nagsaad ng mga tuntunin na ito.",
         "i-agree": "Sumasang-ayon ako",
         "go-back": "Bumalik",
-        "sign-up-header": "Mag-sign Up",
-        "sign-up-subheader": "Mag-sign up ngayon at tulungan kaming makatuklas ng mas magandang alternatibo sa QWERTY"
+        "sign-up": "Mag-sign Up",
+        "sign-up-subheader": "Mag-sign up ngayon at tulungan kaming makatuklas ng mas magandang alternatibo sa QWERTY",
+        "edit-profile": "Wastuhin ang Profile",
+        "edit-profile-subheader": "Ibahin ang impormasiyon ng akawnt",
+        "personal-information": "Personal na Impormasiyon",
+        "password": "Password",
+        "scheduling": "Pag-iskedyul",
+        "forgot-password": "Nakalimutan ang password?",
+        "or": "o"
     }
 }
