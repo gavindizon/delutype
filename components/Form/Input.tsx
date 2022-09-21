@@ -3,8 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useLanguage from "../../hooks/useLanguage";
 import Loading from "../Indicator/Loading";
 import validator from "./utils/validator";
-import labelLang from "../../data/field-labels.json"
-
+import labelLang from "../../data/field-labels.json";
 
 type Props = {
     type: string;
@@ -90,7 +89,7 @@ const Input: FC<Props> = ({
                     >
                         {options?.map((opt) => (
                             <option key={opt} value={opt}>
-                                {opt}
+                                {fieldLabel[opt]}
                             </option>
                         ))}
                     </select>
@@ -139,9 +138,15 @@ const Input: FC<Props> = ({
                                     }}
                                 />
                                 {!insertAsHTML ? (
-                                    <label htmlFor={opt.name} className="">{fieldLabel[opt.label]}</label>
+                                    <label htmlFor={opt.name} className="">
+                                        {fieldLabel[opt.label]}
+                                    </label>
                                 ) : (
-                                    <label htmlFor={opt.name} className="font-light italic" dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}></label>
+                                    <label
+                                        htmlFor={opt.name}
+                                        className="font-light italic"
+                                        dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}
+                                    ></label>
                                 )}
                             </div>
                         );
@@ -188,7 +193,9 @@ const Input: FC<Props> = ({
                                             );
                                     }}
                                 />
-                                <label htmlFor={opt} className="">{fieldLabel[opt]}</label>
+                                <label htmlFor={opt} className="">
+                                    {fieldLabel[opt]}
+                                </label>
                             </div>
                         );
                     })}
