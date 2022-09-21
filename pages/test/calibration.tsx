@@ -1,23 +1,17 @@
 import type { NextPage } from "next";
 import Layout from "../../components/Layout/Layout";
-import { useRouter } from "next/router";
-import general from "../../data/general.json";
+
 import useLanguage from "../../hooks/useLanguage";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import CalibrationButton from "../../components/CalibrationButton/calibrationButton";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import { GiRoundStrawBale } from "react-icons/gi";
 
 const Calibration: NextPage = () => {
-    const router = useRouter();
-    const state = useSelector((state: any) => state);
     const { user } = useAuth();
-    const { layout } = router.query;
-    const { showWPM } = router.query;
     const dispatch = useDispatch();
-    console.log({layout})
+
     useEffect(() => {
         if (user && !user?.isProfileUnfinished) {
             webgazer.begin();
@@ -37,12 +31,10 @@ const Calibration: NextPage = () => {
     }, []);
 
     const lang = useLanguage();
-    const genLang = general[lang as keyof typeof general];
-    let data = [];
     const [remaining, setRemaining] = useState(9);
-    useEffect(() => {
-        if (remaining === 1){
 
+    useEffect(() => {
+        if (remaining === 1) {
             dispatch({
                 type: "OPEN_MODAL",
                 payload: {
@@ -52,7 +44,6 @@ const Calibration: NextPage = () => {
                 },
             });
         }
-          
 
         if (remaining === 0) {
             dispatch({
@@ -61,12 +52,13 @@ const Calibration: NextPage = () => {
                     type: "NOTIFICATION",
                     title: "Calibration Finished!",
                     description: "Click Proceed to continue with the typing test.",
-                    redirectTo: `/test?layout=${layout}&showWPM=${showWPM}`,
+                    redirectTo: `/test`,
                     redirectToLabel: "Proceed",
                 },
             });
         }
     }, [remaining]);
+
     return (
         <Layout title="Calibration" description="" lang={lang}>
             <section>
@@ -83,7 +75,12 @@ const Calibration: NextPage = () => {
                 <div className="flex flex-row fixed top-1/2 lg:relative lg:py-80 items-center w-full justify-between">
                     <CalibrationButton id="btn4" setRemaining={setRemaining}></CalibrationButton>
 
-                    <CalibrationButton id="btn5" hide={remaining > 1} setRemaining={setRemaining} onClick={() => dispatch({ type: "CLOSE_MODAL" })}></CalibrationButton>
+                    <CalibrationButton
+                        id="btn5"
+                        hide={remaining > 1}
+                        setRemaining={setRemaining}
+                        onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    ></CalibrationButton>
 
                     <CalibrationButton id="btn6" setRemaining={setRemaining}></CalibrationButton>
                 </div>

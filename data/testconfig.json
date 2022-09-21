@@ -15,6 +15,24 @@
                 "type": "radio",
                 "required": true,
                 "options": ["yes", "no"]
+            },
+            {
+                "name": "text",
+                "label": "text-title",
+                "type": "select",
+                "required": true,
+                "options": [
+                    "select-input",
+                    "tagalog-100",
+                    "tagalog-200",
+                    "tagalog-300",
+                    "english-100",
+                    "english-200",
+                    "english-300",
+                    "taglish-100",
+                    "taglish-200",
+                    "taglish-300"
+                ]
             }
         ]
     }

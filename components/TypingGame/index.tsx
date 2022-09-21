@@ -9,6 +9,8 @@ import submitResults from "../Form/utils/submitResults";
 import salvoLayout from "../../data/salvoLayout.json";
 import dvorakLayout from "../../data/dvorakLayout.json";
 const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
+    const { settings } = useSelector((state: any) => state);
+
     const router = useRouter();
     const [duration, setDuration] = useState(0);
     const [gazeCount, setGazeCount] = useState(0);
@@ -17,9 +19,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const letterElements = useRef<HTMLDivElement>(null);
     const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
-    const { user, logout } = useAuth();
-    const { layout } = router.query;
-    const { showWPM } = router.query;
+    const { user } = useAuth();
 
     const {
         states: { charsState, currIndex, phase, correctChar, errorChar, startTime, endTime },
@@ -29,7 +29,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     // set cursor
     const pos = useMemo(() => {
         if (currIndex !== -1 && letterElements.current) {
-            let spanref: any = letterElements.current.children[currIndex];
+            let spanref: any = letterElements.current.children[0].children[currIndex];
             let left = spanref.offsetLeft + spanref.offsetWidth - 1;
             let top = spanref.offsetTop;
             return { left, top };
@@ -124,9 +124,9 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
         if (letter?.length === 1) {
-            if (layout === "Salvo") {
+            if (settings.layout === "Salvo") {
                 letter = salvoLayout[letter as keyof typeof salvoLayout] || letter;
-            } else if (layout === "Dvorak") {
+            } else if (settings.layout === "Dvorak") {
                 letter = dvorakLayout[letter as keyof typeof salvoLayout] || letter;
             }
         }
@@ -147,6 +147,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
 
     //timer
     const [time, setTime] = useState(0);
+    const [heightAdjust, setHeightAdjust] = useState(0);
     const [running, setRunning] = useState(false);
 
     useEffect(() => {
@@ -161,11 +162,20 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         return () => clearInterval(interval);
     }, [running]);
 
+    useEffect(() => {
+        console.log(pos.top);
+        if (pos.top > 72) {
+            setHeightAdjust(heightAdjust + 1);
+        }
+    }, [pos.top]);
+
     return (
         <>
             <div
                 tabIndex={0}
                 onKeyDown={(e) => {
+                    e.preventDefault();
+
                     handleKeyDown(e.key, e.ctrlKey);
                     setRunning(true);
                 }}
@@ -173,8 +183,12 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 //  onBlur={() => setIsFocused(false)}
                 className="typing-test relative"
             >
-                <div className="flex justify-between">
-                    <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
+                <div className="flex justify-between mb-4">
+                    {settings.showWPM ? (
+                        <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
+                    ) : (
+                        <div>&nbsp;</div>
+                    )}
                     <p className="text-2xl pb-2">
                         <span>{("0" + Math.floor(time / 3600)).slice(-2)}:</span>
                         <span>{("0" + Math.floor((time / 60) % 60)).slice(-2)}:</span>
@@ -183,18 +197,24 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 </div>
                 <div
                     ref={letterElements}
-                    className="tracking-wide px-1 pointer-events-none select-none mb-4 text-justify text-2xl"
-                    tabIndex={0}
+                    className="tracking-wide px-1 pointer-events-none select-none mb-4 text-justify text-2xl h-64 overflow-hidden"
+                    tabIndex={-1}
                 >
-                    {text.split("").map((letter, index) => {
-                        let state = charsState[index];
-                        let color = state === 0 ? "text-gray-700" : state === 1 ? "text-gray-400" : "text-red-500";
-                        return (
-                            <span key={letter + index} className={`${color}`}>
-                                {letter}
-                            </span>
-                        );
-                    })}
+                    <div
+                        style={{
+                            marginTop: String(-16 * heightAdjust) + "px",
+                        }}
+                    >
+                        {text.split("").map((letter, index) => {
+                            let state = charsState[index];
+                            let color = state === 0 ? "text-gray-700" : state === 1 ? "text-gray-400" : "text-red-500";
+                            return (
+                                <span key={letter + index} className={`${color}`}>
+                                    {letter}
+                                </span>
+                            );
+                        })}
+                    </div>
                 </div>
                 {phase !== 2 && isFocused ? (
                     <span

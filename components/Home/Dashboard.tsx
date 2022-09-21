@@ -8,18 +8,22 @@ import Button from "../../components/Button/Button";
 import Image from "next/image";
 
 import validateForm from "../../components/Form/utils/validateForm";
-
-import useAuth from "../../hooks/useAuth";
 import useLanguage from "../../hooks/useLanguage";
+import fieldLang from "../../data/field-labels.json";
+import text from "../../data/text.json";
 
 import form from "../../data/testconfig.json";
 import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
+import { useDispatch } from "react-redux";
 
 type Props = {
     user: any;
 };
 
 const Dashboard: FC<Props> = ({ user }) => {
+    const dispatch = useDispatch();
+    const lang = useLanguage();
+    const fieldTranslation: any = fieldLang[lang as keyof typeof fieldLang];
     const [status, setStatus] = useState("");
     const [testConfigForm, setTestConfigForm] = useState(initializeFieldValues(form));
     const [validity, setValidity] = useState(initializeValidatorValues(form));
@@ -72,9 +76,27 @@ const Dashboard: FC<Props> = ({ user }) => {
                     className="w-full md:w-[640px] mb-32"
                     onSubmit={(e) => {
                         e.preventDefault();
+
+                        console.log(testConfigForm);
+
+                        let newSettings: any = {
+                            showWPM: testConfigForm.showWPM,
+                            layout: testConfigForm.keyboardLayout,
+                        };
+
+                        if (testConfigForm.text) {
+                            newSettings["title"] = fieldTranslation[testConfigForm.text];
+                            newSettings["text"] = text[testConfigForm.text as keyof typeof text];
+                        }
+
+                        dispatch({
+                            type: "UPDATE_SETTINGS",
+                            payload: newSettings,
+                        });
+
                         setValidity(initializeValidatorValues(form));
                         setTestConfigForm(initializeFieldValues(form));
-                        router.push(`/test/calibration?layout=${testConfigForm.keyboardLayout}&showWPM=${testConfigForm.showWPM}`);
+                        router.push(`/test/calibration`);
                     }}
                 >
                     {form.map((section: any, index: any) => {
