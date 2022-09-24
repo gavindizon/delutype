@@ -10,7 +10,8 @@ const submitResults = async (values: any) => {
             wpm: values.wpm,
             accuracy: values.accuracy,
             gazeCount: values.gazeCount,
-            consistency: values.consistency,
+            rawConsistency: values.rawConsistency,
+            actualConsistency: values.actualConsistency,
         });
 
         return { status: "added result doc to firestore" };

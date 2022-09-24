@@ -4,7 +4,8 @@ import { UPDATE_RESULT } from "../actions/result";
 const initialState: Object = {
     wpm: 0,
     accuracy: 0,
-    consistency: 0,
+    rawConsistency: 0,
+    actualConsistency: 0,
     time: 0,
     createdAtTime: "",
 };
@@ -16,7 +17,8 @@ const resultReducer = (state: Object = initialState, action: PayloadAction<any, 
                 ...state,
                 wpm: action.payload.wpm,
                 accuracy: action.payload.accuracy,
-                consistency: action.payload.consistency,
+                rawConsistency: action.payload.rawConsistency,
+                actualConsistency: action.payload.actualConsistency,
                 time: action.payload.time,
             };
 
