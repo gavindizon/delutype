@@ -77,8 +77,6 @@ const Dashboard: FC<Props> = ({ user }) => {
                     onSubmit={(e) => {
                         e.preventDefault();
 
-                        console.log(testConfigForm);
-
                         let newSettings: any = {
                             showWPM: testConfigForm.showWPM,
                             layout: testConfigForm.keyboardLayout,
