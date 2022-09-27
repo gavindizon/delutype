@@ -9,7 +9,8 @@ export const upsertDocument = async (
     withSection: boolean = false,
     documentId?: string
 ) => {
-    let docValues = sanitizeValues(values, form, withSection);
+
+    let docValues = Object.keys(form).length === 0 ? values : sanitizeValues(values, form, withSection);
 
     if (documentId) {
         const ref = doc(firestore, collectionName, documentId);

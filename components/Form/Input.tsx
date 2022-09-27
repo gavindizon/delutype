@@ -56,6 +56,9 @@ const Input: FC<Props> = ({
     }, [message]);
 
     switch (type) {
+        case "hidden":
+            return <input type="hidden" value={value} name={name} />;
+
         case "select":
             return (
                 <>
