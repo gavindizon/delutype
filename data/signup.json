@@ -57,6 +57,11 @@
                 "validation": {
                     "matchesWith": "password"
                 }
+            },
+            {
+                "name": "code",
+                "label": "code",
+                "type": "hidden"
             }
         ]
     },
