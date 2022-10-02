@@ -28,8 +28,9 @@ const EditProfile: NextPage = () => {
     const genLang: any = general[lang as keyof typeof general];
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const passwordForm = form.filter((section) => section.title === "Password");
-    const profileForm = form.filter((section) => section.title !== "Password");
+    console.log(form);
+    const passwordForm = form.filter((section) => section.title === "password");
+    const profileForm = form.filter((section) => section.title !== "password");
 
     const [editProfileForm, setEditProfileForm] = useState(initializeFieldValues(profileForm));
     const [profileFormValidity, setProfileFormValidity] = useState(initializeValidatorValues(profileForm));
@@ -74,12 +75,8 @@ const EditProfile: NextPage = () => {
         <Layout title="Edit Profile" description="" lang={lang}>
             <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
-                    <h2 className="text-4xl font-extrabold mb-4">
-                        {genLang["edit-profile"]}
-                    </h2>
-                    <p className="text-lg mb-8">
-                        {genLang["edit-profile-subheader"]}
-                    </p>
+                    <h2 className="text-4xl font-extrabold mb-4">{genLang["edit-profile"]}</h2>
+                    <p className="text-lg mb-8">{genLang["edit-profile-subheader"]}</p>
                     <form
                         className="w-full md:w-[640px] mb-32"
                         onSubmit={async (e) => {
@@ -115,7 +112,9 @@ const EditProfile: NextPage = () => {
 
                             return (
                                 <div key={index}>
-                                    <h3 className="text-3xl text-left mt-16 mb-8 font-bold">{genLang[section.title]}</h3>
+                                    <h3 className="text-3xl text-left mt-16 mb-8 font-bold">
+                                        {genLang[section.title]}
+                                    </h3>
                                     {section.fields.map((field) => (
                                         <Input
                                             key={field.name}
