@@ -1,23 +1,24 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
-import { updateResult } from "../../redux/actions/result";
 import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import { useRouter } from "next/router";
-import { serverTimestamp } from "firebase/firestore";
 import submitResults from "../Form/utils/submitResults";
 import salvoLayout from "../../data/salvoLayout.json";
 import dvorakLayout from "../../data/dvorakLayout.json";
+import { getStandardDeviation, getMean } from "./utils/calculate.js";
 const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const { settings } = useSelector((state: any) => state);
 
-    const router = useRouter();
     const [duration, setDuration] = useState(0);
     const [gazeCount, setGazeCount] = useState(0);
     const [isListenerActivated, setListenerActivated] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+
+    const [listOfRawWPM, setListOfRawWPM] = useState<number[]>([]);
+    const [listOfWPM, setListOfWPM] = useState<number[]>([]);
+    const [WPMcount, setWPMCount] = useState(0);
+
     const letterElements = useRef<HTMLDivElement>(null);
-    const state = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const { user } = useAuth();
 
@@ -47,22 +48,26 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         window.removeEventListener("addGaze", addGazeCount);
         let finalResults: object;
         let reduxResults: object;
+
         finalResults = {
             wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
-            accuracy: (((correctChar - errorChar) / text.length) * 100).toFixed(2),
-            consistency: 69,
+            accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
+            rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
+            actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
             time: time,
             gazeCount: gazeCount,
         };
 
         reduxResults = {
             wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
-            accuracy: (((correctChar - errorChar) / text.length) * 100).toFixed(2),
-            consistency: 69,
+            accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
+            rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
+            actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
             time: time,
             gazeCount: gazeCount,
             username: user.displayName,
         };
+
         await submitResults(reduxResults);
 
         dispatch({ type: "UPDATE_RESULT", payload: finalResults });
@@ -98,6 +103,37 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     useEffect(() => {
         if (user && !user?.isProfileUnfinished) {
             webgazer.begin();
+
+            if (document) {
+                setTimeout(function () {
+                    let dot: HTMLElement | null = document.querySelector("#webgazerGazeDot");
+                    if (dot) dot.style.opacity = "0.1";
+                }, 4500);
+            }
+
+            let layout = "QWERTY";
+            let userData;
+
+            if (window) userData = JSON.parse(localStorage.getItem("userData") as string);
+
+            // assigns keyboard Layout
+            switch (userData?.code?.[0]) {
+                case "S":
+                    layout = "Salvo";
+                    break;
+                case "X":
+                case "Q":
+                default:
+                    layout = "QWERTY";
+            }
+
+            dispatch({
+                type: "UPDATE_SETTINGS",
+                payload: {
+                    layout,
+                },
+            });
+
             dispatch({
                 type: "OPEN_MODAL",
                 payload: {
@@ -150,6 +186,15 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const [heightAdjust, setHeightAdjust] = useState(0);
     const [running, setRunning] = useState(false);
 
+    //pushes actual WPM and raw WPM values to WPM states
+    useEffect(() => {
+        var rawWPM = ((60 / time) * (correctChar + errorChar)) / 5 || 0;
+        var actualWPM = ((60 / time) * correctChar) / 5 || 0;
+
+        setListOfRawWPM((prevList) => [...prevList, rawWPM !== NaN ? rawWPM : 0]);
+        setListOfWPM((prevList) => [...prevList, actualWPM !== NaN ? actualWPM : 0]);
+    }, [time]);
+
     useEffect(() => {
         let interval: any;
         if (running) {
@@ -163,7 +208,6 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     }, [running]);
 
     useEffect(() => {
-        console.log(pos.top);
         if (pos.top > 72) {
             setHeightAdjust(heightAdjust + 1);
         }
@@ -184,7 +228,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 className="typing-test relative"
             >
                 <div className="flex justify-between mb-4">
-                    {settings.showWPM ? (
+                    {settings?.showWPM === "yes" ? (
                         <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
                     ) : (
                         <div>&nbsp;</div>

@@ -3,36 +3,12 @@
         "title": "Test Configuration",
         "fields": [
             {
-                "name": "keyboardLayout",
-                "label": "keyboard-layout",
-                "type": "radio",
-                "required": true,
-                "options": ["qwerty", "salvo", "dvorak", "iteration-1", "iteration-2"]
-            },
-            {
                 "name": "showWPM",
                 "label": "show-wpm",
                 "type": "radio",
                 "required": true,
-                "options": ["yes", "no"]
-            },
-            {
-                "name": "text",
-                "label": "text-title",
-                "type": "select",
-                "required": true,
-                "options": [
-                    "select-input",
-                    "tagalog-100",
-                    "tagalog-200",
-                    "tagalog-300",
-                    "english-100",
-                    "english-200",
-                    "english-300",
-                    "taglish-100",
-                    "taglish-200",
-                    "taglish-300"
-                ]
+                "options": ["yes", "no"],
+                "default": "yes"
             }
         ]
     }

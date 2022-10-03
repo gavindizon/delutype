@@ -19,6 +19,7 @@ import useAuth from "../../hooks/useAuth";
 import form from "../../data/edit-profile.json";
 import general from "../../data/general.json";
 import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
+import assignCode from "../../components/Form/utils/assignCode";
 
 const EditProfile: NextPage = () => {
     const { user, setUser, provider } = useAuth();
@@ -28,21 +29,15 @@ const EditProfile: NextPage = () => {
     const genLang: any = general[lang as keyof typeof general];
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const passwordForm = form.filter((section) => section.title === "Password");
-    const profileForm = form.filter((section) => section.title !== "Password");
+
+    const passwordForm = form.filter((section) => section.title === "password");
+    const profileForm = form.filter((section) => section.title !== "password");
 
     const [editProfileForm, setEditProfileForm] = useState(initializeFieldValues(profileForm));
     const [profileFormValidity, setProfileFormValidity] = useState(initializeValidatorValues(profileForm));
+
     const [editPasswordForm, setEditPasswordForm] = useState(initializeFieldValues(passwordForm));
-    const [passwordFormValidity, setPasswordFormValidity] = useState(initializeFieldValues(passwordForm));
-
-    useEffect(() => {
-        setProfileFormValidity(editProfileForm);
-    }, [editProfileForm]);
-
-    useEffect(() => {
-        setPasswordFormValidity(editPasswordForm);
-    }, [editPasswordForm]);
+    const [passwordFormValidity, setPasswordFormValidity] = useState(initializeValidatorValues(passwordForm));
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -54,10 +49,12 @@ const EditProfile: NextPage = () => {
                         user.email,
                         false
                     )) as QueryDocumentSnapshot<DocumentData>;
-                    if (snapshot) setHasDocument(true);
-                    setEditProfileForm((values: any) => {
-                        return { ...values, ...snapshot?.data(), email: user.email, id: snapshot?.id };
-                    });
+                    if (snapshot) {
+                        setHasDocument(true);
+                        setEditProfileForm((values: any) => {
+                            return { ...values, ...snapshot, email: user.email };
+                        });
+                    }
                 }
             } catch (e) {
                 console.error(e);
@@ -68,25 +65,49 @@ const EditProfile: NextPage = () => {
         //eslint-disable-next-line
     }, [user]);
 
-    let data = [];
-
     return (
         <Layout title="Edit Profile" description="" lang={lang}>
             <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
-                    <h2 className="text-4xl font-extrabold mb-4">
-                        {genLang["edit-profile"]}
-                    </h2>
-                    <p className="text-lg mb-8">
-                        {genLang["edit-profile-subheader"]}
-                    </p>
+                    <h2 className="text-4xl font-extrabold mb-4">{genLang["edit-profile"]}</h2>
+                    <p className="text-lg mb-8">{genLang["edit-profile-subheader"]}</p>
                     <form
                         className="w-full md:w-[640px] mb-32"
                         onSubmit={async (e) => {
                             try {
                                 e.preventDefault();
                                 setLoading(true);
-                                await upsertDocument("users", editProfileForm, form, true, editProfileForm?.id);
+                                if (!hasDocument) {
+                                    let result = await assignCode();
+
+                                    if (result) {
+                                        await upsertDocument(
+                                            "users",
+                                            { ...editProfileForm, code: result.code },
+                                            form,
+                                            true,
+                                            editProfileForm?.id
+                                        );
+                                        await upsertDocument(
+                                            "codes",
+                                            { username: editProfileForm.username, occupied: true },
+                                            {},
+                                            true,
+                                            result.id
+                                        );
+                                    } else {
+                                        await upsertDocument(
+                                            "users",
+                                            { ...editProfileForm, code: "X99" },
+                                            form,
+                                            true,
+                                            editProfileForm?.id
+                                        );
+                                    }
+                                } else {
+                                    delete (form as any)?.code;
+                                    await upsertDocument("users", editProfileForm, form, true, editProfileForm?.id);
+                                }
                                 setLoading(false);
                                 router.push("/", "/");
                                 setUser((user: any) => {
@@ -115,7 +136,9 @@ const EditProfile: NextPage = () => {
 
                             return (
                                 <div key={index}>
-                                    <h3 className="text-3xl text-left mt-16 mb-8 font-bold">{genLang[section.title]}</h3>
+                                    <h3 className="text-3xl text-left mt-16 mb-8 font-bold">
+                                        {genLang[section.title]}
+                                    </h3>
                                     {section.fields.map((field) => (
                                         <Input
                                             key={field.name}
@@ -133,7 +156,7 @@ const EditProfile: NextPage = () => {
                         })}
                         <Button
                             type="submit"
-                            isDisabled={!validateForm(profileFormValidity)}
+                            isDisabled={false}
                             isFullWidth={true}
                             loading={loading}
                             className="mt-32"

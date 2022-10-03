@@ -6,9 +6,7 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import Layout from "../components/Layout/Layout";
 import Input from "../components/Form/Input";
 import Button from "../components/Button/Button";
-
 import validateForm from "../components/Form/utils/validateForm";
-import handleSignUpSubmit from "../components/Form/utils/handleSignUpSubmit";
 
 import useAuth from "../hooks/useAuth";
 import useLanguage from "../hooks/useLanguage";
@@ -22,7 +20,7 @@ const SignUp: FC<Props> = () => {
     const [status, setStatus] = useState("");
     const [sendEmailForm, setSendEmailForm] = useState(initializeFieldValues(form, false));
     const [validity, setValidity] = useState(initializeValidatorValues(form, false));
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
 
     const lang = useLanguage();
     const { sendEmailResetPassword } = useAuth();
