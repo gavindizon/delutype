@@ -8,11 +8,8 @@ import Button from "../../components/Button/Button";
 import Image from "next/image";
 
 import validateForm from "../../components/Form/utils/validateForm";
-import useLanguage from "../../hooks/useLanguage";
-import fieldLang from "../../data/field-labels.json";
-import text from "../../data/text.json";
-
 import form from "../../data/testconfig.json";
+
 import { initializeFieldValues, initializeValidatorValues } from "../../components/Form/utils/initializeFieldValues";
 import { useDispatch } from "react-redux";
 
@@ -22,33 +19,19 @@ type Props = {
 
 const Dashboard: FC<Props> = ({ user }) => {
     const dispatch = useDispatch();
-    const lang = useLanguage();
-    const fieldTranslation: any = fieldLang[lang as keyof typeof fieldLang];
-    const [status, setStatus] = useState("");
     const [testConfigForm, setTestConfigForm] = useState(initializeFieldValues(form));
     const [validity, setValidity] = useState(initializeValidatorValues(form));
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const router = useRouter();
-
-    useEffect(() => {
-        if (router.isReady) {
-            const { status } = router.query;
-            setStatus((status as string) || "");
-        }
-    }, [router]);
-
-    useEffect(() => {
-        setTestConfigForm(initializeValidatorValues(form));
-    }, []);
 
     return (
         <section className="min-h-screen px-2 text-center flex flex-col mt-32 items-center relative">
             <div className="w-full flex flex-col justify-center items-center">
                 <div className="mr-2 mb-4">
-                    {user.photoUrl ? (
+                    {user?.photoUrl || user?.picture ? (
                         <div className="w-24 h-24 relative rounded-full overflow-hidden">
                             <Image
-                                src={user.photoUrl}
+                                src={user?.photoUrl || user?.picture}
                                 alt={user.displayName}
                                 layout="fill"
                                 objectFit="contain"
@@ -76,20 +59,11 @@ const Dashboard: FC<Props> = ({ user }) => {
                     className="w-full md:w-[640px] mb-32"
                     onSubmit={(e) => {
                         e.preventDefault();
-
-                        let newSettings: any = {
-                            showWPM: testConfigForm.showWPM,
-                            layout: testConfigForm.keyboardLayout,
-                        };
-
-                        if (testConfigForm.text) {
-                            newSettings["title"] = fieldTranslation[testConfigForm.text];
-                            newSettings["text"] = text[testConfigForm.text as keyof typeof text];
-                        }
-
                         dispatch({
                             type: "UPDATE_SETTINGS",
-                            payload: newSettings,
+                            payload: {
+                                showWPM: testConfigForm.showWPM,
+                            },
                         });
 
                         setValidity(initializeValidatorValues(form));

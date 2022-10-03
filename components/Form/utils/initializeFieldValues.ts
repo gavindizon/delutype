@@ -9,7 +9,7 @@ export const initializeFieldValues = (data: any, withSection: boolean = true) =>
                         fields[field.name] = [];
                         break;
                     default:
-                        fields[field.name] = "";
+                        fields[field.name] = field?.default || "";
                 }
             })
         );
@@ -20,7 +20,7 @@ export const initializeFieldValues = (data: any, withSection: boolean = true) =>
                     fields[field.name] = [];
                     break;
                 default:
-                    fields[field.name] = "";
+                    fields[field.name] = field?.default || "";
             }
         });
     }

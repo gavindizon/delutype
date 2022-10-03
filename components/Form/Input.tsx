@@ -249,6 +249,7 @@ const Input: FC<Props> = ({
                                 setVisibility(!visibility);
                             }}
                             tabIndex={-1}
+                            type="button"
                         >
                             {visibility ? <FaEye size={"18"} /> : <FaEyeSlash size={"18"} />}
                         </button>

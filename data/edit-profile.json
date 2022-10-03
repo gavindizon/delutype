@@ -30,6 +30,11 @@
                 "label": "age-range",
                 "type": "radio",
                 "options": ["19-and-below", "20-29", "30-and-above"]
+            },
+            {
+                "name": "code",
+                "label": "code",
+                "type": "hidden"
             }
         ]
     },
@@ -119,7 +124,7 @@
                 "options": [
                     {
                         "name": "privacy-policy",
-                        "label": "By registering an account, you are giving consent to typhe and agreeing to their <a class='text-blue-500 underline' target='_blank' href='/privacy-policy'>Privacy Policy</a>, and in compliance with the Data Privacy Act of 2012 (RA10173) and its Implementing Rules and Regulations (IPR) effective since September 9, 2016, I am authorizing these student researchers to: <ul class='list-decimal list-inside'> <li> Use my personal data, which includes my name, and age range , gathered for their undergraduate thesis. </li>   <li>Store my personal data for the analysis of results and the accomplishment of their undergraduate thesis.</li> </ul> By submitting, you are agreeing with the terms above. Rest assured your data will be used only for the reasons listed above and only by the entities stated in this terms."
+                        "label": "privacy-email"
                     }
                 ]
             }
