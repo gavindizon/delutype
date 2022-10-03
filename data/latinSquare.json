@@ -1,0 +1,203 @@
+{
+    "Q1": [
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300"
+    ],
+    "Q2": [
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100"
+    ],
+    "Q3": [
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100"
+    ],
+    "Q4": [
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100"
+    ],
+    "Q5": [
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200"
+    ],
+    "Q6": [
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200"
+    ],
+    "Q7": [
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200"
+    ],
+    "Q8": [
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300"
+    ],
+    "Q9": [
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300"
+    ],
+
+    "S1": [
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300"
+    ],
+    "S2": [
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100"
+    ],
+    "S3": [
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100"
+    ],
+    "S4": [
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100"
+    ],
+    "S5": [
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200"
+    ],
+    "S6": [
+        "english-200",
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200"
+    ],
+    "S7": [
+        "tagalog-300",
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200"
+    ],
+    "S8": [
+        "taglish-300",
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300"
+    ],
+    "S9": [
+        "english-300",
+        "tagalog-100",
+        "taglish-100",
+        "english-100",
+        "tagalog-200",
+        "taglish-200",
+        "english-200",
+        "tagalog-300",
+        "taglish-300"
+    ],
+    "X99": ["tagalog-100", "english-200", "taglish-300"],
+    "S99": ["tagalog-100", "english-200", "taglish-300"]
+}

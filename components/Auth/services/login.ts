@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { auth } from "../../../services/firebase/firebaseClient";
+import { auth, firestore } from "../../../services/firebase/firebaseClient";
 import { AnyAction, Dispatch } from "redux";
-
+import { getDocument } from "../../../services/firebase/queries/getDocument";
 const login = async (
     email: string,
     password: string,
@@ -16,8 +16,12 @@ const login = async (
         let { user } = await signInWithEmailAndPassword(auth, email, password);
         setUser(user);
         setProvider("password");
-        dispatch({ type: "CLOSE_MODAL" });
         setIsLoggingIn(false);
+
+        let userData: any = await getDocument("users", "email", email);
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+        dispatch({ type: "CLOSE_MODAL" });
         return { type: "success" };
     } catch (e) {
         setIsLoggingIn(false);

@@ -11,7 +11,6 @@ const initialState: Object = {
 const testSettingsReducer = (state: any = initialState, action: AnyAction) => {
     switch (action.type) {
         case UPDATE_SETTINGS:
-            console.log(action.payload);
             return { ...state, ...action.payload };
         default:
             return state;

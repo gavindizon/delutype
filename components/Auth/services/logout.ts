@@ -5,6 +5,7 @@ import COOKIE_OPTION from "../utils/cookieOption";
 
 const logout = async (router: any) => {
     nookies.destroy(undefined, "token", COOKIE_OPTION);
+    localStorage.removeItem("userData");
     await signOut(auth);
     router.push("/", "/");
 };

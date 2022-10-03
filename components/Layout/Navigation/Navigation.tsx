@@ -51,10 +51,10 @@ const Navigation: FC<Props> = ({ lang, active }) => {
                         <div className={`relative ${styles["navProfile"]}`}>
                             <div className="flex flex-row items-center my-4">
                                 <div className="mr-2">
-                                    {user.photoUrl ? (
+                                    {user?.photoUrl || user?.picture ? (
                                         <div className="w-8 h-8 relative rounded-full overflow-hidden mr-1">
                                             <Image
-                                                src={user.photoUrl}
+                                                src={user?.photoUrl || user?.picture}
                                                 alt={user.displayName}
                                                 layout="fill"
                                                 objectFit="contain"

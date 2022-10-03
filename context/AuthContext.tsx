@@ -5,9 +5,15 @@ import nookies from "nookies";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
-import { auth, firestore } from "../services/firebase/firebaseClient";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { updateProfile, getRedirectResult } from "firebase/auth";
+import { auth } from "../services/firebase/firebaseClient";
+import {
+    updateProfile,
+    getRedirectResult,
+    GoogleAuthProvider,
+    signInWithCredential,
+    signInWithCustomToken,
+    AuthCredential,
+} from "firebase/auth";
 
 import sendEmailResetPassword from "../components/Auth/services/sendEmailResetPassword";
 import signup from "../components/Auth/services/signup";
@@ -19,6 +25,8 @@ import logout from "../components/Auth/services/logout";
 import COOKIE_OPTION from "../components/Auth/utils/cookieOption";
 
 import Loading from "../components/Indicator/Loading";
+
+import { getDocument } from "../services/firebase/queries/getDocument";
 
 export const AuthContext = createContext<any>({});
 
@@ -35,6 +43,9 @@ export function AuthProvider({ children }: any) {
             try {
                 const result = await getRedirectResult(auth);
                 if (result?.providerId === "google.com") {
+                    let credential = GoogleAuthProvider.credentialFromResult(result);
+                    await signInWithCredential(auth, credential as AuthCredential);
+
                     setUser({
                         email: result.user.email,
                         photoURL: result.user.photoURL,
@@ -43,15 +54,10 @@ export function AuthProvider({ children }: any) {
                     });
                     setProvider("google");
                     setIsLoggingIn(true);
-                    let snapshot = await getDocs(
-                        query(collection(firestore, "users"), where("email", "==", result.user.email))
-                    );
+                    let userDoc: any = await getDocument("users", "email", result.user.email as string);
+                    if (window) localStorage.setItem("userData", JSON.stringify(userDoc));
 
-                    let queryResult: any = [];
-                    snapshot?.forEach((doc) => {
-                        queryResult.push({ ...doc.data(), id: doc.id });
-                    });
-                    if (queryResult.length === 0) {
+                    if (!userDoc) {
                         setIsLoggingIn(false);
                         dispatch({
                             type: "OPEN_MODAL",
@@ -69,14 +75,14 @@ export function AuthProvider({ children }: any) {
                     }
                     setIsLoggingIn(false);
 
-                    if (result.user.displayName !== queryResult[0].username) {
-                        await updateProfile(result.user, { displayName: queryResult[0].username });
+                    if (result.user.displayName !== (userDoc.username as any)) {
+                        await updateProfile(result.user, { displayName: userDoc.username });
 
                         let customUserClaims = {
                             uid: result.user.uid,
                             email: result.user.email,
                             photoURL: result.user.photoURL,
-                            displayName: queryResult[0].username,
+                            displayName: userDoc.username,
                             providerData: result.user.providerData,
                         };
 
@@ -106,11 +112,14 @@ export function AuthProvider({ children }: any) {
                         setProvider("");
                     } else {
                         const { data } = await axios.post("/api/verify", { token });
+                        await signInWithCustomToken(auth, data.token);
+
                         setUser({
+                            ...data.user,
                             email: data.user.email,
                             uid: data.user.uid,
                             displayName: data.user?.displayName || data.user?.name,
-                            photoUrl: data.user.picture,
+                            photoUrl: data.user?.picture || data.user?.photoURL,
                         });
                     }
                 } else {

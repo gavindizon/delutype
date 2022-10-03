@@ -42,12 +42,8 @@ const SignUp: FC<Props> = () => {
             <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 {status === "" ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h2 className="text-4xl font-extrabold mb-4">
-                            {genLang["sign-up"]}
-                        </h2>
-                        <p className="text-lg mb-8">
-                            {genLang["sign-up-subheader"]}
-                        </p>
+                        <h2 className="text-4xl font-extrabold mb-4">{genLang["sign-up"]}</h2>
+                        <p className="text-lg mb-8">{genLang["sign-up-subheader"]}</p>
                         <form
                             className="w-full md:w-[640px] mb-32"
                             onSubmit={async (e) => {
@@ -63,7 +59,9 @@ const SignUp: FC<Props> = () => {
                             {form.map((section, index) => {
                                 return (
                                     <div key={index}>
-                                        <h3 className="text-3xl text-left mt-16 mb-8 font-bold">{genLang[section.title]}</h3>
+                                        <h3 className="text-3xl text-left mt-16 mb-8 font-bold">
+                                            {genLang[section.title]}
+                                        </h3>
                                         {section.fields.map((field) => (
                                             <Input
                                                 key={field.name}
@@ -102,9 +100,7 @@ const SignUp: FC<Props> = () => {
                             />
                         </div>
                         <h1 className="text-4xl font-bold mb-2">Successfully created an Account</h1>
-                        <p className="font-light text-2xl">
-                            Please check the email we sent you to verify the account.
-                        </p>
+                        <p className="font-light text-2xl">Please check the email we sent you to verify the account.</p>
                     </div>
                 )}
             </section>
