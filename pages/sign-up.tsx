@@ -42,7 +42,7 @@ const SignUp: FC<Props> = () => {
             <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 {status === "" ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h2 className="text-4xl font-extrabold mb-4">{genLang["sign-up"]}</h2>
+                        <h1 className="font-extrabold text-3xl sm:text-4xl sm:leading-snug md:text-5xl md:leading-snug mb-4">{genLang["sign-up"]}</h1>
                         <p className="text-lg mb-8">{genLang["sign-up-subheader"]}</p>
                         <form
                             className="w-full md:w-[640px] mb-32"

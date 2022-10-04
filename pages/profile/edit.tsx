@@ -69,7 +69,7 @@ const EditProfile: NextPage = () => {
         <Layout title="Edit Profile" description="" lang={lang}>
             <section className="min-h-screen px-2 text-center flex flex-col mt-40 items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
-                    <h2 className="text-4xl font-extrabold mb-4">{genLang["edit-profile"]}</h2>
+                    <h1 className="font-extrabold text-3xl sm:text-4xl sm:leading-snug md:text-5xl md:leading-snug mb-4">{genLang["edit-profile"]}</h1>
                     <p className="text-lg mb-8">{genLang["edit-profile-subheader"]}</p>
                     <form
                         className="w-full md:w-[640px] mb-32"
@@ -151,9 +151,9 @@ const EditProfile: NextPage = () => {
                                             value={editProfileForm[field.name]}
                                         />
                                     ))}
-                                </div>
+                                </div>  
                             );
-                        })}
+                        })} 
                         <Button
                             type="submit"
                             isDisabled={false}
@@ -177,8 +177,9 @@ const EditProfile: NextPage = () => {
                             {passwordForm.map((section, index) => {
                                 return (
                                     <div key={index}>
-                                        <h3 className="text-2xl text-left mt-2 mb-4 font-semibold ">{section.title}</h3>
-                                        <hr className="mb-3" />
+                                        <h3 className="text-3xl text-left mt-16 mb-8 font-bold">
+                                            {genLang[section.title]}
+                                        </h3>
                                         {section.fields.map((field) => (
                                             <Input
                                                 key={field.name}
@@ -198,7 +199,7 @@ const EditProfile: NextPage = () => {
                                 isDisabled={!validateForm(passwordFormValidity)}
                                 isFullWidth={true}
                                 loading={loading}
-                                className="mt-8"
+                                className="mt-32"
                                 leftIcon={<IoKeySharp size={18} />}
                             >
                                 Update Password

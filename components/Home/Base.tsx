@@ -30,7 +30,7 @@ const Base: FC<Props> = ({ dispatch }) => {
                     <h1 className="font-extrabold text-7xl">
                         ty<span>ph</span>e
                     </h1>
-                    <p className="font-light text-lg tracking-normal">{pageLang.hero.subtitle}</p>
+                    <p className="font-regular text-lg tracking-normal">{pageLang.hero.subtitle}</p>
                     <Button href={"/about"}>{genLang["learn-more"]}</Button>
                 </div>
                 <div className="flex flex-col items-center w-full lg:w-5/12 mt-8 lg:items-end gap-4">

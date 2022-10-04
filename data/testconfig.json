@@ -1,14 +1,21 @@
 [
     {
-        "title": "Test Configuration",
+        "title": "scheduling",
         "fields": [
             {
                 "name": "showWPM",
                 "label": "show-wpm",
-                "type": "radio",
-                "required": true,
-                "options": ["yes", "no"],
-                "default": "yes"
+                "required": false,
+                "type": "checkbox",
+                "validation": {
+                    "min": 0
+                },
+                "options": [
+                    {
+                        "name": "showWPM",
+                        "label": "show-wpm"
+                    }
+                ]
             }
         ]
     }

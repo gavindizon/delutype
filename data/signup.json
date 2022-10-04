@@ -108,7 +108,7 @@
         "fields": [
             {
                 "name": "privacyPolicy",
-                "label": "",
+                "label": "privacy-policy",
                 "required": true,
                 "type": "checkbox",
                 "validation": {

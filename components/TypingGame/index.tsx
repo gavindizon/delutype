@@ -147,7 +147,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 className="typing-test relative"
             >
                 <div className="flex justify-between mb-4">
-                    {settings?.showWPM === "yes" ? (
+                    {settings?.showWPM.length !== 0 ? (
                         <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
                     ) : (
                         <div>&nbsp;</div>

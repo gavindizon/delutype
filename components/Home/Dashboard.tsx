@@ -25,9 +25,9 @@ const Dashboard: FC<Props> = ({ user }) => {
     const router = useRouter();
 
     return (
-        <section className="min-h-screen px-2 text-center flex flex-col mt-32 items-center relative">
+        <section className="min-h-screen text-center flex flex-col mt-32 items-center relative">
             <div className="w-full flex flex-col justify-center items-center">
-                <div className="mr-2 mb-4">
+                <div className="mb-4">
                     {user?.photoUrl || user?.picture ? (
                         <div className="w-24 h-24 relative rounded-full overflow-hidden">
                             <Image
@@ -56,7 +56,7 @@ const Dashboard: FC<Props> = ({ user }) => {
             </div>
             <div>
                 <form
-                    className="w-full md:w-[640px] mb-32"
+                    className="w-full md:w-[640px] mb-32 flex flex-col justify-center items-center"
                     onSubmit={(e) => {
                         e.preventDefault();
                         dispatch({
@@ -71,15 +71,23 @@ const Dashboard: FC<Props> = ({ user }) => {
                         router.push(`/test/calibration`);
                     }}
                 >
+                    <Button
+                        type="submit"
+                        isDisabled={!validateForm(validity)}
+                        isFullWidth
+                        loading={loading}
+                        className="mt-8"
+                    >
+                        Start Test
+                    </Button>
                     {form.map((section: any, index: any) => {
                         return (
                             <div key={index}>
-                                <h3 className="text-2xl text-left mt-2 mb-4 font-semibold ">{section.title}</h3>
-                                <hr className="mb-3" />
                                 {section.fields.map((field: any) => (
                                     <Input
                                         key={field.name}
                                         {...field}
+                                        label={null}
                                         validity={validity}
                                         setValidity={setValidity}
                                         fieldValues={testConfigForm}
@@ -90,15 +98,6 @@ const Dashboard: FC<Props> = ({ user }) => {
                             </div>
                         );
                     })}
-                    <Button
-                        type="submit"
-                        isDisabled={!validateForm(validity)}
-                        isFullWidth
-                        loading={loading}
-                        className="mt-8"
-                    >
-                        START TEST
-                    </Button>
                 </form>
             </div>
             <div className="w-full text-left">
