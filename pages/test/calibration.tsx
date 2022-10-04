@@ -20,7 +20,7 @@ const Calibration: NextPage = () => {
                 payload: {
                     type: "NOTIFICATION",
                     title: "Calibration",
-                    description: "Click on each point 5 times, whilst looking at it until every point turns red.",
+                    description: "Click on each point 5 times, while looking at it until every point turns red.",
                 },
             });
         }
@@ -40,7 +40,7 @@ const Calibration: NextPage = () => {
                 payload: {
                     type: "NOTIFICATION",
                     title: "One More Step!",
-                    description: "Click on the center point 5 times, whilst looking at it to end calibration.",
+                    description: "Click on the center point 5 times, while looking at it to end calibration.",
                 },
             });
         }

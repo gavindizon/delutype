@@ -10,7 +10,7 @@
         "is-eligible-in-dlsu": "Are you an alumni, student, or faculty at De La Salle University - Manila?",
         "privacy-policy": "Privacy Policy",
         "keyboard-layout": "Keyboard Layout",
-        "show-wpm": "Show WPM",
+        "show-wpm": "Show words per minute",
         "text-title": "Text Title",
         "1st-week": "First week of October 2022",
         "2nd-week": "Second week of October 2022",
@@ -36,7 +36,8 @@
         "taglish-100": "Taglish Text with 100 words",
         "taglish-200": "Taglish Text with 200 words",
         "taglish-300": "Taglish Text with 300 words",
-        "select-input": "Select a Value"
+        "select-input": "Select a Value",
+        "optional": "(optional)"
     },
     "fil": {
         "username": "Username",
@@ -49,7 +50,7 @@
         "is-eligible-in-dlsu": "Isa ka bang alumni, estudyante, o pakulti ng De La Salle University - Manila?",
         "privacy-policy": "Patakaran sa privacy",
         "keyboard-layout": "Pagkakaayos ng keyboard",
-        "show-wpm": "Ipakita ang WPM",
+        "show-wpm": "Ipakita ang words per minute",
         "text-title": "Titulo ng teksto",
         "1st-week": "Unang linggo ng Oktubre 2022",
         "2nd-week": "Ikalawang linggo ng Oktubre 2022",
@@ -75,6 +76,7 @@
         "taglish-100": "Taglish na Teksto na may 100 na salita",
         "taglish-200": "Taglish na Teksto na may 200 na salita",
         "taglish-300": "Taglish na Teksto na may 300 na salita",
-        "select-input": "Pumili ng Balyu"
+        "select-input": "Pumili ng Balyu",
+        "optional": "(opsyonal)"
     }
 }

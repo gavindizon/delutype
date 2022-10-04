@@ -14,7 +14,10 @@ import useAuth from "../../../hooks/useAuth";
 import { useRouter } from "next/router";
 
 import form from "../../../data/signin.json";
-import { initializeFieldValues, initializeValidatorValues } from "../../../components/Form/utils/initializeFieldValues";
+import {
+    initializeFieldValues,
+    initializeValidatorValues,
+} from "../../../components/Form/utils/initializeFieldValues";
 
 interface LoginModel {
     email: string;
@@ -24,10 +27,15 @@ interface LoginModel {
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { loginWithGoogle, login, setIsLoggingIn, setUser, setProvider } = useAuth();
+    const { loginWithGoogle, login, setIsLoggingIn, setUser, setProvider } =
+        useAuth();
 
-    const [sendLoginForm, setSendLoginForm] = useState(initializeFieldValues(form, false));
-    const [validity, setValidity] = useState(initializeValidatorValues(form, false));
+    const [sendLoginForm, setSendLoginForm] = useState(
+        initializeFieldValues(form, false)
+    );
+    const [validity, setValidity] = useState(
+        initializeValidatorValues(form, false)
+    );
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ status: false, message: "" });
@@ -39,8 +47,16 @@ const Login = () => {
         try {
             setError({ status: false, message: "" });
             setLoading(true);
-            if (email.trim() === "" || password === "") throw new Error("Error: Please input your email and password");
-            const response: any = await login(email, password, setIsLoggingIn, dispatch, setUser, setProvider);
+            if (email.trim() === "" || password === "")
+                throw new Error("Error: Please input your email and password");
+            const response: any = await login(
+                email,
+                password,
+                setIsLoggingIn,
+                dispatch,
+                setUser,
+                setProvider
+            );
             setSendLoginForm(initializeFieldValues(form, false));
 
             if (response?.type === "error") throw new Error(response?.message);
@@ -76,8 +92,10 @@ const Login = () => {
                     />
                 ))}
                 {error?.status && (
-                    <div className="w-full bg-red-500/70 border border-red-900 rounded-sm p-2">
-                        <p className="text-left text-sm mb-2 text-red-900/100 ">{error.message}</p>
+                    <div className="w-full bg-red-500 rounded-sm p-2 mt-6">
+                        <p className="text-left text-sm mb-2 text-black ">
+                            {error.message}
+                        </p>
                     </div>
                 )}
                 <Link href="/forgot-password">
@@ -86,7 +104,9 @@ const Login = () => {
                         onClick={(e) => {
                             e.preventDefault();
                             dispatch({ type: "CLOSE_MODAL" });
-                            router.push("/forgot-password", undefined, { shallow: true });
+                            router.push("/forgot-password", undefined, {
+                                shallow: true,
+                            });
                         }}
                         tabIndex={-1}
                     >
@@ -96,7 +116,10 @@ const Login = () => {
                 <Button
                     type="submit"
                     isFullWidth
-                    isDisabled={sendLoginForm.email === "" || sendLoginForm.password === ""}
+                    isDisabled={
+                        sendLoginForm.email === "" ||
+                        sendLoginForm.password === ""
+                    }
                     className="mt-8"
                     loading={loading}
                     leftIcon={<CgMail size={18} />}

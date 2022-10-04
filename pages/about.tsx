@@ -1,6 +1,5 @@
-import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
-import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
 import Researcher from "../components/Researcher/Researcher";
