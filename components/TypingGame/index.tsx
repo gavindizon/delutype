@@ -2,30 +2,31 @@ import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import submitResults from "../Form/utils/submitResults";
-import salvoLayout from "../../data/salvoLayout.json";
-import dvorakLayout from "../../data/dvorakLayout.json";
-import { getStandardDeviation, getMean } from "./utils/calculate.js";
+import { handleEndGame } from "./services/handleEndGame";
+import assignKeyboard from "./utils/assignKeyboard";
+import handleKeyDown from "./utils/handleKeyDown";
+
 const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const { settings } = useSelector((state: any) => state);
-
-    const [duration, setDuration] = useState(0);
-    const [gazeCount, setGazeCount] = useState(0);
-    const [isListenerActivated, setListenerActivated] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
-
-    const [listOfRawWPM, setListOfRawWPM] = useState<number[]>([]);
-    const [listOfWPM, setListOfWPM] = useState<number[]>([]);
-    const [WPMcount, setWPMCount] = useState(0);
-
-    const letterElements = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
     const { user } = useAuth();
-
+    const letterElements = useRef<HTMLDivElement>(null);
     const {
         states: { charsState, currIndex, phase, correctChar, errorChar, startTime, endTime },
         actions: { insertTyping, deleteTyping, resetTyping },
     } = useTyping(text, { skipCurrentWordOnSpace: false, pauseOnError: true });
+
+    const [gazeCount, setGazeCount] = useState(0);
+    const [isListenerActivated, setListenerActivated] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const [time, setTime] = useState(0);
+    const [heightAdjust, setHeightAdjust] = useState(0);
+    const [running, setRunning] = useState(false);
+    const [listOfRawWPM, setListOfRawWPM] = useState<number[]>([]);
+    const [listOfWPM, setListOfWPM] = useState<number[]>([]);
+    function addGazeCount() {
+        setGazeCount((prev) => prev + 1);
+    }
 
     // set cursor
     const pos = useMemo(() => {
@@ -42,63 +43,6 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         }
     }, [currIndex]);
 
-    async function checkEndGame() {
-        setDuration(Math.floor(((endTime || 0) - (startTime || 0)) / 1000));
-        setRunning(false);
-        window.removeEventListener("addGaze", addGazeCount);
-        let finalResults: object;
-        let reduxResults: object;
-
-        finalResults = {
-            wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
-            accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
-            rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
-            actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
-            time: time,
-            gazeCount: gazeCount,
-        };
-
-        reduxResults = {
-            wpm: Math.round(((60 / time) * correctChar) / 5) || 0,
-            accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
-            rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
-            actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
-            time: time,
-            gazeCount: gazeCount,
-            username: user.displayName,
-        };
-
-        await submitResults(reduxResults);
-
-        dispatch({ type: "UPDATE_RESULT", payload: finalResults });
-
-        dispatch({
-            type: "OPEN_MODAL",
-            payload: {
-                type: "NOTIFICATION",
-                title: "Test done!",
-                description: "Thank you for finishing the typing test. Would you like to perform the test again?",
-                redirectTo: "/test",
-                redirectToLabel: "YES",
-                addOns: {
-                    backTo: "/",
-                    backToLabel: "BACK TO HOME",
-                },
-            },
-        });
-
-        setGazeCount(0);
-        resetTyping();
-        setListenerActivated(false);
-        setDuration(0);
-        setTime(0);
-        setIsFocused(false);
-    }
-
-    function addGazeCount() {
-        setGazeCount((prev) => prev + 1);
-    }
-
     // initialize webgazer
     useEffect(() => {
         if (user && !user?.isProfileUnfinished) {
@@ -111,35 +55,14 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 }, 4500);
             }
 
-            let layout = "QWERTY";
-            let userData;
-
-            if (window) userData = JSON.parse(localStorage.getItem("userData") as string);
-
-            // assigns keyboard Layout
-            switch (userData?.code?.[0]) {
-                case "S":
-                    layout = "Salvo";
-                    break;
-                case "X":
-                case "Q":
-                default:
-                    layout = "QWERTY";
-            }
-
-            dispatch({
-                type: "UPDATE_SETTINGS",
-                payload: {
-                    layout,
-                },
-            });
+            assignKeyboard(dispatch);
 
             dispatch({
                 type: "OPEN_MODAL",
                 payload: {
                     type: "NOTIFICATION",
-                    title: "Calibration",
-                    description: "Click on each point 5 times, whilst looking at it until every point turns red.",
+                    title: `Start Test`,
+                    description: `Your task is to type the text using the ${settings.key}`,
                 },
             });
         }
@@ -151,40 +74,25 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
 
     useEffect(() => {
         if (phase === 2 && endTime && startTime) {
-            checkEndGame();
-        } else {
-            setDuration(0);
+            handleEndGame({
+                time,
+                correctChar,
+                errorChar,
+                text,
+                listOfRawWPM,
+                listOfWPM,
+                gazeCount,
+                dispatch,
+                addGazeCount,
+                setRunning,
+                resetTyping,
+                setTime,
+                setGazeCount,
+                setIsFocused,
+                setListenerActivated,
+            });
         }
     }, [phase, startTime, endTime]);
-
-    //handle key presses
-    const handleKeyDown = (letter: string, control: boolean) => {
-        if (letter?.length === 1) {
-            if (settings.layout === "Salvo") {
-                letter = salvoLayout[letter as keyof typeof salvoLayout] || letter;
-            } else if (settings.layout === "Dvorak") {
-                letter = dvorakLayout[letter as keyof typeof salvoLayout] || letter;
-            }
-        }
-
-        if (letter === "Escape") {
-            resetTyping();
-        } else if (letter === "Backspace") {
-            deleteTyping(control);
-        } else if (letter.length === 1) {
-            setRunning(true);
-            insertTyping(letter);
-            if (!isListenerActivated) {
-                window.addEventListener("addGaze", addGazeCount);
-                setListenerActivated(true);
-            }
-        }
-    };
-
-    //timer
-    const [time, setTime] = useState(0);
-    const [heightAdjust, setHeightAdjust] = useState(0);
-    const [running, setRunning] = useState(false);
 
     //pushes actual WPM and raw WPM values to WPM states
     useEffect(() => {
@@ -220,7 +128,18 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 onKeyDown={(e) => {
                     e.preventDefault();
 
-                    handleKeyDown(e.key, e.ctrlKey);
+                    handleKeyDown({
+                        letter: e.key,
+                        control: e.ctrlKey,
+                        settings,
+                        isListenerActivated,
+                        setListenerActivated,
+                        addGazeCount,
+                        resetTyping,
+                        deleteTyping,
+                        setRunning,
+                        insertTyping,
+                    });
                     setRunning(true);
                 }}
                 onFocus={() => setIsFocused(true)}
