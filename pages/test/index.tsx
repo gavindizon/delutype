@@ -8,8 +8,10 @@ import text from "../../data/text.json";
 import translation from "../../data/field-labels.json";
 
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Test: NextPage = () => {
+    const { result } = useSelector((state: any) => state);
     const lang = translation[useLanguage() as keyof typeof translation];
     const [userData, setUserData] = useState<any>({});
     const [testValue, setTestValue] = useState<string>("english-100");
@@ -19,8 +21,16 @@ const Test: NextPage = () => {
     }, []);
 
     useEffect(() => {
-        if (userData?.code) setTestValue(latinSquare[userData?.code as keyof typeof latinSquare][userData?.stage || 0]);
+        if (userData?.code) {
+            let code = latinSquare[userData?.code as keyof typeof latinSquare];
+            let stage = code[userData?.stage % code?.length || 0];
+            setTestValue(stage);
+        }
     }, [userData]);
+
+    useEffect(() => {
+        if (window) setUserData(JSON.parse(localStorage.getItem("userData") as string));
+    }, [result]);
 
     return (
         <Layout title="Test" description="" lang={useLanguage()}>
