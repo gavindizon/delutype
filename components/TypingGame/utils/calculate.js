@@ -1,4 +1,6 @@
 export const getStandardDeviation = (array) => {
+  if (array[0] === 0) array.shift();
+
   const n = array.length;
   const mean = array.reduce((a, b) => a + b) / n;
   return Math.sqrt(
@@ -7,5 +9,7 @@ export const getStandardDeviation = (array) => {
 };
 
 export const getMean = (array) => {
+  if (array[0] === 0) array.shift();
+
   return array.reduce((a, b) => a + b) / array.length;
 };

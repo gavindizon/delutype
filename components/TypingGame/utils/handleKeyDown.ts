@@ -28,7 +28,6 @@ const handleKeyDown = ({
         deleteTyping(control);
     } else if (letter.length === 1) {
         setRunning(true);
-        console.log(letter, "HELLO");
         insertTyping(letter);
         if (!isListenerActivated) {
             window.addEventListener("addGaze", addGazeCount);

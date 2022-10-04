@@ -62,7 +62,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 payload: {
                     type: "NOTIFICATION",
                     title: `Start Test`,
-                    description: `Your task is to type the text using the ${settings.key}`,
+                    description: `Your task is to type the text using the ${settings.layout} layout. Click on the text and start typing to begin the test`,
                 },
             });
         }
@@ -98,7 +98,6 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     useEffect(() => {
         var rawWPM = ((60 / time) * (correctChar + errorChar)) / 5 || 0;
         var actualWPM = ((60 / time) * correctChar) / 5 || 0;
-
         setListOfRawWPM((prevList) => [...prevList, rawWPM !== NaN ? rawWPM : 0]);
         setListOfWPM((prevList) => [...prevList, actualWPM !== NaN ? actualWPM : 0]);
     }, [time]);

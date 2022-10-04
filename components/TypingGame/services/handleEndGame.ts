@@ -34,6 +34,8 @@ export async function handleEndGame({
         accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
         rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
         actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
+        listOfRawWPM: listOfRawWPM.join(", "),
+        listOfWPM: listOfWPM.join(", "),
         time,
         gazeCount,
     };
