@@ -15,6 +15,8 @@ const submitResults = async (values: any) => {
                 gazeCount: values.gazeCount,
                 rawConsistency: values.rawConsistency,
                 actualConsistency: values.actualConsistency,
+                listOfWPM: values.listOfWPM,
+                listOfRawWPM: values.listOfRawWPM
             },
             {}
         );
