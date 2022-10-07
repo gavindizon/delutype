@@ -108,26 +108,5 @@
                 "options": ["yes", "no"]
             }
         ]
-    },
-    {
-        "title": "",
-        "fields": [
-            {
-                "name": "privacyPolicy",
-                "label": "",
-                "required": true,
-                "type": "checkbox",
-                "validation": {
-                    "min": 1
-                },
-                "insertAsHTML": true,
-                "options": [
-                    {
-                        "name": "privacy-policy",
-                        "label": "privacy-email"
-                    }
-                ]
-            }
-        ]
     }
 ]

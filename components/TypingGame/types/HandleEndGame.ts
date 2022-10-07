@@ -1,4 +1,5 @@
 import { Dispatch, AnyAction } from "redux";
+import GazeData from "./GazeData";
 
 type HandleEndGame = {
     time: number;
@@ -8,8 +9,12 @@ type HandleEndGame = {
     listOfRawWPM: number[];
     listOfWPM: number[];
     gazeCount: number;
+    gazeUpLog: GazeData[];
+    gazeDownLog: GazeData[];
+    typeLog: any;
     dispatch: Dispatch<AnyAction>;
-    addGazeCount: (this: Window, arg1: Event) => any;
+    addGaze: (this: Window, arg1: Event) => any;
+    removeGaze: (this: Window, arg1: Event) => any;
     setIsFocused: Function;
     setGazeCount: Function;
     setListenerActivated: Function;

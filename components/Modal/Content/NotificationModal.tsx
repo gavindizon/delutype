@@ -28,14 +28,14 @@ const NotificationModal: FC<Props> = ({
     const dispatch = useDispatch();
     return (
         <>
-            <div className="mx-auto py-4 px-4 h-full">
-                <h1 className="text-center text-2xl pb-6">{name}</h1>
+            <div className="flex h-full flex-col justify-center items-center">
+                <h1 className="font-bold text-center text-3xl mt-16 mb-8">{name}</h1>
                 {!insertDescriptionAsHTML ? (
-                    <p className="text-center">{description}</p>
+                    <p className="text-center w-5/6 mb-8">{description}</p>
                 ) : (
-                    <div dangerouslySetInnerHTML={{ __html: description }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: description }} className="w-5/6 mb-8"></div>
                 )}
-                <div className="w-full flex justify-center py-4">
+                <div className="w-full flex justify-center mb-12">
                     {redirectToLabel && (
                         <Button
                             href={redirectAction ? undefined : redirectTo}

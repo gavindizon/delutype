@@ -64,7 +64,7 @@ const Input: FC<Props> = ({
                 <>
                     <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                         {fieldLabel[label]}
-                        {!required && " *"}
+                        {!required && " (optional)"}
                     </label>
                     <select
                         title={name}
@@ -104,7 +104,7 @@ const Input: FC<Props> = ({
                 <div className="w-full mb-4 font-light">
                     <p className="font-medium text-lg text-left mt-4 mb-2 block">
                         {fieldLabel[label]}
-                        {!required && " *"}
+                        {!required && name !== "showWPM" && " (optional)"}
                     </p>
                     {options?.map((opt) => {
                         return (
@@ -112,17 +112,21 @@ const Input: FC<Props> = ({
                                 <input
                                     type="checkbox"
                                     name={opt.name}
+                                    //  id={opt.name}
                                     title={opt.name}
                                     disabled={disabled}
                                     checked={fieldValues[name].includes(opt.name)}
-                                    className="my-2 mx-4"
+                                    className="my-2 mr-4 cursor-pointer"
                                     onChange={async (e) => {
                                         let values = fieldValues[name];
 
                                         if (e.target.checked) values.push(opt.name);
                                         else values = values.filter((value: any) => opt.name !== value);
 
-                                        setForm({ ...fieldValues, [name]: values });
+                                        setForm({
+                                            ...fieldValues,
+                                            [name]: values,
+                                        });
 
                                         (validation || required) &&
                                             setMessage(
@@ -141,14 +145,16 @@ const Input: FC<Props> = ({
                                     }}
                                 />
                                 {!insertAsHTML ? (
-                                    <label htmlFor={opt.name} className="">
+                                    <label htmlFor={opt.name} className="cursor-pointer">
                                         {fieldLabel[opt.label]}
                                     </label>
                                 ) : (
                                     <label
                                         htmlFor={opt.name}
-                                        className="font-light italic"
-                                        dangerouslySetInnerHTML={{ __html: fieldLabel[opt.label] }}
+                                        className="font-light italic cursor-pointer"
+                                        dangerouslySetInnerHTML={{
+                                            __html: fieldLabel[opt.label],
+                                        }}
                                     ></label>
                                 )}
                             </div>
@@ -164,7 +170,7 @@ const Input: FC<Props> = ({
                 <div className="w-full mb-4 font-light">
                     <p className="font-medium text-lg text-left mt-4 mb-2 block">
                         {fieldLabel[label]}
-                        {!required && " *"}
+                        {!required && " " + fieldLabel["optional"]}
                     </p>
                     {options?.map((opt) => {
                         return (
@@ -172,13 +178,17 @@ const Input: FC<Props> = ({
                                 <input
                                     type="radio"
                                     name={name}
+                                    id={opt}
                                     title={name}
                                     value={opt}
                                     checked={fieldValues[name] === opt}
                                     disabled={disabled}
-                                    className="my-2 mx-4"
+                                    className="my-2 mr-4 cursor-pointer"
                                     onChange={async (e) => {
-                                        setForm({ ...fieldValues, [name]: e.target.value });
+                                        setForm({
+                                            ...fieldValues,
+                                            [name]: e.target.value,
+                                        });
 
                                         (validation || required) &&
                                             setMessage(
@@ -196,7 +206,7 @@ const Input: FC<Props> = ({
                                             );
                                     }}
                                 />
-                                <label htmlFor={opt} className="">
+                                <label htmlFor={opt} className="cursor-pointer">
                                     {fieldLabel[opt]}
                                 </label>
                             </div>
@@ -214,7 +224,7 @@ const Input: FC<Props> = ({
                     <div className="relative w-full">
                         <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
-                            {!required && " *"}
+                            {!required && " (optional)"}
                         </label>
                         <input
                             type={visibility ? "text" : "password"}
@@ -224,7 +234,10 @@ const Input: FC<Props> = ({
                             value={value}
                             onChange={async (e) => {
                                 e.preventDefault();
-                                setForm({ ...fieldValues, [name]: e.target.value });
+                                setForm({
+                                    ...fieldValues,
+                                    [name]: e.target.value,
+                                });
                                 (validation || required) &&
                                     setMessage(
                                         await validator(
@@ -268,7 +281,7 @@ const Input: FC<Props> = ({
                     <div className="relative w-full">
                         <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
-                            {!required && " *"}
+                            {!required && " (optional)"}
                         </label>
                         <input
                             type={type}

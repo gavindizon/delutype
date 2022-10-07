@@ -1,6 +1,6 @@
-import { getStandardDeviation, getMean } from "../utils/calculate.js";
+import { getStandardDeviation, getMean } from "../utils/calculate";
 import submitResults from "../../Form/utils/submitResults";
-import HandleEndGame from "../types/HandleEndGame.js";
+import HandleEndGame from "../types/HandleEndGame";
 
 export async function handleEndGame({
     time,
@@ -8,11 +8,15 @@ export async function handleEndGame({
     errorChar,
     text,
     dispatch,
-    addGazeCount,
+    addGaze,
+    removeGaze,
     setRunning,
     listOfRawWPM,
     listOfWPM,
     gazeCount,
+    gazeUpLog,
+    gazeDownLog,
+    typeLog,
     resetTyping,
     setTime,
     setGazeCount,
@@ -23,7 +27,8 @@ export async function handleEndGame({
     let user: any;
 
     if (window) {
-        window.removeEventListener("addGaze", addGazeCount);
+        window.removeEventListener("addGaze", addGaze);
+        window.removeEventListener("removeGaze", removeGaze);
         user = JSON.parse(localStorage.getItem("userData") as string);
     }
 
@@ -34,8 +39,13 @@ export async function handleEndGame({
         accuracy: Number.parseFloat((((correctChar - errorChar) / text.length) * 100).toFixed(2)),
         rawConsistency: (getStandardDeviation(listOfRawWPM) / getMean(listOfRawWPM)) * 100,
         actualConsistency: (getStandardDeviation(listOfWPM) / getMean(listOfWPM)) * 100,
+        listOfRawWPM: listOfRawWPM.join(", "),
+        listOfWPM: listOfWPM.join(", "),
         time,
         gazeCount,
+        gazeDownLog,
+        gazeUpLog,
+        typeLog,
     };
 
     await submitResults({ ...finalResults, username: user.username });
