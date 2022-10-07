@@ -1,4 +1,4 @@
-import { getStandardDeviation, getMean } from "../utils/calculate.js";
+import { getStandardDeviation, getMean } from "../utils/calculate";
 import submitResults from "../../Form/utils/submitResults";
 import HandleEndGame from "../types/HandleEndGame.js";
 
