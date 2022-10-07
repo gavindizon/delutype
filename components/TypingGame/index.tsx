@@ -5,6 +5,8 @@ import useAuth from "../../hooks/useAuth";
 import { handleEndGame } from "./services/handleEndGame";
 import assignKeyboard from "./utils/assignKeyboard";
 import handleKeyDown from "./utils/handleKeyDown";
+import getWord from "./utils/getWord";
+import GazeData from "./types/GazeData";
 
 const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const { settings } = useSelector((state: any) => state);
@@ -24,8 +26,21 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     const [running, setRunning] = useState(false);
     const [listOfRawWPM, setListOfRawWPM] = useState<number[]>([]);
     const [listOfWPM, setListOfWPM] = useState<number[]>([]);
-    function addGazeCount() {
+    const [currentChar, setCurrentChar] = useState(text[0]);
+    const [currentWord, setCurrentWord] = useState(text.split(" ")[0]);
+    const [typeLog, setTypeLog] = useState<any>([]);
+    const [gazeDownLog, setGazeDownLog] = useState<any>([]);
+    const [gazeUpLog, setGazeUpLog] = useState<any>([]);
+    const [gazeStatus, setGazeStatus] = useState<"up" | "down" | "">("");
+
+    function addGaze() {
         setGazeCount((prev) => prev + 1);
+
+        if (gazeStatus !== "down") setGazeStatus("down");
+    }
+
+    function removeGaze() {
+        if (gazeStatus !== "up") setGazeStatus("up");
     }
 
     // set cursor
@@ -42,6 +57,38 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
             };
         }
     }, [currIndex]);
+
+    useEffect(() => {
+        switch (gazeStatus) {
+            case "up":
+                setGazeUpLog((prev: GazeData[]) => [
+                    ...prev,
+                    {
+                        timestamp: startTime ? new Date().getTime() - startTime : 0,
+                        currentChar,
+                        currentWord,
+                    },
+                ]);
+                break;
+            case "down":
+                setGazeDownLog((prev: GazeData[]) => [
+                    ...prev,
+                    {
+                        timestamp: startTime ? new Date().getTime() - startTime : 0,
+                        currentChar,
+                        currentWord,
+                    },
+                ]);
+                break;
+        }
+
+        //eslint-disable-next-line
+    }, [gazeStatus]);
+
+    useEffect(() => {
+        setCurrentChar(text[0]);
+        setCurrentWord(text.split(" ")[0]);
+    }, [text]);
 
     // initialize webgazer
     useEffect(() => {
@@ -70,6 +117,8 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         return () => {
             if (user && !user?.isProfileUnfinished) webgazer?.end();
         };
+
+        //eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -82,8 +131,12 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 listOfRawWPM,
                 listOfWPM,
                 gazeCount,
+                typeLog,
+                gazeUpLog,
+                gazeDownLog,
                 dispatch,
-                addGazeCount,
+                addGaze,
+                removeGaze,
                 setRunning,
                 resetTyping,
                 setTime,
@@ -92,6 +145,8 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 setListenerActivated,
             });
         }
+
+        //eslint-disable-next-line
     }, [phase, startTime, endTime]);
 
     //pushes actual WPM and raw WPM values to WPM states
@@ -100,6 +155,8 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         var actualWPM = ((60 / time) * correctChar) / 5 || 0;
         setListOfRawWPM((prevList) => [...prevList, rawWPM !== NaN ? rawWPM : 0]);
         setListOfWPM((prevList) => [...prevList, actualWPM !== NaN ? actualWPM : 0]);
+
+        //eslint-disable-next-line
     }, [time]);
 
     useEffect(() => {
@@ -118,7 +175,16 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
         if (pos.top > 72) {
             setHeightAdjust(heightAdjust + 1);
         }
+
+        //eslint-disable-next-line
     }, [pos.top]);
+
+    useEffect(() => {
+        setCurrentChar(text[(currIndex + 1) % text.length]);
+        setCurrentWord(getWord(text, currIndex));
+
+        //eslint-disable-next-line
+    }, [currIndex]);
 
     return (
         <>
@@ -133,11 +199,16 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                         settings,
                         isListenerActivated,
                         setListenerActivated,
-                        addGazeCount,
+                        addGaze,
+                        removeGaze,
                         resetTyping,
                         deleteTyping,
                         setRunning,
                         insertTyping,
+                        setTypeLog,
+                        currentChar,
+                        currentWord,
+                        timestamp: startTime ? new Date().getTime() - (startTime as number) : 0,
                     });
                     setRunning(true);
                 }}
@@ -191,6 +262,9 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 ) : null}
             </div>
             <p className="text-sm">{running ? gazeCount : 0}</p>
+            <p className="text-sm">
+                {currentChar} | {currentWord}
+            </p>
         </>
     );
 };

@@ -8,11 +8,16 @@ const handleKeyDown = ({
     settings,
     isListenerActivated,
     setListenerActivated,
-    addGazeCount,
     resetTyping,
     deleteTyping,
     setRunning,
     insertTyping,
+    setTypeLog,
+    timestamp,
+    currentChar,
+    currentWord,
+    addGaze,
+    removeGaze,
 }: HandleKeyDown) => {
     if (letter?.length === 1) {
         if (settings.layout === "Salvo") {
@@ -29,8 +34,21 @@ const handleKeyDown = ({
     } else if (letter.length === 1) {
         setRunning(true);
         insertTyping(letter);
+
+        setTypeLog((typeLog: any) => [
+            ...typeLog,
+            {
+                timestamp,
+                currentChar,
+                currentWord,
+                actualChar: letter,
+                hasCorrectInput: currentChar === letter,
+            },
+        ]);
+
         if (!isListenerActivated) {
-            window.addEventListener("addGaze", addGazeCount);
+            window.addEventListener("addGaze", addGaze);
+            window.addEventListener("removeGaze", removeGaze);
             setListenerActivated(true);
         }
     }
