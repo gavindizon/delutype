@@ -62,10 +62,7 @@ const Input: FC<Props> = ({
         case "select":
             return (
                 <>
-                    <label
-                        htmlFor={name}
-                        className="font-medium text-lg text-left mt-4 mb-2 block"
-                    >
+                    <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                         {fieldLabel[label]}
                         {!required && " (optional)"}
                     </label>
@@ -115,23 +112,16 @@ const Input: FC<Props> = ({
                                 <input
                                     type="checkbox"
                                     name={opt.name}
-                                    id={opt.name}
+                                    //  id={opt.name}
                                     title={opt.name}
                                     disabled={disabled}
-                                    checked={fieldValues[name].includes(
-                                        opt.name
-                                    )}
+                                    checked={fieldValues[name].includes(opt.name)}
                                     className="my-2 mr-4 cursor-pointer"
                                     onChange={async (e) => {
                                         let values = fieldValues[name];
 
-                                        if (e.target.checked)
-                                            values.push(opt.name);
-                                        else
-                                            values = values.filter(
-                                                (value: any) =>
-                                                    opt.name !== value
-                                            );
+                                        if (e.target.checked) values.push(opt.name);
+                                        else values = values.filter((value: any) => opt.name !== value);
 
                                         setForm({
                                             ...fieldValues,
@@ -171,9 +161,7 @@ const Input: FC<Props> = ({
                         );
                     })}
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm mt-2">
-                            {message[0]}
-                        </span>
+                        <span className="w-full block text-red-500 text-left text-sm mt-2">{message[0]}</span>
                     )}
                 </div>
             );
@@ -225,9 +213,7 @@ const Input: FC<Props> = ({
                         );
                     })}
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm my-2">
-                            {message[0]}
-                        </span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </div>
             );
@@ -236,10 +222,7 @@ const Input: FC<Props> = ({
             return (
                 <>
                     <div className="relative w-full">
-                        <label
-                            htmlFor={name}
-                            className="font-medium text-lg text-left mt-4 mb-2 block"
-                        >
+                        <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
                             {!required && " (optional)"}
                         </label>
@@ -281,17 +264,11 @@ const Input: FC<Props> = ({
                             tabIndex={-1}
                             type="button"
                         >
-                            {visibility ? (
-                                <FaEye size={"18"} />
-                            ) : (
-                                <FaEyeSlash size={"18"} />
-                            )}
+                            {visibility ? <FaEye size={"18"} /> : <FaEyeSlash size={"18"} />}
                         </button>
                     </div>
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm my-2">
-                            {message[0]}
-                        </span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </>
             );
@@ -302,10 +279,7 @@ const Input: FC<Props> = ({
             return (
                 <>
                     <div className="relative w-full">
-                        <label
-                            htmlFor={name}
-                            className="font-medium text-lg text-left mt-4 mb-2 block"
-                        >
+                        <label htmlFor={name} className="font-medium text-lg text-left mt-4 mb-2 block">
                             {fieldLabel[label]}
                             {!required && " (optional)"}
                         </label>
@@ -346,9 +320,7 @@ const Input: FC<Props> = ({
                     </div>
 
                     {message.length > 0 && (
-                        <span className="w-full block text-red-500 text-left text-sm my-2">
-                            {message[0]}
-                        </span>
+                        <span className="w-full block text-red-500 text-left text-sm my-2">{message[0]}</span>
                     )}
                 </>
             );

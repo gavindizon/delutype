@@ -1,4 +1,5 @@
 var addGaze = new CustomEvent("addGaze");
+var removeGaze = new CustomEvent("removeGaze");
 
 const BOTTOM = window.innerHeight * 0.8;
 var isLookingDown = false;
@@ -13,7 +14,10 @@ var isLookingDown = false;
                 isLookingDown = true;
             }
         } else {
-            isLookingDown = false;
+            if (!!isLookingDown) {
+                dispatchEvent(removeGaze);
+                isLookingDown = false;
+            }
         }
     });
 })();

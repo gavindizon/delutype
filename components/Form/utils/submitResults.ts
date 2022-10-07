@@ -16,14 +16,17 @@ const submitResults = async (values: any) => {
                 rawConsistency: values.rawConsistency,
                 actualConsistency: values.actualConsistency,
                 listOfWPM: values.listOfWPM,
-                listOfRawWPM: values.listOfRawWPM
+                listOfRawWPM: values.listOfRawWPM,
+                typeLog: values.typeLog,
+                gazeUpLog: values.gazeUpLog,
+                gazeDownLog: values.gazeDownLog,
             },
             {}
         );
 
         let userData: any = JSON.parse(localStorage.getItem("userData") as string);
         if (userData?.id) {
-            await upsertDocument("users", { stage: ++userData.stage }, {}, false, userData.id);
+            await upsertDocument("users", { stage: ++userData.stage || 0 }, {}, false, userData.id);
             localStorage.setItem("userData", JSON.stringify(userData) as string);
         }
 
