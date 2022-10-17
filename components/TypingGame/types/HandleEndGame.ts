@@ -12,6 +12,7 @@ type HandleEndGame = {
     gazeUpLog: GazeData[];
     gazeDownLog: GazeData[];
     typeLog: any;
+    settings: Object;
     dispatch: Dispatch<AnyAction>;
     addGaze: (this: Window, arg1: Event) => any;
     removeGaze: (this: Window, arg1: Event) => any;
