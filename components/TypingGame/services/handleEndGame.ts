@@ -16,6 +16,7 @@ export async function handleEndGame({
     gazeCount,
     gazeUpLog,
     gazeDownLog,
+    settings,
     typeLog,
     resetTyping,
     setTime,
@@ -46,6 +47,8 @@ export async function handleEndGame({
         gazeDownLog,
         gazeUpLog,
         typeLog,
+        layout: settings['layout' as keyof typeof settings],
+        title: settings['title' as keyof typeof settings],
     };
 
     await submitResults({ ...finalResults, username: user.username });

@@ -134,6 +134,7 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 typeLog,
                 gazeUpLog,
                 gazeDownLog,
+                settings,
                 dispatch,
                 addGaze,
                 removeGaze,
@@ -182,7 +183,6 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
     useEffect(() => {
         setCurrentChar(text[(currIndex + 1) % text.length]);
         setCurrentWord(getWord(text, currIndex));
-
         //eslint-disable-next-line
     }, [currIndex]);
 
@@ -217,11 +217,13 @@ const TypingGame: FC<{ text: string }> = ({ text = "" }) => {
                 className="typing-test relative"
             >
                 <div className="flex justify-between mb-4">
+                   
                     {settings?.showWPM.length !== 0 ? (
                         <p className={`text-2xl pb-2`}>WPM: {Math.round(((60 / time) * correctChar) / 5) || 0}</p>
                     ) : (
                         <div>&nbsp;</div>
                     )}
+                    
                     <p className="text-2xl pb-2">
                         <span>{("0" + Math.floor(time / 3600)).slice(-2)}:</span>
                         <span>{("0" + Math.floor((time / 60) % 60)).slice(-2)}:</span>
