@@ -20,6 +20,8 @@ const submitResults = async (values: any) => {
                 typeLog: values.typeLog,
                 gazeUpLog: values.gazeUpLog,
                 gazeDownLog: values.gazeDownLog,
+                layout: values.layout,
+                title: values.title
             },
             {}
         );
